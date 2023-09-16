@@ -45,7 +45,7 @@ const Splash = ({navigation}) => {
             color: 'black',
             fontFamily: 'Poppins-SemiBold',
           }}>
-          Food For Each
+          For Each Partner
         </Text>
       </View>
       <Image

@@ -5,7 +5,7 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AppColors from '../colors/AppColors';
 const TextFieldStyles = StyleSheet.create({
   inputField: {
-    width: wp('53%'),
+    width: wp('50%'),
     height: hp('7%'),
   },
   donorInputField: {
@@ -45,3 +45,6 @@ const TextFieldStyles = StyleSheet.create({
 });
 
 export default TextFieldStyles;
+
+
+

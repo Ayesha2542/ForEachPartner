@@ -32,7 +32,7 @@ import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import CategoryModal from '../../components/CategoryModal';
 
-const AfterSignup = ({navigation}) => {
+const VerifyScreen = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
@@ -62,7 +62,7 @@ const AfterSignup = ({navigation}) => {
           { marginTop: hp('2'), fontSize: hp('3.5') },
         ]}
       >
-        Restaurant Details
+        Verify
       </Text>
         
 
@@ -154,7 +154,7 @@ style={ContainerStyles.inputFieldNeomorphContainer}>
           </Neomorph>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('VerifyScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Neomorph
             darkShadowColor="white"
             lightShadowColor="white"
@@ -181,4 +181,4 @@ style={ContainerStyles.inputFieldNeomorphContainer}>
   );
 };
 
-export default AfterSignup;
+export default VerifyScreen;
