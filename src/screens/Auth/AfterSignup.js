@@ -10,13 +10,14 @@ import {
   View,
   Modal,
   Button,
+  StyleSheet
 } from 'react-native';
 import BackButtonHeader from '../../components/headers/BackButtonHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -31,11 +32,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import CategoryModal from '../../components/CategoryModal';
+import { launchImageLibrary } from 'react-native-image-picker';
+
 
 const AfterSignup = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
+  const [imageData, setImageData] = useState('')
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -51,10 +56,45 @@ const AfterSignup = ({navigation}) => {
     setCategoryInput(selectedCategoryLabels.join(', '));
     closeModal();
   };
+ 
+  //Functions......
+  const openImagePicker = () => {
+    launchImageLibrary({ mediaType: 'photo' }, response => {
+      if (!response.didCancel && !response.error) {
+        console.log('Selected image URI:', response.assets[0].uri);
+        setImageData(response.assets[0].uri);
+      }
+    });
+  };
+
+ 
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <BackButtonHeader navigation={navigation} />
+ 
+      <TouchableOpacity
+              onPress={() => {
+                openImagePicker();
+              }}>
+              <Neomorph style={{justifyContent:"center",alignItems:"center", shadowRadius: 3,
+        borderRadius: 100,
+        backgroundColor: AppColors.background2,
+        width: wp('30%'),
+        height: hp('15%'),
+        marginLeft: wp('30%')}}>
+                {imageData == "" ? (
+                  <Ionicons name='camera-outline' size={34} color={'grey'} />
+                ) : (
+                  <Image source={{ uri: imageData }} style={{   width: wp('30%'),
+                  height: hp('15%'),
+                  borderRadius:100,
+                  borderWidth: 0.3,
+                  borderColor: 'grey'
+              }} />
+                )}
+              </Neomorph>
+            </TouchableOpacity>
 
       <Text
         style={[
@@ -154,7 +194,7 @@ style={ContainerStyles.inputFieldNeomorphContainer}>
           </Neomorph>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('VerifyScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Neomorph
             darkShadowColor="white"
             lightShadowColor="white"
@@ -181,4 +221,18 @@ style={ContainerStyles.inputFieldNeomorphContainer}>
   );
 };
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'cover',
+    marginBottom: 20,
+  },
+});
 export default AfterSignup;
