@@ -224,7 +224,7 @@ const Signup = ({navigation}) => {
               lightShadowColor="white"
               swapShadows // <- change zIndex of each shadow color
               style={ContainerStyles.touchableOpacityNeomorphContainer}>
-              <Text style={TextStyles.whiteCenteredLable}>SIGN UP</Text>
+              <Text style={TextStyles.whiteCenteredLable}>NEXT</Text>
             </Neomorph>
           </TouchableOpacity>
           <View style={{flexDirection: 'row'}}>

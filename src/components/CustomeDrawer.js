@@ -22,23 +22,14 @@ const CustomeDrawer = props => {
           source={require('../assets/Images/image13.png')}
           style={[ImageStyles.logoImageStyle]}
         />
-        <Text style={[TextStyles.whiteCenteredLable]}>Toqeer Fatima</Text>
+        <Text style={[TextStyles.whiteCenteredLable]}>Mr. Ahmad</Text>
       </ImageBackground>
-<DrawerContentScrollView>
+      <DrawerContentScrollView>
       <View
         style={{
           paddingLeft: 20,
         }}>
-        <TouchableOpacity
-          style={{paddingVertical: 15}}
-          onPress={() => {
-            navigation.navigate('Login');
-          }}>
-          <View style={[ContainerStyles.TwoitemsCenter]}>
-            <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Login</Text>
-          </View>
-        </TouchableOpacity>
+        
         <TouchableOpacity
           style={{paddingVertical: 15}}
           onPress={() => {
@@ -46,7 +37,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Signup</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Signup</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -56,7 +47,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Address</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Address</Text>
           </View>
         </TouchableOpacity>
 
@@ -67,18 +58,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Profile</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{paddingVertical: 15}}
-          onPress={() => {
-            navigation.navigate('ScheduleScreen');
-          }}>
-          <View style={[ContainerStyles.TwoitemsCenter]}>
-            <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>ScheduleScreen</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Profile</Text>
           </View>
         </TouchableOpacity>
 
@@ -89,7 +69,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Notify</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Notify</Text>
           </View>
         </TouchableOpacity>
 
@@ -100,7 +80,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.mediumTextStyle]}>Orders</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Orders</Text>
           </View>
         </TouchableOpacity>
 

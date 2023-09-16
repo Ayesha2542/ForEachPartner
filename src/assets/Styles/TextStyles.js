@@ -57,6 +57,11 @@ const TextStyles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     marginLeft: wp('6'),
   },
+  drawerTextStyle: {
+    fontSize: hp('2.1'),
+    fontFamily: 'Poppins-Regular',
+    marginLeft: wp('6'),
+  },
   errorText: {
     color: AppColors.primary,
     fontFamily: 'Poppins-Regular',
