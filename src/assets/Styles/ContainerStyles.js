@@ -248,7 +248,6 @@ const ContainerStyles = StyleSheet.create({
     backgroundColor: AppColors.white,
     shadowOpacity: 0.2,
     marginTop: hp('2'),
-    marginLeft: wp('3'),
     alignItems: 'center',
   },
   productsContainerSeparator: {
@@ -404,15 +403,14 @@ alignItems:"center"
 },
 OrdersContainer2: {
   shadowRadius: 4,
-  shadowOpacity: 0.4,
+  shadowOpacity: 0.2,
   borderRadius: 25,
   backgroundColor: AppColors.white,
-  width: wp('90'),
-  height: hp('15'),
-  marginTop:hp('4'),
-  // shadowOffset: { width: 2, height: 2 },     
-  justifyContent:'center'
+  width: wp('42.3'),
+  height: hp('21'),
+
 },
+
 
 
   donorInputFieldNeomorphContainer: {

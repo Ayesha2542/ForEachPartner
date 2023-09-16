@@ -39,11 +39,11 @@ const TextStyles = StyleSheet.create({
   },
 
   primaryText2: {
-    color: AppColors.white,
+    color: AppColors.black,
     fontFamily: 'Poppins-Medium',
-    fontSize: hp('3.4'),
+    fontSize: hp('3.2'),
     textAlign: 'center',
-    marginTop:hp('5'),
+    marginTop:hp('6'),
   },
 
   smallText: {
