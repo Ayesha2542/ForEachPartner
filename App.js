@@ -29,6 +29,7 @@ import ScheduleScreen from './src/screens/Food/ScheduleScreen';
 import Notification from './src/screens/Notification/Notification';
 import Orders from './src/screens/Orders/Orders';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
+import AddFoodItems from './src/screens/Orders/AddFoodItems';
 
 
 const Stack = createNativeStackNavigator();
@@ -71,7 +72,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
-
+      <Stack.Screen name="AddFoodItems" component={AddFoodItems} />
 
 
     </Stack.Navigator>
