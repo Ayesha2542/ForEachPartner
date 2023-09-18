@@ -95,6 +95,16 @@ const CustomeDrawer = props => {
           </View>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('AddFoodItems');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>AddFoodItems</Text>
+          </View>
+        </TouchableOpacity>
 
         </View>
         </DrawerContentScrollView>

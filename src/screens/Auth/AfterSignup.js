@@ -41,6 +41,11 @@ const AfterSignup = ({navigation}) => {
   const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('')
 
+  const navigateToCategoryCards = () => {
+    navigation.navigate('Home', {
+      selectedCategories: selectedCategories,
+    });
+  };
 
   const openModal = () => {
     setModalVisible(true);
@@ -194,7 +199,7 @@ style={ContainerStyles.inputFieldNeomorphContainer}>
           </Neomorph>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity  onPress={navigateToCategoryCards}>
           <Neomorph
             darkShadowColor="white"
             lightShadowColor="white"
