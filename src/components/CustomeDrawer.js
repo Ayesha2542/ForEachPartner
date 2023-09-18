@@ -84,6 +84,16 @@ const CustomeDrawer = props => {
           </View>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('Menu');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>Menu</Text>
+          </View>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={{paddingVertical: 15}}

@@ -24,30 +24,26 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconStyles from '../../assets/Styles/IconStyles';
 
 
-const OngoingOrder = ({navigation}) => {
+const Menu = ({navigation}) => {
   const [ongoingOrders, setOngoingOrders] = useState([
     {
       id: '1',
       name: 'Cheeseburger',
-      price: 10.99,
+      price: 1200,
       uri: require('../../assets/Images/image38.jpg'),
-      orderId: '#12345',
-      restaurantName: 'Delicious Eats',
-      total: 15.98,
+     
     },
     {
       id: '1',
-      name: 'Cheeseburger',
-      price: 10.99,
+      name: "SpecialPizza",
+      price: 1370,
       uri: require('../../assets/Images/image38.jpg'),
-      orderId: '#12345',
-      restaurantName: 'Delicious Eats',
-      total: 15.98,
+     
     },
   ]);
   return (
     <SafeAreaView style={styles.container}>
-      <ProfileHeader navigation={navigation} item="OnGoing Order" />
+      <ProfileHeader navigation={navigation} item="Meals" />
 
       <FlatList
         data={ongoingOrders}
@@ -57,45 +53,39 @@ const OngoingOrder = ({navigation}) => {
               style={{
                 borderBottomWidth: wp('0.4'),
                 borderColor: AppColors.background,
-                paddingBottom: hp('3'),
+              
               }}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row',width:wp('70')}}>
                 <Image source={item.uri} style={[ImageStyles.orderImage]} />
                 <View
                   style={{
-                    marginTop: hp('2'),
+                    marginTop: hp('4'),
                     marginLeft: wp('2.5'),
                   }}>
-                  <View style={{width: wp('47')}}>
-                    <Text style={[OtherStyles.text2]}>
-                      Order_id {item.orderId}
-                    </Text>
-                  </View>
-                  <View style={{width: wp('45')}}>
-                    <Text
-                      style={[
-                        TextStyles.mediumTextStyle2,
-                        {marginLeft: wp('0'), fontSize: hp('1.9')},
-                      ]}>
-                      {item.restaurantName}
-                    </Text>
-                  </View>
-                  <View key={item.id} style={TextStyles.itemContainer}>
-                    <Text style={TextStyles.itemName}>{item.name}</Text>
+                  
+                  
+                  <View key={item.id}>
+                    <View style={{justifyContent:"space-between",flexDirection:"row"}}>
+                    <Text style={{fontFamily:"Poppins-SemiBold",fontSize:hp(2),color:AppColors.black}}>{item.name}</Text>
+                    <View style={{marginLeft:wp('25')}}>
+                     <FontAwesome
+                      name="trash"
+                      size={20
+                    }
+                      color={AppColors.primary}
+                    
+                    />
+                    </View>
+                    </View>
+                    <Text>A cheesz burger is a delicious,classic  fast-food</Text>
                     <Text style={styles.itemPrice}>
-                      ${item.price.toFixed(2)}
+                      Rs.{item.price}
                     </Text>
+                   
                   </View>
                   <View style={styles.totalContainer}>
-                    <Text style={styles.total}>
-                      Total: ${item.total.toFixed(2)}
-                    </Text>
-                    <FontAwesome
-                      name="trash"
-                      size={25}
-                      color={AppColors.primary}
-                      style={{marginLeft: wp('20')}}
-                    />
+                    
+                   
                   </View>
                 </View>
               </View>
@@ -104,22 +94,6 @@ const OngoingOrder = ({navigation}) => {
         }}
       />
 
-      {/* <View style={{alignItems:"center"}}>
-          <TouchableOpacity>
-        <Neomorph
-          // darkShadowColor={AppColors.primary}
-          lightShadowColor={AppColors.background}
-          // inner // <- enable shadow inside of neomorph
-          swapShadows // <- change zIndex of each shadow color
-          style={[ContainerStyles.SmalltouchableOpacityNeomorphContainer]}>
-          <View style={{flexDirection: 'row', justifyContent: 'center',marginTop:hp('1.5')}}>
-            <Text style={{color:AppColors.white,fontFamily:"Poppins-SemiBold",fontSize:hp('2')}}>
-             Cancel Order
-            </Text>
-          </View>
-        </Neomorph>
-      </TouchableOpacity>
-      </View> */}
     </SafeAreaView>
   );
 };
@@ -155,10 +129,10 @@ const styles = StyleSheet.create({
   itemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft:wp('45')
   },
   totalContainer: {
     marginTop: 20,
-    borderTopWidth: 1,
     borderTopColor: 'lightgray',
     paddingTop: 10,
     flexDirection: 'row',
@@ -179,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OngoingOrder;
+export default Menu;
