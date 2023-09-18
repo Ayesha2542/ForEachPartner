@@ -31,7 +31,6 @@ import Orders from './src/screens/Orders/Orders';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
 import VerifyScreen from './src/screens/Auth/VerifyScreen';
 import Menu from './src/screens/Food/Menu';
-
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -63,7 +62,6 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
       <Stack.Screen name="AfterSignup" component={AfterSignup} />
-      <Stack.Screen name="VerifyScreen" component={VerifyScreen} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
       <Stack.Screen name="DonateHome" component={DonateHome} />
       <Stack.Screen name="Donor" component={Donor} />
