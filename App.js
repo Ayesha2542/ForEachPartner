@@ -29,8 +29,8 @@ import ScheduleScreen from './src/screens/Food/ScheduleScreen';
 import Notification from './src/screens/Notification/Notification';
 import Orders from './src/screens/Orders/Orders';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
-
-
+import VerifyScreen from './src/screens/Auth/VerifyScreen';
+import Menu from './src/screens/Food/Menu';
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -71,6 +71,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
+      <Stack.Screen name="Menu" component={Menu} />
 
 
 

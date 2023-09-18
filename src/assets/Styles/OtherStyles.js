@@ -19,6 +19,12 @@ const OtherStyles = StyleSheet.create({
     fontSize: hp('2.1'),
     letterSpacing: -1,
   },
+  text2: {
+    fontFamily: 'Poppins-Medium',
+    color: AppColors.primary,
+    fontSize: hp('2'),
+    resizeMode: 'cover',
+  },
 
 });
 export default OtherStyles;

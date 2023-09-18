@@ -209,7 +209,14 @@ const TextStyles = StyleSheet.create({
   incrementText:{
     color: AppColors.white,
     fontSize: wp('6%'),
-  }
+  },
+  mediumTextStyle2: {
+    fontSize: hp('2.4'),
+    fontFamily: 'Poppins-SemiBold',
+    marginLeft: wp('6'),
+  },
+
+
 });
 
 export default TextStyles;
