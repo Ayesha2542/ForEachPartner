@@ -34,6 +34,8 @@ import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
 import Deals from './src/screens/Food/Deals';
 import RestaurantDetail from './src/screens/Auth/RestaurantDetail';
 import SecurityQuestions from './src/screens/Auth/SecurityQuestions';
+import Setting from './src/screens/Setting';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +82,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Deals" component={Deals} />
+      <Stack.Screen name="Setting" component={Setting} />
 
     </Stack.Navigator>
   );

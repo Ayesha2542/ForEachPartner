@@ -106,7 +106,11 @@ const CustomeDrawer = props => {
           borderTopWidth: 1,
           borderTopColor: AppColors.background,
         }}>
-        <TouchableOpacity style={{paddingVertical: 15}}>
+        <TouchableOpacity style={{paddingVertical: 15}}
+                  onPress={() => {
+                    navigation.navigate('Setting');
+                  }}>
+        
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
             <Text style={[TextStyles.mediumTextStyle]}>Setting</Text>
