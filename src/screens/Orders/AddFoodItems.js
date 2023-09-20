@@ -150,7 +150,7 @@ const AddFoodItems = ({navigation}) => {
         </Neomorph>
         <TouchableOpacity
             onPress={() => {
-            navigation.navigate('Home')
+            navigation.navigate('Menu')
     
             }}>
             <Neomorph

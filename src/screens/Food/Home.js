@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import DrawerHeader from '../../components/headers/DrawerHeader';
 import { Neomorph } from 'react-native-neomorph-shadows';
-import { Image, Text, View, TouchableOpacity, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { Image, Text, View, TouchableOpacity, SafeAreaView, ScrollView, FlatList, ImageBackground,StatusBar } from 'react-native';
 import AppColors from '../../assets/colors/AppColors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
@@ -17,6 +17,12 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.white }}>
       <DrawerHeader navigation={navigation} />
+      <StatusBar
+                barStyle="light-content"
+                backgroundColor={AppColors.primary}
+                translucent={true}
+            />
+     <ScrollView>
       <FlatList
         data={selectedCategories}
         numColumns={2} // Set the number of columns to 2
@@ -24,7 +30,7 @@ const Home = ({ navigation }) => {
         renderItem={({ item }) => (
           <View style={{ marginLeft: wp('11'), marginTop: hp('3.9') }}>
             <TouchableOpacity onPress={() => {
-              navigation.navigate('AddFoodItems')
+              navigation.navigate('Menu')
             }}>
               <Neomorph
                 darkShadowColor={AppColors.primary}
@@ -40,6 +46,7 @@ const Home = ({ navigation }) => {
           </View>
         )}
       />
+      </ScrollView>
     </SafeAreaView>
   );
 };

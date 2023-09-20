@@ -105,7 +105,7 @@ const ContainerStyles = StyleSheet.create({
   headerViewStyle: {
     height: hp('8%'),
     width: wp('100%'),
-    backgroundColor: AppColors.primary,
+    backgroundColor: AppColors.white,
     flexDirection: 'row',
   },
   itemsCenter: {

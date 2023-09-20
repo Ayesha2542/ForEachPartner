@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  TextInput
 } from 'react-native';
 import {Button} from 'react-native-paper';
 import ImageStyles from '../../assets/Styles/ImageStyles';
@@ -22,6 +23,7 @@ import OtherStyles from '../../assets/Styles/OtherStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconStyles from '../../assets/Styles/IconStyles';
+import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 
 
 const Menu = ({navigation}) => {
@@ -43,7 +45,7 @@ const Menu = ({navigation}) => {
   ]);
   return (
     <SafeAreaView style={styles.container}>
-      <ProfileHeader navigation={navigation} item="Meals" />
+      <ProfileHeader navigation={navigation} item="My Orders" />
 
       <FlatList
         data={ongoingOrders}
@@ -93,7 +95,23 @@ const Menu = ({navigation}) => {
           );
         }}
       />
-
+ <View style={{alignItems: 'center', marginTop: hp('5')}}>
+           
+     
+        <TouchableOpacity
+            onPress={() => {
+            navigation.navigate('AddFoodItems')
+    
+            }}>
+            <Neomorph
+              darkShadowColor={AppColors.white}
+              lightShadowColor={AppColors.white}
+              swapShadows // <- change zIndex of each shadow color
+              style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
+              <Text style={TextStyles.whiteCenteredLable}>Add Item</Text>
+            </Neomorph>
+          </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
