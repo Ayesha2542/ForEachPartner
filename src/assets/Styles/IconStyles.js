@@ -6,14 +6,13 @@ import { widthPercentageToDP as wp ,heightPercentageToDP as hp} from "react-nati
 
 const IconStyles = StyleSheet.create({
     signupIcons: {
-
         color: AppColors.primary,
         margin: 15,
     },
     drawerManuIcon: {
-        color: "white",
-        marginTop: hp('1.5'),
-        marginLeft:wp('3')
+        color: AppColors.white,
+        marginTop: hp('5'),
+        marginLeft:wp('4')
     },
     arrowLeftIcon: {
         color: AppColors.primary,

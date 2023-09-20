@@ -72,10 +72,10 @@ const ImageStyles = StyleSheet.create({
     borderRadius: hp('1%'),
   },
   orderImage: {
-    width: wp('25'),
-    height:hp('12'),
+    width: wp('20'),
+    height:hp('10'),
     marginLeft: wp('5'),
-    marginTop: hp('1.6'),
+    marginTop: hp('3'),
     borderRadius: wp('15'),
     borderWidth: 4,
   },

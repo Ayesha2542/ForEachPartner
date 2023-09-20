@@ -218,31 +218,12 @@ const AddAddress = ({navigation}) => {
 
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => {}}>
-                <Neomorph
-                  darkShadowColor={AppColors.Gray}
-                  lightShadowColor={AppColors.background2}
-                  swapShadows // <- change zIndex of each shadow color
-                  style={[
-                    ContainerStyles.smallCircleNeomorph,
-                    {marginLeft: wp('6')},
-                  ]}>
-                  
-                  <AntDesign
-                    name="plus"
-                    size={20}
-                    color={AppColors.primary}
-                    style={[IconStyles.smallNeomorphIcon]}
-                  />
-                </Neomorph>
-                <Text style={{marginLeft: wp('9'),marginTop:hp('1'),color:AppColors.black}}>Other</Text>
-
-              </TouchableOpacity>
+             
             </View>
           </View>
         </ScrollView>
 
-        <View style={{height: hp(10), borderTopWidth: 0.2}}>
+        <View style={{height: hp(10)}}>
           <TouchableOpacity onPress={() => { navigation.navigate('Address')}}>
             <Neomorph
               // darkShadowColor={AppColors.primary}

@@ -43,7 +43,7 @@ const Notification = ({navigation}) => {
   );
 
   return (
-<SafeAreaView>
+<SafeAreaView style={{flex:1,backgroundColor:AppColors.white}}>
     <ProfileHeader navigation={navigation} item="Notification" /> 
 
       <FlatList
