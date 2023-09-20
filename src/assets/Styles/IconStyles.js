@@ -16,7 +16,7 @@ const IconStyles = StyleSheet.create({
     },
     arrowLeftIcon: {
         color: AppColors.primary,
-        marginTop: hp('5    '),
+        marginTop: hp('5'),
         marginLeft: wp('5')
     },
     heartIcon: {
@@ -36,6 +36,9 @@ const IconStyles = StyleSheet.create({
 
     bellIcon:{
         color:AppColors.primary,marginTop:hp('1.5'),marginLeft:wp('3')
+    },
+    bellIcon2:{
+        color:AppColors.white,marginTop: hp('6'),marginRight:wp('5')
     },
 
     LocationIcon:{

@@ -31,21 +31,21 @@ const Menu = ({navigation}) => {
     {
       id: '1',
       name: 'Cheeseburger',
-      price: 1200,
+      price: 250,
       uri: require('../../assets/Images/image38.jpg'),
      
     },
     {
       id: '1',
       name: "SpecialPizza",
-      price: 1370,
+      price: 770,
       uri: require('../../assets/Images/image38.jpg'),
      
     },
   ]);
   return (
     <SafeAreaView style={styles.container}>
-      <ProfileHeader navigation={navigation} item="My Orders" />
+      <ProfileHeader navigation={navigation} item="Products" />
 
       <FlatList
         data={ongoingOrders}

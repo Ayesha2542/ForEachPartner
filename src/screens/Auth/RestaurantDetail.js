@@ -35,7 +35,7 @@ import CategoryModal from '../../components/CategoryModal';
 import {launchImageLibrary} from 'react-native-image-picker';
 import LottieView from 'lottie-react-native';
 
-const AfterSignup = ({navigation,isVisible, close}) => {
+const RestaurantDetail = ({navigation,isVisible, close}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
@@ -232,4 +232,4 @@ const AfterSignup = ({navigation,isVisible, close}) => {
   );
 };
 
-export default AfterSignup;
+export default RestaurantDetail;

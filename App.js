@@ -19,7 +19,6 @@ import AddAddress from './src/screens/Addresses/AddAddress';
 import SingleProductDetail from './src/screens/Products/SingleProductDetail';
 import FoodShareScreen from './src/screens/Food/FoodShareScreen';
 import Products from './src/screens/Products/Products';
-import AfterSignup from './src/screens/Auth/AfterSignup';
 import ForgetPassword from './src/screens/Auth/ForgetPassword';
 import DonateHome from './src/screens/DonateFood/DonateHome';
 import Donor from './src/screens/DonateFood/Donor';
@@ -33,6 +32,8 @@ import AddFoodItems from './src/screens/Orders/AddFoodItems';
 import Menu from './src/screens/Food/Menu';
 import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
 import Deals from './src/screens/Food/Deals';
+import RestaurantDetail from './src/screens/Auth/RestaurantDetail';
+import SecurityQuestions from './src/screens/Auth/SecurityQuestions';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,7 +65,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="AddAddress" component={AddAddress} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
-      <Stack.Screen name="AfterSignup" component={AfterSignup} />
+      <Stack.Screen name="SecurityQuestions" component={SecurityQuestions} />
+      <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
       <Stack.Screen name="DonateHome" component={DonateHome} />
       <Stack.Screen name="Donor" component={Donor} />

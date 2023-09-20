@@ -26,6 +26,7 @@ import IconStyles from '../../assets/Styles/IconStyles';
 
 const Deals = ({navigation}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const OpenModal = () => {
     setIsModalVisible(true);
   };
@@ -36,25 +37,17 @@ const Deals = ({navigation}) => {
   const [ongoingOrders, setOngoingOrders] = useState([
     {
       id: '1',
-      name: 'Cheeseburger',
+      name: 'Delux Thali',
       price: 1200,
+      description:"Shahi Paneer, Mix Veg, Daal Makhni, 3 Roti, Rice, Curd, Salad",
       uri: require('../../assets/Images/image39.jpg'),
     },
-    {
-      id: '1',
-      name: 'SpecialPizza',
-      price: 1370,
-      uri: require('../../assets/Images/pizza.jpg'),
-    },
-    {
-      id: '1',
-      name: 'Chinese',
-      price: 1370,
-      uri: require('../../assets/Images/image40.jpg'),
-    },
+   
+  
+    
   ]);
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <ProfileHeader navigation={navigation} item="Speacial Deals" />
 
       <FlatList
@@ -65,6 +58,7 @@ const Deals = ({navigation}) => {
               style={{
                 borderBottomWidth: wp('0.4'),
                 borderColor: AppColors.background,
+                paddingBottom: hp('2'),
               }}>
               <TouchableOpacity onPress={OpenModal}>
                 <View style={{flexDirection: 'row', width: wp('70')}}>
@@ -75,115 +69,124 @@ const Deals = ({navigation}) => {
                       {width: wp('20'), height: hp('10')},
                     ]}
                   />
-                  
+
                   <View
                     style={{
                       marginTop: hp('3'),
                       marginLeft: wp('2.5'),
                     }}>
-                    <View key={item.id}>
-                      <View
-                        style={{
-                          justifyContent: 'space-between',
-                          flexDirection: 'row',
-                        }}>
-                        <Text
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-SemiBold',
+                        fontSize: hp(2),
+                        color: AppColors.black,
+                      }}>
+                      {item.name}
+                    </Text>
+
+                    <Text>
+                     {item.description}
+                    </Text>
+                    <Text style={[TextStyles.fetchTextStyle,{marginLeft:0}]}>Total Rs.{item.price}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isModalVisible}
+                onRequestClose={closeModal}
+                >
+               
+               
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <Image
+                      source={require('../../assets/Images/burger.jpg')}
+                      style={{height: hp('20'), width: wp('81')}}
+                    />
+                    <Text style={[TextStyles.leftMediumText, {marginLeft: 0}]}>
+                      Delux Thali
+                    </Text>
+                    <Text>
+                      Shahi Paneer , Mix Veg , Daal Makhni , 3 Roti , Rice ,
+                      Curd , Salad
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <TouchableOpacity>
+                        <View
                           style={{
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: hp(2),
-                            color: AppColors.black,
+                            borderWidth: 1.5,
+                            borderRadius: 8,
+                            borderColor: 'darkgray',
+                            height: hp('5'),
+                            width: wp('30'),
+                            marginTop: hp('5'),
+                            justifyContent: 'center',
+                            alignItems: 'center',
                           }}>
-                          {item.name}
-                        </Text>
-                        <View style={{marginLeft: wp('25')}}></View>
-                      </View>
-                      <Text>
-                        A cheesz burger is a delicious,classic fast-food
-                      </Text>
-                      <Text style={styles.itemPrice}>Rs.{item.price}</Text>
+                          <Text style={{}}>Edit item</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity>
+                        <View
+                          style={{
+                            borderWidth: 1.5,
+                            borderRadius: 8,
+                            borderColor: 'darkgray',
+                            height: hp('5'),
+                            width: wp('30'),
+                            marginTop: hp('5'),
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text style={{}}>Delete item</Text>
+                        </View>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-                
-              </TouchableOpacity>
-              <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={closeModal}
-      >
-        <Text>jdksjkdjskj</Text>
-      </Modal>
+              </Modal>
+              
             </View>
+            
           );
         }}
       />
+      <TouchableOpacity
+            onPress={() => {
+            navigation.navigate('AddFoodItems')
+    
+            }}>
+            <Neomorph
+              darkShadowColor={AppColors.white}
+              lightShadowColor={AppColors.white}
+              swapShadows // <- change zIndex of each shadow color
+              style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%'),marginLeft:wp('15')}]}>
+              <Text style={TextStyles.whiteCenteredLable}>Add Item</Text>
+            </Neomorph>
+          </TouchableOpacity>
+
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: AppColors.white,
-    // alignItems:"center"
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  orderId: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  restaurantName: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  itemContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  itemName: {
-    fontSize: 16,
-  },
-  itemPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: wp('45'),
-  },
-  totalContainer: {
-    marginTop: 20,
-    borderTopColor: 'lightgray',
-    paddingTop: 10,
-    flexDirection: 'row',
-  },
-  total: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  orderImage: {
-    width: 200,
-    height: 150,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  button: {
-    marginTop: 20,
-  },
-
   modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  modalContent: {
     backgroundColor: 'white',
-    height:hp('40'),
-    width:wp('80'),
-    margin:hp('5'),
-    marginTop:hp('20')
+    padding: 20,
+    borderRadius: 10,
+    width: '90%',
   },
 });
-
 export default Deals;
