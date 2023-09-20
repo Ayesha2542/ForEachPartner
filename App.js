@@ -33,6 +33,7 @@ import AddFoodItems from './src/screens/Orders/AddFoodItems';
 import Menu from './src/screens/Food/Menu';
 import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
 import Deals from './src/screens/Food/Deals';
+import Setting from './src/screens/Setting';
 
 const Stack = createNativeStackNavigator();
 
@@ -78,6 +79,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Deals" component={Deals} />
+      <Stack.Screen name="Setting" component={Setting} />
 
     </Stack.Navigator>
   );
