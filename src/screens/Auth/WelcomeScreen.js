@@ -53,3 +53,49 @@ const WelcomeScreen = ({ navigation }) => {
 };
 
 export default WelcomeScreen;
+
+
+
+
+
+
+
+
+{/* <View
+style={{
+  flexDirection:"row"
+}}
+>
+ <DrawerHeader navigation={navigation} />
+<View
+  style={{
+    width: wp('115'),
+    height: hp('55'),
+    borderLeftRadius: 60, // Set the top left corner radius to 20
+    borderTopRightRadius: 60,
+    
+    transform: [{ rotate: '-45deg' }],
+  }}
+>
+  <ImageBackground
+    source={require('../../assets/Images/pizzaaa.png')}
+    style={{
+      width: '80%',
+      height: '75%',
+      marginLeft:25,
+      transform: [{ rotate: '-5deg' }],
+    }}
+  >
+  </ImageBackground>
+  
+</View>
+
+</View>
+
+
+<ScrollView>
+<View style={{marginTop:hp('0')}}>
+
+
+<Text style={[TextStyles.dealPriceText,{color:"darkgreen"}]}>Your request has been verified by the admin. You can now start using this app</Text>
+</View> */}

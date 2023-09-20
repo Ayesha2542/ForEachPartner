@@ -216,7 +216,7 @@ const Signup = ({navigation}) => {
           <TouchableOpacity
             onPress={() => {
               // userRegister();
-              navigation.navigate('AfterSignup')
+              navigation.navigate('SecurityQuestions')
               console.log('signup is running');
             }}>
             <Neomorph
