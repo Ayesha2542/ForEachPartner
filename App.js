@@ -27,7 +27,6 @@ import { AppProvider } from './src/Context/AppContext';
 import ScheduleScreen from './src/screens/Food/ScheduleScreen';
 import Notification from './src/screens/Notification/Notification';
 import Orders from './src/screens/Orders/Orders';
-import OngoingOrder from './src/screens/Orders/OngoingOrder';
 import AddFoodItems from './src/screens/Orders/AddFoodItems';
 import Menu from './src/screens/Food/Menu';
 import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
@@ -77,7 +76,6 @@ const MainStackNavigator = () => {
       <Stack.Screen name="ScheduleScreen" component={ScheduleScreen} />
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="Orders" component={Orders} />
-      <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
       <Stack.Screen name="AddFoodItems" component={AddFoodItems} />
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
