@@ -12,7 +12,7 @@ const TabBarStyles =StyleSheet.create({
           textTransform: 'none',
         },
         tabBarItemStyle: {
-          width: wp('35%'),
+          width: wp('40%'),
         },
         tabBarIndicatorStyle: {
           backgroundColor: AppColors.primary,
