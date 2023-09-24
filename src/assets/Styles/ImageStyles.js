@@ -53,7 +53,7 @@ const ImageStyles = StyleSheet.create({
   },
   scheduleImage: {
     width: wp('32'),
-    height:hp('15'),
+    height: hp('15'),
     marginLeft: wp('10'),
     marginTop: hp('1.6'),
     borderRadius: wp('2'),
@@ -85,7 +85,12 @@ const ImageStyles = StyleSheet.create({
     borderWidth: 0.3,
     borderColor: 'grey',
   }
-
+  orderProfileImage: {
+    height: hp('6%'),
+    width: wp('12%'),
+    borderRadius: wp('12%'),
+    marginLeft: wp('2'),
+  },
 });
 
 export default ImageStyles;
