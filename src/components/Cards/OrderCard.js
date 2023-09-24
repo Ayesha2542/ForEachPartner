@@ -29,7 +29,7 @@ const OrderCard = ({navigation, item}) => {
           <View style={[ContainerStyles.bottomBorder2, {marginTop: hp('1')}]}>
             <View style={{flexDirection: 'row'}}>
               <Image
-                source={require('../../assets/Images/toqeer.jpeg')} // Specify the source of the image
+                source={item.uri} // Specify the source of the image
                 style={[ImageStyles.orderProfileImage]} // Set the desired width and height of the image
               />
               <Text style={[TextStyles.label2, {marginLeft: wp('3%')}]}>
