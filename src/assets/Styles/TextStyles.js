@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {StyleSheet} from 'react-native';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AppColors from '../../assets/colors/AppColors';
 
 const TextStyles = StyleSheet.create({
@@ -27,7 +27,7 @@ const TextStyles = StyleSheet.create({
     fontSize: hp('3'),
     marginLeft: wp('19'),
     marginTop: hp('2'),
-    fontFamily:"Poppins-Medium"
+    fontFamily: 'Poppins-Medium',
   },
   primaryText: {
     color: 'black',
@@ -43,7 +43,7 @@ const TextStyles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     fontSize: hp('3.2'),
     textAlign: 'center',
-    marginTop:hp('6'),
+    marginTop: hp('6'),
   },
 
   smallText: {
@@ -137,18 +137,16 @@ const TextStyles = StyleSheet.create({
     fontSize: hp('2.1'),
     marginLeft: wp('4'),
     letterSpacing: -1,
-    marginTop: hp('3')
+    marginTop: hp('3'),
   },
   profileSimpleText: {
-
     fontFamily: 'Poppins-SemiBold',
-    marginLeft: wp('8'),  
+    marginLeft: wp('8'),
     marginTop: hp('2'),
     fontSize: hp('2.5'),
     marginTop: hp('4'),
     letterSpacing: -1,
-    color: AppColors.black
-
+    color: AppColors.black,
   },
   profileTextStyle: {
     color: "black", 
@@ -161,7 +159,16 @@ const TextStyles = StyleSheet.create({
     fontFamily:"Poppins-Regular",
     marginTop:hp('1'),
     marginLeft:wp('4'),
-    
+    color: 'black',
+    fontSize: hp('2.2%'),
+    marginLeft: wp('7%'),
+    fontFamily: 'Poppins-SemiBold',
+    marginTop: hp('2.4%'),
+  },
+  productsLeftText: {
+    fontFamily: 'Poppins-Regular',
+    marginTop: hp('1'),
+    marginLeft: wp('4')
   },
   dealText: {
     fontFamily: 'Poppins-Regular',
@@ -171,7 +178,7 @@ const TextStyles = StyleSheet.create({
     color: AppColors.black,
     fontFamily: 'Poppins-Regular',
     // fontSize: hp('1.7'),
-    marginLeft:wp('4%')
+    marginLeft: wp('4%'),
   },
   whiteCenteredLable3: {
     color: AppColors.white,
@@ -193,20 +200,20 @@ const TextStyles = StyleSheet.create({
     color: 'black', // Customize the label color as needed
     // marginBottom: hp('1%'), // Add margin below the label
     // marginRight: wp('58%'),
-    marginLeft:wp('15%')
+    marginLeft: wp('15%'),
   },
-  decrementText:{
+  decrementText: {
     color: AppColors.white,
     marginBottom: hp('2%'),
     fontSize: wp('5%'),
   },
-  countText:{
+  countText: {
     marginTop: hp('4%'),
     fontSize: wp('5%'),
     fontFamily: 'Poppins-Regular',
     color: AppColors.black,
   },
-  incrementText:{
+  incrementText: {
     color: AppColors.white,
     fontSize: wp('6%'),
   },
@@ -215,8 +222,38 @@ const TextStyles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     marginLeft: wp('6'),
   },
-
-
+  label2: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: wp('3%'),
+    color: 'black',
+    flex: 1,
+  },
+  miniPrimaryColorText: {
+    color: AppColors.primary,
+    textAlign: 'center',
+    marginTop: hp('0.5'),
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: hp('1'),
+  },
+  miniWhiteText: {
+    color: AppColors.white,
+    textAlign: 'center',
+    marginTop: hp('0.5'),
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: hp('1'),
+  },
+  orderDescription: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: wp('3%'),
+    marginTop: hp('1'),
+    marginLeft: wp('3'),
+  },
+  lightText: {
+    fontFamily: 'Poppins-Regular',
+    flex: 1,
+    marginTop: hp('-3'),
+    fontSize: wp('3%'),
+  },
 });
 
 export default TextStyles;
