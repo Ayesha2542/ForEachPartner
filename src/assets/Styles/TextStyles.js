@@ -149,6 +149,16 @@ const TextStyles = StyleSheet.create({
     color: AppColors.black,
   },
   profileTextStyle: {
+    color: "black", 
+    fontSize: hp('2.3%'), 
+    marginLeft: wp('23%'), 
+    fontFamily: "Poppins-SemiBold",
+     marginTop: hp('2.4%'),
+  },
+  productsLeftText:{
+    fontFamily:"Poppins-Regular",
+    marginTop:hp('1'),
+    marginLeft:wp('4'),
     color: 'black',
     fontSize: hp('2.2%'),
     marginLeft: wp('7%'),
@@ -158,7 +168,7 @@ const TextStyles = StyleSheet.create({
   productsLeftText: {
     fontFamily: 'Poppins-Regular',
     marginTop: hp('1'),
-    marginLeft: wp('4'),
+    marginLeft: wp('4')
   },
   dealText: {
     fontFamily: 'Poppins-Regular',

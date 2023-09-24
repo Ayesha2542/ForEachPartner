@@ -14,6 +14,13 @@ const IconStyles = StyleSheet.create({
         marginTop: hp('5'),
         marginLeft:wp('4')
     },
+
+    drawerManuIcon2: {
+        color: AppColors.white,
+        marginTop: hp('1.5'),
+        marginLeft:wp('4')
+    },
+
     arrowLeftIcon: {
         color: AppColors.primary,
         marginTop: hp('5'),
@@ -30,7 +37,7 @@ const IconStyles = StyleSheet.create({
         marginLeft: wp('28'),
     },
     editIcon:{
-        marginLeft:wp('60'),marginTop:hp('1'),color:AppColors.primary
+        marginLeft:wp('65'),marginTop:hp('1'),color:AppColors.primary
     },
 
 
