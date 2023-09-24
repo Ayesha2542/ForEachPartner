@@ -91,7 +91,7 @@ const TextStyles = StyleSheet.create({
   leftSmallText: {
     color: AppColors.black,
     fontFamily: 'Poppins-Regular',
-    marginLeft: wp('4%'),
+    // marginLeft: wp('4%'),
   },
   popularFoodLabel: {
     color: AppColors.white,
@@ -222,6 +222,26 @@ const TextStyles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     marginLeft: wp('6'),
   },
+smallButtonText:{
+  color: AppColors.white,
+  fontFamily: 'Poppins-Regular',
+  fontSize: hp('2%'),
+  alignSelf:"center",
+ marginTop: hp('1.5%'),
+},
+modalContent: {
+  backgroundColor: 'white',
+padding:10,
+  borderRadius: 10,
+  width: '80%',
+
+},
+foodPrice:{
+  fontSize: 16,
+  fontFamily: 'Poppins-Bold',
+  marginLeft: wp('45')
+}
+
   label2: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: wp('3%'),

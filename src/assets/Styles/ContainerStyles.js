@@ -7,6 +7,15 @@ import {
 import AppColors from '../colors/AppColors';
 
 const ContainerStyles = StyleSheet.create({
+  centeredContainer:{
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  flexCenter:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  },
   inputFieldNeomorphContainer: {
     width: wp('80%'),
     height: hp('7%'),
@@ -16,7 +25,42 @@ const ContainerStyles = StyleSheet.create({
     marginVertical: hp('3%'),
     shadowOpacity: 0.3,
     marginTop: hp('1.4%'),
+   } ,
+
+   EditNameNeomorphContainer:{
+      width: wp('87%'),
+      height: hp('7%'),
+      borderRadius: wp('3%'),
+      shadowRadius: 3,
+      backgroundColor: AppColors.white,
+      // alignSelf:"center",
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      marginVertical: hp('2%'),
+      shadowOpacity: 0.2,
+      marginLeft:wp('6'),
+      marginTop: hp('1.1%'),
+
+     } ,
+  
+   profileInputFieldContainer:{
+      
+      shadowRadius: 2,
+      shadowOpacity: 0.15,
+      borderRadius: 10,
+      backgroundColor: AppColors.white,
+      width: hp('43'),
+      height: hp('12'),
+   },
+    NeomorphContainer:{
+      shadowRadius: 2,
+      shadowOpacity: 0.15,
+      borderRadius: 10,
+      backgroundColor:AppColors.white,
+      width: hp('43'),
+      height: hp('10'),
   },
+
 
   EditNameNeomorphContainer: {
     width: wp('87%'),
@@ -69,7 +113,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.15,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('43'),
     height: hp('12'),
   },
@@ -77,7 +121,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.15,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('43'),
     height: hp('10'),
   },
@@ -157,7 +201,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.3,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('45'),
     height: hp('15'),
   },
@@ -396,7 +440,81 @@ const ContainerStyles = StyleSheet.create({
   },
 
   donorInputFieldNeomorphContainer: {
-    width: wp('72%'),
+      width: wp('72%'),
+      height: hp('7%'),
+      borderRadius: wp('3%'),
+      shadowRadius: 4,
+      backgroundColor: AppColors.white,
+      marginVertical: hp('2%'),
+      shadowOpacity: 0.3,
+      // marginTop: hp('1.4%'),
+     } ,
+     recipientNeomorphContainer: {
+      width: wp('90%'),
+      height: hp('28%'),
+      borderRadius: wp('3%'),
+      shadowRadius: 4,
+      backgroundColor: AppColors.white,
+      marginVertical: hp('3%'),
+      shadowOpacity: 0.3,
+      marginTop: hp('1.4%'),
+      paddingBottom: hp('3'),
+      // elevation:8
+     } ,
+     smallRoundContainer: {
+      height: hp('5%'),
+      width: wp('10%'),
+      justifyContent: 'center',
+      // marginLeft: wp('4%'),
+      alignItems: 'center',
+      borderRadius: hp('10%'),
+      backgroundColor: AppColors.primary,
+      //  marginRight: wp('2/%'),
+       marginTop:hp('3%')
+    },
+    cartButtonContainer:{
+      flexDirection: 'row',
+      borderTopWidth: 1,
+      borderColor: AppColors.background,
+      width: wp('100%'),
+      height: hp('10%'),
+      marginTop:hp('28'),
+      justifyContent: 'space-evenly',
+    },
+    imageContainterNeomorph:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowRadius: 3,
+      borderRadius: 100,
+      backgroundColor: AppColors.background2,
+      width: wp('30%'),
+      height: hp('15%'),
+    },
+    smallConfirmButtonNeomorph:{
+      marginTop: hp('3%'),
+      shadowRadius: 6,
+      backgroundColor: AppColors.primary,
+      borderRadius: wp('3%'),
+      height: hp('6%'),
+      width: wp('40%'),
+      marginVertical: hp('1.4%'),
+      shadowOpacity: 0.3,
+      marginLeft: wp('15'),
+    },
+    productCardNeomorph:{
+      width: wp('90%'),
+      height: hp('18%'),
+      borderRadius: wp('3%'),
+      shadowRadius: 2,
+      backgroundColor: AppColors.white,
+      marginVertical: hp('1.5%'),
+      shadowOpacity: 0.3,
+      marginTop: hp('1.4%'),
+      paddingBottom: hp('3'),
+    },
+   
+ Unknown:{
+   width: wp('72%'),
     height: hp('7%'),
     borderRadius: wp('3%'),
     shadowRadius: 4,
@@ -472,6 +590,7 @@ const ContainerStyles = StyleSheet.create({
     marginLeft: wp('3'),
     marginTop: hp('1'),
   },
+
 });
 
 export default ContainerStyles;
