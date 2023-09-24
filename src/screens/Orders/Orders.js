@@ -36,16 +36,16 @@ const NewOrders = ({navigation}) => {
       orderId:"348",
       dateTime:"Today at 12:35 AM",
       totalPrice:"Rs. 350.00",
-      description:"Message: Hi, please pack green sauce in my order and please tell your delivery boy that he has to come on 2nd floor because I'm not at home."
-    
+      description:"Message: Hi, please pack green sauce in my order and please tell your delivery boy that he has to come on 2nd floor because I'm not at home.",
+    uri:require('../../assets/Images/toqeer.jpeg')
     },
     {
       customerName:"Ali",
       orderId:"352",
       dateTime:"Today at 11:35 AM",
       totalPrice:"Rs. 750.00",
-      description:"Message: Hi, please pack green sauce in my order and please tell your delivery boy that he has to come on 2nd floor because I'm not at home."
-
+      description:"Message: Hi, please pack green sauce in my order and please tell your delivery boy that he has to come on 2nd floor because I'm not at home.",
+      uri:require('../../assets/Images/image36.jpg')
     
     }
   ])
