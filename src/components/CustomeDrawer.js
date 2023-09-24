@@ -69,7 +69,7 @@ const CustomeDrawer = props => {
           }}>
           <View style={[ContainerStyles.TwoitemsCenter]}>
             <Ionicons name="settings-outline" size={22} />
-            <Text style={[TextStyles.drawerTextStyle]}>Notify</Text>
+            <Text style={[TextStyles.drawerTextStyle]}>Notification</Text>
           </View>
         </TouchableOpacity>
 

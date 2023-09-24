@@ -28,7 +28,7 @@ const Profile = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.white }}>
       <CartHeader navigation={navigation} item="Profile" />
-
+<View style={{justifyContent:"center"}}>
       <View style={{ marginTop: hp('4'), alignItems: 'center' }}>
         <TouchableOpacity
           onPress={() => {
@@ -93,16 +93,15 @@ const Profile = ({ navigation }) => {
             lightShadowColor={AppColors.darkgray}
             swapShadows // <- change zIndex of each shadow color
             style={ContainerStyles.profileInputFieldContainer}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row'}}>
               <Text style={[TextFieldStyles.profileInputField]}>Mobile</Text>
-              <View style={{marginLeft:wp('0')}}>
               <MaterialIcons
                 name="edit"
                 size={25}
                 color={AppColors.primary}
-                style={[IconStyles.editIcon]}
+                style={[IconStyles.editIcon,{marginRight:wp('2')}]}
               />
-              </View>
+            
             </View>
             <Text style={[TextFieldStyles.profileInputFieldText]}>
               {userMobileNumber}
@@ -111,7 +110,7 @@ const Profile = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Text style={[TextStyles.profileSimpleText]}>Connected accounts</Text>
+      {/* <Text style={[TextStyles.profileSimpleText]}>Connected accounts</Text>
 
       <View style={{ marginTop: hp('2'), alignItems: 'center' }}>
         <Neomorph
@@ -153,6 +152,7 @@ const Profile = ({ navigation }) => {
             <Text style={[TextStyles.simpleText,{marginLeft:wp('5')}]}>Google</Text>
           </View>
         </Neomorph>
+      </View> */}
       </View>
     </SafeAreaView>
   );

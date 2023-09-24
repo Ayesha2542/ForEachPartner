@@ -35,6 +35,8 @@ import Deals from './src/screens/Food/Deals';
 import RestaurantDetail from './src/screens/Auth/RestaurantDetail';
 import SecurityQuestions from './src/screens/Auth/SecurityQuestions';
 import Setting from './src/screens/Setting';
+import PrivacyPolicy from './src/screens/Settings/PrivacyPolicy';
+import TermsOfUse from './src/screens/Settings/TermsOfUse';
 
 
 const Stack = createNativeStackNavigator();
@@ -83,6 +85,9 @@ const MainStackNavigator = () => {
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Deals" component={Deals} />
       <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
+      
 
     </Stack.Navigator>
   );

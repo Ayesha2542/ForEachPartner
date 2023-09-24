@@ -56,16 +56,4 @@ const Notification = ({navigation}) => {
 
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-});
-
 export default Notification;

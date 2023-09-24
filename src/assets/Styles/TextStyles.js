@@ -152,8 +152,8 @@ const TextStyles = StyleSheet.create({
   },
   profileTextStyle: {
     color: "black", 
-    fontSize: hp('2.2%'), 
-    marginLeft: wp('7%'), 
+    fontSize: hp('2.3%'), 
+    marginLeft: wp('23%'), 
     fontFamily: "Poppins-SemiBold",
      marginTop: hp('2.4%'),
   },
