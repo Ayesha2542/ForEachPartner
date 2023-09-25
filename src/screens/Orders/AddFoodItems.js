@@ -23,6 +23,8 @@ import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
+import ConfirmationModal from '../../components/ConfirmationModal';
+
 
 const AddFoodItems = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -58,6 +60,7 @@ const AddFoodItems = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
+      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}>
         <Neomorph
           style={{
             justifyContent: 'center',
@@ -67,7 +70,6 @@ const AddFoodItems = ({navigation}) => {
             backgroundColor: AppColors.background2,
             width: wp('30%'),
             height: hp('15%'),
-            marginLeft: wp('30%'),
           }}>
           {imageData == '' ? (
             <TouchableOpacity  onPress={() => {
@@ -148,19 +150,28 @@ const AddFoodItems = ({navigation}) => {
             />
           </View>
         </Neomorph>
-        <TouchableOpacity
-            onPress={() => {
-            navigation.navigate('Menu')
-    
-            }}>
+        <TouchableOpacity onPress={openModal}>
             <Neomorph
               darkShadowColor={AppColors.white}
               lightShadowColor={AppColors.white}
               swapShadows // <- change zIndex of each shadow color
               style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
-              <Text style={TextStyles.whiteCenteredLable}>Add Item</Text>
+              <Text style={TextStyles.whiteCenteredLable}>Add Product</Text>
             </Neomorph>
           </TouchableOpacity>
+          <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}>
+        <ConfirmationModal 
+          selectedCategories={selectedCategories}
+          onCategorySelect={handleCategorySelect}
+          navigation={navigation}
+        />
+
+      </Modal>
+      </View>
       </View>
     </SafeAreaView>
   );

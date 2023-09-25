@@ -7,6 +7,15 @@ import {
 import AppColors from '../colors/AppColors';
 
 const ContainerStyles = StyleSheet.create({
+  centeredContainer:{
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  flexCenter:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  },
   inputFieldNeomorphContainer: {
     width: wp('80%'),
     height: hp('7%'),
@@ -50,7 +59,7 @@ const ContainerStyles = StyleSheet.create({
       shadowRadius: 2,
       shadowOpacity: 0.15,
       borderRadius: 10,
-      backgroundColor: 'white',
+      backgroundColor:AppColors.white,
       width: hp('43'),
       height: hp('10'),
       
@@ -77,7 +86,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.15,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('43'),
     height: hp('12'),
   },
@@ -85,7 +94,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.15,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('43'),
     height: hp('10'),
   },
@@ -166,7 +175,7 @@ const ContainerStyles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.3,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor:AppColors.white,
     width: hp('45'),
     height: hp('15'),
   },
@@ -454,7 +463,39 @@ OrdersContainer2: {
       height: hp('10%'),
       marginTop:hp('28'),
       justifyContent: 'space-evenly',
-    }
+    },
+    imageContainterNeomorph:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowRadius: 3,
+      borderRadius: 100,
+      backgroundColor: AppColors.background2,
+      width: wp('30%'),
+      height: hp('15%'),
+    },
+    smallConfirmButtonNeomorph:{
+      marginTop: hp('3%'),
+      shadowRadius: 6,
+      backgroundColor: AppColors.primary,
+      borderRadius: wp('3%'),
+      height: hp('6%'),
+      width: wp('40%'),
+      marginVertical: hp('1.4%'),
+      shadowOpacity: 0.3,
+      marginLeft: wp('15'),
+    },
+    productCardNeomorph:{
+      width: wp('90%'),
+      height: hp('18%'),
+      borderRadius: wp('3%'),
+      shadowRadius: 2,
+      backgroundColor: AppColors.white,
+      marginVertical: hp('1.5%'),
+      shadowOpacity: 0.3,
+      marginTop: hp('1.4%'),
+      paddingBottom: hp('3'),
+    },
+   
   
 });
 

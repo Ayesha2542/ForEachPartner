@@ -16,9 +16,7 @@ import FurtherScreens from './src/screens/TabScreens/FurtherScreens';
 import EditProfile from './src/screens/Profile/EditProfile';
 import Address from './src/screens/Addresses/Address';
 import AddAddress from './src/screens/Addresses/AddAddress';
-import SingleProductDetail from './src/screens/Products/SingleProductDetail';
 import FoodShareScreen from './src/screens/Food/FoodShareScreen';
-import Products from './src/screens/Products/Products';
 import ForgetPassword from './src/screens/Auth/ForgetPassword';
 import DonateHome from './src/screens/DonateFood/DonateHome';
 import Donor from './src/screens/DonateFood/Donor';
@@ -29,12 +27,12 @@ import Notification from './src/screens/Notification/Notification';
 import Orders from './src/screens/Orders/Orders';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
 import AddFoodItems from './src/screens/Orders/AddFoodItems';
-import Menu from './src/screens/Food/Menu';
 import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
 import Deals from './src/screens/Food/Deals';
 import RestaurantDetail from './src/screens/Auth/RestaurantDetail';
 import SecurityQuestions from './src/screens/Auth/SecurityQuestions';
 import Setting from './src/screens/Setting';
+import Products from './src/screens/Food/Products';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,7 +41,7 @@ const Drawer = createDrawerNavigator();
 
 const DraweNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Signup"
+    <Drawer.Navigator 
       screenOptions={{ headerShown: false }} 
       drawerStyle={{
         width: wp('85'),
@@ -57,6 +55,9 @@ const DraweNavigator = () => {
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="Profile" component={Profile} />
@@ -66,7 +67,6 @@ const MainStackNavigator = () => {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="AddAddress" component={AddAddress} />
       <Stack.Screen name="Products" component={Products} />
-      <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
       <Stack.Screen name="SecurityQuestions" component={SecurityQuestions} />
       <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
@@ -79,7 +79,6 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
       <Stack.Screen name="AddFoodItems" component={AddFoodItems} />
-      <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Deals" component={Deals} />
       <Stack.Screen name="Setting" component={Setting} />
@@ -91,9 +90,6 @@ const MainStackNavigator = () => {
 const AuthStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Splash" component={Splash} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Drawer" component={DraweNavigator} />
     </Stack.Navigator>
   );
