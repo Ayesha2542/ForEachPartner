@@ -73,7 +73,8 @@ const TextStyles = StyleSheet.create({
     left: wp('15%'),
     top: hp('3%'),
     fontFamily: 'Poppins-SemiBold',
-    color: 'black',
+    color: AppColors.black,
+    fontSize:wp('4.5')
   },
   leftText: {
     color: AppColors.black,
@@ -151,7 +152,7 @@ const TextStyles = StyleSheet.create({
   profileTextStyle: {
     color: "black", 
     fontSize: hp('2.3%'), 
-    marginLeft: wp('23%'), 
+    marginLeft: wp('25%'), 
     fontFamily: "Poppins-SemiBold",
      marginTop: hp('2.4%'),
   },
@@ -240,12 +241,17 @@ foodPrice:{
   fontSize: 16,
   fontFamily: 'Poppins-Bold',
   marginLeft: wp('45')
-}
-
+},
   label2: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: wp('3%'),
-    color: 'black',
+    color: AppColors.black,
+    flex: 1,
+  },
+  label3: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: wp('3%'),
+    color: AppColors.black,
     flex: 1,
   },
   miniPrimaryColorText: {
@@ -262,11 +268,16 @@ foodPrice:{
     fontFamily: 'Poppins-SemiBold',
     fontSize: hp('1'),
   },
+  mediumWhiteText: {
+    color: AppColors.white,
+    textAlign: 'center',
+    marginTop: hp('1.3'),
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: hp('1.5'),
+  },
   orderDescription: {
     fontFamily: 'Poppins-Regular',
     fontSize: wp('3%'),
-    marginTop: hp('1'),
-    marginLeft: wp('3'),
   },
   lightText: {
     fontFamily: 'Poppins-Regular',

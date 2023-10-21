@@ -83,8 +83,8 @@ const ImageStyles = StyleSheet.create({
     height: hp('15%'),
     borderRadius: 100,
     borderWidth: 0.3,
-    borderColor: 'grey',
-  }
+    borderColor: 'gray',
+  },
   orderProfileImage: {
     height: hp('6%'),
     width: wp('12%'),
