@@ -23,7 +23,8 @@ import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
-import ConfirmationModal from '../../components/ConfirmationModal';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import LottieView from 'lottie-react-native';
 
 
 const AddFoodItems = ({navigation}) => {
@@ -164,11 +165,59 @@ const AddFoodItems = ({navigation}) => {
         transparent={true}
         visible={isModalVisible}
         onRequestClose={closeModal}>
-        <ConfirmationModal 
-          selectedCategories={selectedCategories}
-          onCategorySelect={handleCategorySelect}
-          navigation={navigation}
+          <View
+      style={[
+        ContainerStyles.flexCenter,
+        { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+      ]}
+    >
+      <View
+        style={[
+          TextStyles.modalContent,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
+        <Neomorph
+          darkShadowColor={AppColors.primary}
+          lightShadowColor={AppColors.darkgray}
+          swapShadows // <- change zIndex of each shadow color
+          style={ContainerStyles.smallCloseButtonNeomorph}
+        >
+          <TouchableOpacity onPress={closeModal}>
+            <AntDesign
+              name="close"
+              size={wp('4%')}
+              style={{ color: AppColors.primary }}
+            />
+          </TouchableOpacity>
+        </Neomorph>
+
+        <LottieView
+          source={require('../../assets/animations/Done.json')}
+          autoPlay
+          loop
+          style={{ width:wp('80'), height:hp('25')}}
+          speed={1}
         />
+        <Text style={[TextStyles.leftSmallText]}>
+          Product is Successfully Added
+        </Text>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('Products');
+        }}>
+          <Neomorph
+            darkShadowColor={AppColors.white}
+            lightShadowColor={AppColors.white}
+            swapShadows // <- change zIndex of each shadow color
+            style={[ContainerStyles.smallConfirmButtonNeomorph, { marginLeft: 0 }]}>
+            <Text
+              style={[TextStyles.smallButtonText]}>
+              View Product
+            </Text>
+          </Neomorph>
+        </TouchableOpacity>
+      </View>
+    </View>
 
       </Modal>
       </View>

@@ -558,7 +558,7 @@ const ContainerStyles = StyleSheet.create({
   },
   bottomBorder2: {
     height: hp('8%'),
-    width: wp('94'),
+    width: wp('100'),
     justifyContent: 'center',
     // borderTopEndRadius: wp('3%'),
     // borderTopStartRadius: wp('3'),
@@ -582,6 +582,14 @@ const ContainerStyles = StyleSheet.create({
     marginLeft: wp('10'),
     marginTop: hp('1'),
   },
+  cancelOrderTouchableMedium: {
+    height: hp('5'),
+    width: wp('30'),
+    backgroundColor: 'red',
+    borderRadius: wp('0.5'),
+    marginLeft: wp('12'),
+    marginTop: hp('1'),
+  },
   acceptOrderTouchable: {
     height: hp('3'),
     width: wp('18'),
@@ -590,6 +598,25 @@ const ContainerStyles = StyleSheet.create({
     marginLeft: wp('3'),
     marginTop: hp('1'),
   },
+  acceptOrderTouchableMedium: {
+    height: hp('5'),
+    width: wp('30'),
+    backgroundColor: 'green',
+    borderRadius: wp('0.5'),
+    marginLeft: wp('15'),
+    marginTop: hp('1'),
+  },
+  smallCloseButtonNeomorph:{
+    shadowRadius: 2,
+    backgroundColor: AppColors.white,
+    borderRadius: wp('1%'),
+    height: hp('4%'),
+    width: wp('8%'),
+    shadowOpacity: 0.3,
+    marginLeft: wp('65'),
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 
 });
 

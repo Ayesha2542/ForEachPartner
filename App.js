@@ -34,6 +34,9 @@ import Setting from './src/screens/Setting';
 import Products from './src/screens/Food/Products';
 import PrivacyPolicy from './src/screens/Settings/PrivacyPolicy';
 import TermsOfUse from './src/screens/Settings/TermsOfUse';
+import NewOrder from './src/screens/Orders/NewOrder';
+import OngoingOrder from './src/screens/Orders/OngoingOrder';
+import PastOrder from './src/screens/Orders/PastOrder';
 
 
 
@@ -64,6 +67,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="FullPriceHomeScreen" component={FullPriceHomeScreen} />
       <Stack.Screen name="FurtherScreens" component={FurtherScreens} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
@@ -78,15 +82,15 @@ const MainStackNavigator = () => {
       <Stack.Screen name="FoodShareScreen" component={FoodShareScreen} />
       <Stack.Screen name="ScheduleScreen" component={ScheduleScreen} />
       <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="AddFoodItems" component={AddFoodItems} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Deals" component={Deals} />
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
-      
-
+      <Stack.Screen name="NewOrder" component={NewOrder} />
+      <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
+      <Stack.Screen name="PastOrder" component={PastOrder} />
     </Stack.Navigator>
   );
 };

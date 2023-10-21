@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 const AppContext = React.createContext();
 
 export const AppProvider =({children})=>{
-
+  
     const[selectedFoodFeature,setSelectedFoodFeature]=useState([]);
     const[selectedSubCategoryFeature,setSelectedSubCategoryFoodFeature]=useState([]);
     const[selectedRestaurants,setSelectedRestaurants]=useState([]);
@@ -46,6 +46,7 @@ export const AppProvider =({children})=>{
       const storeIsAddedIntoDonatedData = val => {
         setIsAddedIntoDonatedData(val);
       };  
+
     return <AppContext.Provider value={{
         selectedFoodFeature,
         selectedCategories,
@@ -68,6 +69,7 @@ export const AppProvider =({children})=>{
         storeInDonatedData,
         storeIsAddedIntoDonatedData,
         storeSelectedCategories,
+
     }} >
         {children}
     </AppContext.Provider>

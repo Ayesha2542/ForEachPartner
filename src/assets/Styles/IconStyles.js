@@ -37,7 +37,7 @@ const IconStyles = StyleSheet.create({
     marginTop: hp('1'),
     color: AppColors.primary,
   },
-=======
+
     signupIcons: {
         color: AppColors.primary,
         margin: 15,
