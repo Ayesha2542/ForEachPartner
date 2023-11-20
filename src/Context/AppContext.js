@@ -13,6 +13,9 @@ export const AppProvider =({children})=>{
     const [donatedData, setDonatedData] = useState([]);
     const [isAddedIntoDonatedData, setIsAddedIntoDonatedData] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const[baseUrl,setBaseUrl]=useState("http://192.168.1.16:8888");
+const [currentUser,setCurrentUser] =useState({});
+
     const storeSelectedFoodFeature= (val)=>{
         setSelectedFoodFeature(val);  
     }
@@ -46,8 +49,14 @@ export const AppProvider =({children})=>{
       const storeIsAddedIntoDonatedData = val => {
         setIsAddedIntoDonatedData(val);
       };  
+      const updateCurrentUser = obj => {
+        setCurrentUser(obj);   
+           };  
+        
     return <AppContext.Provider value={{
-        selectedFoodFeature,
+      baseUrl,
+      currentUser,
+      selectedFoodFeature,
         selectedCategories,
         selectedSubCategoryFeature,
         selectedRestaurants,
@@ -68,6 +77,8 @@ export const AppProvider =({children})=>{
         storeInDonatedData,
         storeIsAddedIntoDonatedData,
         storeSelectedCategories,
+        updateCurrentUser
+
     }} >
         {children}
     </AppContext.Provider>

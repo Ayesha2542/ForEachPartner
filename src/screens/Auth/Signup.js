@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -18,7 +18,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AppColors from '../../assets/colors/AppColors';
-
 import IconStyles from '../../assets/Styles/IconStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
@@ -26,8 +25,10 @@ import ImageStyles from '../../assets/Styles/ImageStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
+import AppContext from '../../Context/AppContext';
 
 const Signup = ({navigation}) => {
+  const {baseUrl,updateCurrentUser}=useContext(AppContext)
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -80,13 +81,14 @@ const Signup = ({navigation}) => {
 
     axios({
       method: 'post',
-      url: 'http://192.168.0.103:8888/signup',
+      url: `${baseUrl}/Signup`,
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'},
     })
       .then(function (response) {
         if (response.data.save == true) {
           AsyncStorage.setItem('user', JSON.stringify(response.data.newUser));
+          updateCurrentUser({userId:response.data.newUser._id,email:response.data.email,password:response.data.password})
           navigation.navigate('Home');
         } else if (response.data.save == false) {
           // setUserEmailError("A user With the same email already exists.");
@@ -166,7 +168,7 @@ const Signup = ({navigation}) => {
                   setUserEmail(text);
                   setUserEmailError('');
                 }}
-              />
+              /> 
             </View>
             {userEmailError ? (
               <Text style={[TextStyles.errorText]}>{userEmailError}</Text>
@@ -215,8 +217,8 @@ const Signup = ({navigation}) => {
 
           <TouchableOpacity
             onPress={() => {
-              // userRegister();
-              navigation.navigate('SecurityQuestions')
+              userRegister();
+              // navigation.navigate('SecurityQuestions')
               console.log('signup is running');
             }}>
             <Neomorph
