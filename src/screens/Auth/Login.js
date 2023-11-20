@@ -39,14 +39,14 @@ const Login = ({navigation}) => {
 
     axios({
       method: 'post',
-      url: 'http://192.168.0.103:8888/login',
+      url: `${baseUrl}/Login`,
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'},
     })
       .then(function (response) {
         if (response.data.match == true) {
           AsyncStorage.setItem(
-            'user',
+            'provider',
             JSON.stringify(response.data.loggedInUser),
           );
           navigation.navigate('Home');
