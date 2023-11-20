@@ -7,10 +7,11 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AppColors from '../../assets/colors/AppColors';
 import TextStyles from '../../assets/Styles/TextStyles';
 import Profile from '../../screens/Profile/Profile';
+import { SafeAreaView } from 'react-native';
 
 const AddressHeader = ({item, navigation}) => {
   return (
-    <View style={{backgroundColor:AppColors.white,height:hp('8'),width:wp('100'),flexDirection:"row",borderBottomWidth:0.2}}>
+    <View style={{backgroundColor:AppColors.white,height:hp('8'),width:wp('100'),flexDirection:"row",borderBottomWidth:0.2,marginTop:hp('4')}}>
         <TouchableOpacity
           onPress={()=>{
             navigation.goBack('Address');
@@ -21,6 +22,7 @@ const AddressHeader = ({item, navigation}) => {
 
       <Text style={[TextStyles.profileTextStyle]}>{item}</Text>
     </View>
+
   );
 };
 export default AddressHeader;

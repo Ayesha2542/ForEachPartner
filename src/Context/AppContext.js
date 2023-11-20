@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 const AppContext = React.createContext();
 
 export const AppProvider =({children})=>{
-
+  
     const[selectedFoodFeature,setSelectedFoodFeature]=useState([]);
     const[selectedSubCategoryFeature,setSelectedSubCategoryFoodFeature]=useState([]);
     const[selectedRestaurants,setSelectedRestaurants]=useState([]);
@@ -52,7 +52,6 @@ const [currentUser,setCurrentUser] =useState({});
       const updateCurrentUser = obj => {
         setCurrentUser(obj);   
            };  
-        
     return <AppContext.Provider value={{
       baseUrl,
       currentUser,
@@ -78,6 +77,7 @@ const [currentUser,setCurrentUser] =useState({});
         storeIsAddedIntoDonatedData,
         storeSelectedCategories,
         updateCurrentUser
+
 
     }} >
         {children}

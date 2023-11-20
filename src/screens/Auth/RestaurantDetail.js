@@ -1,16 +1,12 @@
-import React, {useEffect, useState} from 'react';
-
+import React,{useState} from 'react';
 import {
   Image,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   Modal,
-  Button,
-  StyleSheet,
 } from 'react-native';
 import BackButtonHeader from '../../components/headers/BackButtonHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
@@ -18,7 +14,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,37 +22,21 @@ import AppColors from '../../assets/colors/AppColors';
 import IconStyles from '../../assets/Styles/IconStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
-import ImageStyles from '../../assets/Styles/ImageStyles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
-import CategoryModal from '../../components/CategoryModal';
 import {launchImageLibrary} from 'react-native-image-picker';
-import LottieView from 'lottie-react-native';
+import ImageStyles from '../../assets/Styles/ImageStyles';
+import CategoryModal from '../../components/CategoryModal';
 
-const RestaurantDetail = ({navigation,isVisible, close}) => {
+const RestaurantDetail = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('');
-  const [isAnimationVisible, setAnimationVisible] = useState(false);
-
-  // Function to toggle the visibility of the animation
-  const toggleAnimation = () => {
-    setAnimationVisible(!isAnimationVisible);
-  };
-
-  const navigateToCategoryCards = () => {
-    navigation.navigate('WelcomeScreen', {
-      selectedCategories: selectedCategories,
-    });
-  };
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -67,8 +46,7 @@ const RestaurantDetail = ({navigation,isVisible, close}) => {
     setCategoryInput(selectedCategoryLabels.join(', '));
     closeModal();
   };
-
-  //Functions......
+  
   const openImagePicker = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (!response.didCancel && !response.error) {
@@ -81,48 +59,28 @@ const RestaurantDetail = ({navigation,isVisible, close}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
-
+       <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}> 
       <TouchableOpacity
         onPress={() => {
           openImagePicker();
         }}>
         <Neomorph
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            shadowRadius: 3,
-            borderRadius: 100,
-            backgroundColor: AppColors.background2,
-            width: wp('30%'),
-            height: hp('15%'),
-            marginLeft: wp('30%'),
-          }}>
+          style={[ContainerStyles.imageContainterNeomorph]}>
           {imageData == '' ? (
-            <Ionicons name="camera-outline" size={34} color={'grey'} />
+            <Ionicons name="camera-outline" size={34} color={AppColors.Gray} />
           ) : (
             <Image
               source={{uri: imageData}}
-              style={{
-                width: wp('30%'),
-                height: hp('15%'),
-                borderRadius: 100,
-                borderWidth: 0.3,
-                borderColor: 'grey',
-              }}
+              style={[ImageStyles.roundImageStyle]}
             />
           )}
         </Neomorph>
       </TouchableOpacity>
 
       <Text
-        style={[
-          TextStyles.leftHeading,
-          {marginTop: hp('2'), fontSize: hp('3.5')},
-        ]}>
+        style={[TextStyles.cartTextStyle,{marginLeft:0}]}>
         Restaurant Details
-      </Text>
-
-      <View style={{alignItems: 'center'}}>
+      </Text>     
         <Neomorph
           darkShadowColor={AppColors.primary}
           lightShadowColor={AppColors.background}
@@ -215,9 +173,6 @@ const RestaurantDetail = ({navigation,isVisible, close}) => {
             <Text style={TextStyles.whiteCenteredLable}>Sign Up</Text>
           </Neomorph>
         </TouchableOpacity>
- 
-      </View>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -228,6 +183,7 @@ const RestaurantDetail = ({navigation,isVisible, close}) => {
           onCategorySelect={handleCategorySelect}
         />
       </Modal>
+      </View>
     </SafeAreaView>
   );
 };

@@ -5,7 +5,6 @@ import {
   Image,
   View,
   StatusBar,
-  ScrollView,
 } from 'react-native';
 import AppColors from '../../assets/colors/AppColors';
 import {
@@ -17,13 +16,12 @@ const Splash = ({navigation}) => {
   //
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Drawer');
+      navigation.navigate('Login');
     }, 2000);
   }, []);
 
   return (
-    <SafeAreaView
-      style={{flex: 1, backgroundColor: AppColors.white, marginTop: hp('3.8')}}>
+    <SafeAreaView style={{flex:1,backgroundColor: AppColors.white,marginTop:hp('4')}}>
       <StatusBar
         barStyle="dark-content"
         backgroundColor="white"
@@ -32,17 +30,17 @@ const Splash = ({navigation}) => {
 
       <Image
         source={require('../../assets/Images/image1.png')}
-        style={{height: hp('56%'), width: wp('56%')}}
+        style={{height: hp('56%'), width: wp('57%')}}
       />
       <View style={{alignItems: 'center'}}>
         <Image
-          source={require('../../assets/Images/logo.png')}
+          source={require('../../assets/Images/image13.png')}
           style={{height: hp('14%'), width: wp('32%')}}
         />
         <Text
           style={{
             fontSize: hp('3%'),
-            color: 'black',
+            color: AppColors.black,
             fontFamily: 'Poppins-SemiBold',
           }}>
           For Each Partner

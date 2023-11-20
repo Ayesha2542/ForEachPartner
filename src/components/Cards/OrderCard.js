@@ -1,9 +1,5 @@
-import React from 'react';
-import {SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
-import BackButtonHeader from '../../components/headers/BackButtonHeader';
-import CartHeader from '../../components/headers/CartHeader';
-import TabScreensHeader from '../../components/headers/TabScreensHeader';
-import ProfileHeader from '../../components/headers/ProfileHeader';
+import React, {useContext,useState} from 'react';
+import {SafeAreaView, View, Image, Text, TouchableOpacity, Modal,FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,7 +10,22 @@ import {Neomorph} from 'react-native-neomorph-shadows';
 import ImageStyles from '../../assets/Styles/ImageStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import {ScrollView} from 'react-native';
-const OrderCard = ({navigation, item}) => {
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import DropDownPicker from 'react-native-dropdown-picker';
+import CustomDropdown from '../CustomDropdown';
+import {SelectList} from 'react-native-dropdown-select-list';
+
+
+const OrderCard = ({navigation, item, currentOrderRoute}) => {
+  const [selected, setSelected] =React.useState('');
+  const data = [
+    {value: 'Sort by Default Order'},
+    {value: 'Sort by Name'},
+    {value: 'Sort by Price'},
+    {value: 'Sort by Date'},
+    {value: 'Sort by Popularity'},
+    {value: 'Sort by Rating'},
+  ];
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -29,7 +40,7 @@ const OrderCard = ({navigation, item}) => {
           <View style={[ContainerStyles.bottomBorder2, {marginTop: hp('1')}]}>
             <View style={{flexDirection: 'row'}}>
               <Image
-                source={require('../../assets/Images/toqeer.jpeg')} // Specify the source of the image
+                source={item.uri} // Specify the source of the image
                 style={[ImageStyles.orderProfileImage]} // Set the desired width and height of the image
               />
               <Text style={[TextStyles.label2, {marginLeft: wp('3%')}]}>
@@ -92,31 +103,109 @@ const OrderCard = ({navigation, item}) => {
               <Text style={[TextStyles.label2]}>Rs. 550</Text>
             </View>
           </ScrollView>
-          <View
-            style={[
-              ContainerStyles.bottomBorder2,
-              {flex: 1, marginTop: hp('3')},
-            ]}></View>
-          <Text style={[TextStyles.orderDescription]}>{item.description}</Text>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={[ContainerStyles.borderTouchable]}>
-              <Text style={[TextStyles.miniPrimaryColorText]}>
-                Call Customer
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[ContainerStyles.borderTouchable]}>
-              <Text style={[TextStyles.miniPrimaryColorText]}>
-                View Details
-              </Text>
-            </TouchableOpacity>
+          {currentOrderRoute === 'NewOrders' ? (
+            <>
+              <View
+                style={[
+                  ContainerStyles.bottomBorder2,
+                  {flex: 1, marginTop: hp('3')},
+                ]}></View>
+              <View
+                style={[
+                  ContainerStyles.centeredContainer,
+                  {
+                    paddingHorizontal: 10,
+                  },
+                ]}>
+                <Text style={[TextStyles.orderDescription]}>
+                  {item.description}
+                </Text>
+              </View>
 
-            <TouchableOpacity style={[ContainerStyles.cancelOrderTouchable]}>
-              <Text style={[TextStyles.miniWhiteText]}>Cancel Order</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[ContainerStyles.acceptOrderTouchable]}>
-              <Text style={[TextStyles.miniWhiteText]}>Accept Order</Text>
-            </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity style={[ContainerStyles.borderTouchable]}>
+                  <Text style={[TextStyles.miniPrimaryColorText]}>
+                    Call Customer
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('NewOrder');
+                  }}
+                  style={[ContainerStyles.borderTouchable]}>
+                  <Text style={[TextStyles.miniPrimaryColorText]}>
+                    View Details
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[ContainerStyles.cancelOrderTouchable]}>
+                  <Text style={[TextStyles.miniWhiteText]}>Cancel Order</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[ContainerStyles.acceptOrderTouchable]}>
+                  <Text style={[TextStyles.miniWhiteText]}>Accept Order</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) :  currentOrderRoute === 'OngoingOrders' ? (
+            <View
+            style={{
+              height: hp('8%'),
+              width: wp('100'),
+              justifyContent: 'center',
+              // borderTopEndRadius: wp('3%'),
+              // borderTopStartRadius: wp('3'),
+              borderTopWidth: hp('0.2'),
+              borderColor: AppColors.background2,
+              flex: 1,
+              flexDirection:"row"
+            }}>
+       <Text style={{color:"green",marginLeft:wp('1.5'),fontSize:wp('4'),fontFamily:"Poppins-SemiBold"}}>Order Status : </Text>
+          <SelectList
+          setSelected={setSelected}
+          data={data}
+          search={false}
+          boxStyles={{
+            borderRadius: 10,
+            width: wp('40'),
+            marginTop: 0,
+            marginLeft: 10,
+          }} 
+          defaultOption={{value: 'Sort by Default Order'}}
+          dropdownStyles={{width: 200, marginLeft: 70}} //default selected option
+        />
+        </View>
+          ):  (
+          <View
+            style={{
+              height: hp('8%'),
+              width: wp('100'),
+              justifyContent: 'center',
+              // borderTopEndRadius: wp('3%'),
+              // borderTopStartRadius: wp('3'),
+              borderTopWidth: hp('0.2'),
+              borderColor: AppColors.background2,
+              flex: 1
+            }}>
+
+          
+            <View style={{flexDirection:"row"}}>
+            <Text style={{color:"green",marginLeft:wp('1.5'),fontSize:wp('4'),fontFamily:"Poppins-SemiBold"}}>Order Status : </Text>
+            <Text style={{color:"green",marginLeft:wp('1.5'),fontSize:wp('4'),fontFamily:"Poppins-SemiBold"}}>Order Delivered</Text>
+            <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('NewOrder');
+                  }}
+                  style={[ContainerStyles.borderTouchable,{marginTop:0,marginLeft:wp('10')}]}>
+                  <Text style={[TextStyles.miniPrimaryColorText]}>
+                    View Details
+                  </Text>
+                </TouchableOpacity>
+            </View>
           </View>
+          )
+        }
         </Neomorph>
       </View>
     </SafeAreaView>

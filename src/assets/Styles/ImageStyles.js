@@ -73,11 +73,17 @@ const ImageStyles = StyleSheet.create({
   },
   orderImage: {
     width: wp('20'),
-    height: hp('10'),
-    marginLeft: wp('5'),
+    height:hp('10'),
+    marginLeft: wp('3'),
     marginTop: hp('3'),
     borderRadius: wp('15'),
-    borderWidth: 4,
+  },
+  roundImageStyle:{
+    width: wp('30%'),
+    height: hp('15%'),
+    borderRadius: 100,
+    borderWidth: 0.3,
+    borderColor: 'gray',
   },
   orderProfileImage: {
     height: hp('6%'),

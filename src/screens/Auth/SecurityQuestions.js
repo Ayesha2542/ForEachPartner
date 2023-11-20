@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
-
+import React, {useState} from 'react';
 import {
   Image,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,22 +9,14 @@ import {
 } from 'react-native';
 import BackButtonHeader from '../../components/headers/BackButtonHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feather from 'react-native-vector-icons/Feather';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AppColors from '../../assets/colors/AppColors';
-
-import IconStyles from '../../assets/Styles/IconStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import ImageStyles from '../../assets/Styles/ImageStyles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 
 const SecurityQuestions = ({navigation}) => {
