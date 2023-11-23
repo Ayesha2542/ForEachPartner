@@ -1,51 +1,43 @@
-import React,{useState} from 'react';
-import {View,Text,TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import CheckBox from 'react-native-check-box';
-import {Neomorph} from 'react-native-neomorph-shadows';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Neomorph } from 'react-native-neomorph-shadows';
 import TextStyles from '../assets/Styles/TextStyles';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import ContainerStyles from '../assets/Styles/ContainerStyles';
 import AppColors from '../assets/colors/AppColors';
+import axios from 'axios'; // Import axios for making HTTP requests
 
+const CategoryModal = ({ selectedCategories, onCategorySelect }) => {
+  const [categories, setAllCategories] = useState([]);
 
-const CategoryModal = ({selectedCategories, onCategorySelect}) => {
-  const [categories, setCategories] = useState([
-    {id: 1, label: 'Pizza', checked: selectedCategories.includes('Category 1')},
-    {
-      id: 2,
-      label: 'Burger',
-      checked: selectedCategories.includes('Category 2'),
-    },
-    {
-      id: 3,
-      label: 'Shawarma',
-      checked: selectedCategories.includes('Category 2'),
-    },
-    {
-      id: 4,
-      label: 'Biryani',
-      checked: selectedCategories.includes('Category 2'),
-    },
-    {id: 5, label: 'Pasta', checked: selectedCategories.includes('Category 2')},
-    {
-      id: 6,
-      label: 'Chinese',
-      checked: selectedCategories.includes('Category 2'),
-    },
-    // Add more categories as needed
-  ]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.post('http://192.168.0.104:8888/viewAllCategories');
+        const fetchedCategories = response.data.map(category => ({
+          id: category._id, // Assuming the category object has an '_id' property
+          label: category.title,
+          checked: selectedCategories.includes(category.title),
+        }));
+        setAllCategories(fetchedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    // Call the function when the component mounts
+    fetchCategories();
+  }, [selectedCategories]); // Include selectedCategories in the dependency array to update when it changes
 
   const handleCategoryToggle = (categoryId, label) => {
     const updatedCategories = categories.map(category => {
       if (category.id === categoryId) {
-        return {...category, checked: !category.checked};
+        return { ...category, checked: !category.checked };
       }
       return category;
     });
-    setCategories(updatedCategories);
+    setAllCategories(updatedCategories);
   };
 
   const confirmSelection = () => {
@@ -56,11 +48,9 @@ const CategoryModal = ({selectedCategories, onCategorySelect}) => {
   };
 
   return (
-    <View style={[ContainerStyles.flexCenter,{backgroundColor: 'rgba(0, 0, 0, 0.5)',}]}>
+    <View style={[ContainerStyles.flexCenter, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]}>
       <View style={[TextStyles.modalContent]}>
-        <Text style={[TextStyles.mediumTextStyle]}>
-          Select Categories You want to sale
-        </Text>
+        <Text style={[TextStyles.mediumTextStyle]}>Select Categories You want to sale</Text>
         {categories.map(category => (
           <CheckBox
             key={category.id}
@@ -68,23 +58,22 @@ const CategoryModal = ({selectedCategories, onCategorySelect}) => {
             onClick={() => handleCategoryToggle(category.id, category.label)}
             rightText={category.label}
             checkBoxColor="green"
-            style={{marginLeft: wp('5'), marginTop: hp('2')}} // Set the checkbox color to green
+            style={{ marginLeft: wp('5'), marginTop: hp('2') }}
           />
         ))}
         <TouchableOpacity onPress={confirmSelection}>
           <Neomorph
             darkShadowColor={AppColors.white}
             lightShadowColor={AppColors.white}
-            swapShadows // <- change zIndex of each shadow color
-            style={ContainerStyles.smallConfirmButtonNeomorph}>
-            <Text
-              style={[TextStyles.smallButtonText]}>
-              Confirm
-            </Text>
+            swapShadows
+            style={ContainerStyles.smallConfirmButtonNeomorph}
+          >
+            <Text style={[TextStyles.smallButtonText]}>Confirm</Text>
           </Neomorph>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
 export default CategoryModal;

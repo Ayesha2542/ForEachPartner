@@ -81,7 +81,7 @@ const Signup = ({navigation}) => {
 
     axios({
       method: 'post',
-      url: `${baseUrl}/Signup`,
+      url: `${baseUrl}/restaurantSignup`,
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'},
     })
@@ -89,7 +89,7 @@ const Signup = ({navigation}) => {
         if (response.data.save == true) {
           AsyncStorage.setItem('user', JSON.stringify(response.data.newUser));
           updateCurrentUser({userId:response.data.newUser._id,email:response.data.email,password:response.data.password})
-          navigation.navigate('Home');
+          navigation.navigate('RestaurantDetail');
         } else if (response.data.save == false) {
           // setUserEmailError("A user With the same email already exists.");
           // alert('A user with this Email Address Already Exists');
