@@ -95,7 +95,7 @@ const AddFoodItems = ({navigation}) => {
         //handle error
         console.log(response);
       });
-    // console.warn("Stop");
+    
   };
 
 
