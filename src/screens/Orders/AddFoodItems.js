@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -25,14 +25,23 @@ import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LottieView from 'lottie-react-native';
+import AppContext from '../../Context/AppContext';
+import axios from 'axios';
 
 
 const AddFoodItems = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('');
+  const {baseUrl, updateCurrentUser} = useContext(AppContext);
+  const [productTitle, setproductTitle] = useState('');
+  const [productDescription, setproductDescription] = useState('');
+  const [productPrice, setproductPrice] = useState('');
 
+  const onPressCombined = () => {
+    addProduct();
+    setModalVisible(true);
+  };
+  
   const openModal = () => {
     setModalVisible(true);
   };
@@ -57,6 +66,38 @@ const AddFoodItems = ({navigation}) => {
       }
     });
   };
+
+  const addProduct = () => {
+    const formData = new FormData();
+    formData.append('title', productTitle);
+    formData.append('description', productDescription);
+    formData.append('price', productPrice);
+
+    axios({
+      method: 'post',
+      url: `${baseUrl}/addProduct`,
+      data: formData,
+      headers: {'Content-Type': 'multipart/form-data'},
+    })
+      .then(function (response) {
+        if (response.data.save == true) {
+          AsyncStorage.setItem(
+            'product',
+            JSON.stringify(response.data.newProduct),
+          );
+          // updateCurrentUser({userId:response.data.newUser._id,email:response.data.email,password:response.data.password})
+          navigation.navigate('Home');
+        } else {
+          alert(' Please try again later.');
+        }
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+    // console.warn("Stop");
+  };
+
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -109,6 +150,11 @@ const AddFoodItems = ({navigation}) => {
                 TextFieldStyles.inputField,
                 {paddingHorizontal: wp('5%'), width: wp('70%')},
               ]}
+              value={productTitle}
+              onChangeText={text => {
+                setproductTitle(text);
+              }}
+
             />
           </View>
         </Neomorph>
@@ -128,7 +174,11 @@ const AddFoodItems = ({navigation}) => {
                 TextFieldStyles.inputField,
                 {paddingHorizontal: wp('5%'), width: wp('70%')},
               ]}
-              autoCapitalize="none"
+              value={productDescription}
+              onChangeText={text => {
+                setproductDescription(text);
+              }}
+
             />
           </View>
         </Neomorph>
@@ -147,11 +197,15 @@ const AddFoodItems = ({navigation}) => {
                 TextFieldStyles.inputField,
                 {paddingHorizontal: wp('5%'), width: wp('70%')},
               ]}
-              autoCapitalize="none"
+              value={productPrice}
+              onChangeText={text => {
+                setproductPrice(text);
+              }}
+
             />
           </View>
         </Neomorph>
-        <TouchableOpacity onPress={openModal}>
+        <TouchableOpacity onPress={onPressCombined}>
             <Neomorph
               darkShadowColor={AppColors.white}
               lightShadowColor={AppColors.white}
