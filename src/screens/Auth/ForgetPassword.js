@@ -250,7 +250,7 @@ const ForgetPassword = ({navigation}) => {
           <TouchableOpacity
             onPress={() => {
               // userRegister();
-            navigation.navigate('Home')
+            navigation.navigate('RestaurantDetail')
     
             }}>
             <Neomorph
