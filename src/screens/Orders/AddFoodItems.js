@@ -27,6 +27,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import LottieView from 'lottie-react-native';
 import AppContext from '../../Context/AppContext';
 import axios from 'axios';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const AddFoodItems = ({navigation}) => {
@@ -36,7 +38,8 @@ const AddFoodItems = ({navigation}) => {
   const [productTitle, setproductTitle] = useState('');
   const [productDescription, setproductDescription] = useState('');
   const [productPrice, setproductPrice] = useState('');
-
+  // const {storeSelectedImageUri,selectedImageUri,currentUser}=useContext(AppContext);
+const [productImage,setProductImage]=useState('');
   const onPressCombined = () => {
     addProduct();
     setModalVisible(true);
@@ -63,15 +66,47 @@ const AddFoodItems = ({navigation}) => {
       if (!response.didCancel && !response.error) {
         console.log('Selected image URI:', response.assets[0].uri);
         setImageData(response.assets[0].uri);
+        setProductImage(response.assets[0])
       }
     });
   };
+
+  // const openGallery = async () => {
+  //   const options = {
+  //     title: 'Select Image',
+  //     type: 'library',
+  //     options: {
+  //       maxHeight: 200,
+  //       maxWidth: 200,
+  //       selectionLimit: 1,
+  //       mediaType: 'photo',
+  //       includeBase64: false,
+  //     },
+  //   };
+
+  //   const images = await launchImageLibrary(options);
+  //   storeSelectedImageUri(images.assets[0].uri);
+  //   // setCustomerProfileImage(images.assets[0]);
+  //   // console.log(images.assets[0])
+  //   console.log('i am serry');
+  //   return images;
+  // };
+
+
+
+
 
   const addProduct = () => {
     const formData = new FormData();
     formData.append('title', productTitle);
     formData.append('description', productDescription);
     formData.append('price', productPrice);
+    formData.append('productImage',{
+      uri:productImage.uri,
+      type:productImage.type,
+      name:productImage.fileName,
+
+    })
 
     axios({
       method: 'post',
@@ -132,6 +167,30 @@ const AddFoodItems = ({navigation}) => {
             />
           )}
         </Neomorph>
+
+{/* <TouchableOpacity onPress={openGallery}>
+          <Image
+            source={
+              selectedImageUri === ''
+                ? require('../../assets/Images/burger1.jpg')
+                : {uri: selectedImageUri}
+            }
+            style={{
+              height: hp('17%'),
+              width: wp('35%'),
+              borderRadius: 100,
+              alignSelf: 'center',
+              // marginBottom: 7,
+            }}
+          />
+          <View style={[ContainerStyles.CameraIconView]}>
+            <MaterialIcons name="camera-alt" size={23} color="white" />
+          </View>
+        </TouchableOpacity>
+
+ */}
+
+
 
       {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
       <View style={{alignItems: 'center', marginTop: hp('5')}}>
