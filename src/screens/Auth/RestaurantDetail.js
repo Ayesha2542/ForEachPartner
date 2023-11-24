@@ -59,7 +59,7 @@ const RestaurantDetail = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
-       <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}> 
+       <View style={[ContainerStyles.centeredContainer,{marginTop:hp('0')}]}> 
       <TouchableOpacity
         onPress={() => {
           openImagePicker();
@@ -130,6 +130,24 @@ const RestaurantDetail = ({navigation}) => {
 
             <TextInput
               placeholder="Enter CNIC"
+              style={[TextFieldStyles.inputField]}
+            />
+          </View>
+        </Neomorph>
+        <Neomorph
+          darkShadowColor={AppColors.primary}
+          lightShadowColor={AppColors.background}
+          swapShadows // <- change zIndex of each shadow color
+          style={ContainerStyles.inputFieldNeomorphContainer}>
+          <View style={{flexDirection: 'row'}}>
+            <AntDesign
+              name="idcard"
+              size={wp('6%')}
+              style={IconStyles.signupIcons}
+            />
+
+            <TextInput
+              placeholder="Enter PhoneNumber"
               style={[TextFieldStyles.inputField]}
             />
           </View>
