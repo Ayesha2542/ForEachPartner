@@ -270,7 +270,7 @@ const [productImage,setProductImage]=useState('');
               lightShadowColor={AppColors.white}
               swapShadows // <- change zIndex of each shadow color
               style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
-              <Text style={TextStyles.whiteCenteredLable}>Add Product</Text>
+              <Text style={TextStyles.whiteCenteredLable}>Add Producttt</Text>
             </Neomorph>
           </TouchableOpacity>
           <Modal
