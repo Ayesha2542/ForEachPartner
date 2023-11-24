@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View, Image} from 'react-native';
 import {Neomorph} from 'react-native-neomorph-shadows';
 import AppColors from '../../assets/colors/AppColors';
@@ -8,23 +8,31 @@ import {
 } from 'react-native-responsive-screen';
 import TextStyles from '../../assets/Styles/TextStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
-import pizzaImage from '../../assets/Images/image16.png'; // Replace with the actual image path for pizza
-import burgerImage from '../../assets/Images/image17.png'; // Replace with the actual image path for burger
-import ShawarmaImage from '../../assets/Images/image18.jpg'; // Replace with the actual image path for burger
-import BiryaniImage from '../../assets/Images/image19.png'; // Replace with the actual image path for burger
-import PastaImage from '../../assets/Images/image20.png'; // Replace with the actual image path for burger
-import ChineseImage from '../../assets/Images/image21.png'; // Replace with the actual image path for burger
+import axios from 'axios';
+import AppContext from '../../Context/AppContext';
 
 const SmallCard = ({navigation, item}) => {
-  const categoryImages = {
-    Pizza: pizzaImage,
-    Burger: burgerImage,
-    Shawarma: ShawarmaImage,
-    Biryani: BiryaniImage,
-    Pasta: PastaImage,
-    Chinese: ChineseImage,
-    // Add more mappings for other categories
-  };
+  const[allCategories,setAllCategories]=useState([])
+  const {baseUrl} = useContext(AppContext)
+
+  const categoryImages = allCategories.reduce((acc, category) => {
+    acc[category.title] = category.categoryImage;
+    return acc;
+  }, {});
+
+    useEffect(() => {
+    // Function to fetch categories from the backend
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.post(`${baseUrl}/viewAllCategories`);
+        setAllCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+  
 
   const categoryImage = categoryImages[item];
 
@@ -38,7 +46,7 @@ const SmallCard = ({navigation, item}) => {
           style={ContainerStyles.smallCategoriesNeomorphStyle}>
           {/* Display the category image */}
           <Image
-            source={categoryImage}
+            source={{uri: baseUrl+categoryImage}}
             style={{width: wp(25), height: hp(9.5),marginTop:hp('2')}}
           />
         </Neomorph>

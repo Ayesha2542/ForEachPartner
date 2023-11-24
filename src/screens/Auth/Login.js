@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,useContext} from 'react';
 
 import {
   Image,
@@ -23,8 +23,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import Feather from 'react-native-vector-icons/Feather';
+import AppContext from '../../Context/AppContext';
 
 const Login = ({navigation}) => {
+  const {baseUrl,updateCurrentUser}=useContext(AppContext)
   // states
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -49,7 +51,7 @@ const Login = ({navigation}) => {
             'provider',
             JSON.stringify(response.data.loggedInUser),
           );
-          navigation.navigate('Home');
+          navigation.navigate('RestaurantDetail');
         } else {
           alert('No User found with this email and password');
         }
