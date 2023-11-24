@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -7,14 +7,16 @@ import TextStyles from '../assets/Styles/TextStyles';
 import ContainerStyles from '../assets/Styles/ContainerStyles';
 import AppColors from '../assets/colors/AppColors';
 import axios from 'axios'; // Import axios for making HTTP requests
+import AppContext from '../Context/AppContext';
 
 const CategoryModal = ({ selectedCategories, onCategorySelect }) => {
+  const {baseUrl} = useContext(AppContext);
   const [categories, setAllCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.post('http://192.168.0.104:8888/viewAllCategories');
+        const response = await axios.post(`${baseUrl}/viewAllCategories`);
         const fetchedCategories = response.data.map(category => ({
           id: category._id, // Assuming the category object has an '_id' property
           label: category.title,
