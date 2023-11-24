@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState,useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,29 +16,46 @@ import {Neomorph} from 'react-native-neomorph-shadows';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import ProductCard from '../../components/Cards/ProductsCard';
-
+import AppContext from '../../Context/AppContext';
+import { useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 const Products = ({navigation}) => {
-  const [myProducts, setMyProducts] = useState([
-    {
-      id: '1',
-      name: 'Student Burger',
-      price: 200,
-      uri: require('../../assets/Images/image17.png'),
-    },
-    {
-      id: '2',
-      name: 'Zinger Burger',
-      price: 370,
-      uri: require('../../assets/Images/burger1.jpg'),
-    },
-    
-  ]);
+  const { storeSelectedSubCategoryFeature,baseUrl } = useContext(AppContext);
+  const [allProducts, setAllProducts] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchProducts = async () => {
+            try {
+              const response = await axios.post(`${baseUrl}/viewAllProducts`);
+              setAllProducts(response.data);
+            } catch (error) {
+              console.error('Error fetching categories:', error);
+            }
+          };
+          fetchProducts();
+    }, []))
+   
+  
+  // useEffect(() => {
+  //   // Function to fetch categories from the backend
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.post(`${baseUrl}/viewAllProducts`);
+  //       setAllProducts(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, []);
+  
+  
   return (
     <SafeAreaView style={{flex:1,backgroundColor: AppColors.white,}}>
       <ProfileHeader navigation={navigation} item="Products" />
 
       <FlatList
-        data={myProducts}
+        data={allProducts}
         renderItem={({item}) => {
           return (
             <ProductCard navigation={navigation} item={item} />

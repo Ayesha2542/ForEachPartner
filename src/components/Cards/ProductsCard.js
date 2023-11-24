@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import ImageStyles from '../../assets/Styles/ImageStyles';
 import AppColors from '../../assets/colors/AppColors';
@@ -10,11 +10,44 @@ import {Neomorph} from 'react-native-neomorph-shadows';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import AppContext from '../../Context/AppContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ProductCard = ({navigation, item}) => {
-  //
-  const [description, setDescription] = useState('A cheesz burger is a delicious,classic fast-food ');
-  
+  const {baseUrl} = useContext(AppContext)
+  const [allProducts, setAllProducts] = useState([])
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/viewAllProducts`);
+      setAllProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const deleteProduct = (delId) => {
+    axios
+      .delete(`${baseUrl}/deleteProduct/${delId}`)
+      .then((response) => {
+        if (response.data.success) {
+          fetchProducts();
+          
+        } else {
+          alert('something went wrong');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchProducts();
+    }, [])
+  );
   return (
     <View style={[ContainerStyles.flexCenter]}>
       <Neomorph
@@ -41,7 +74,7 @@ const ProductCard = ({navigation, item}) => {
                     fontSize: hp(2),
                     color: AppColors.black,
                   }}>
-                  {item.name}
+                  {item.title}
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
@@ -54,7 +87,9 @@ const ProductCard = ({navigation, item}) => {
                     style={{marginLeft: wp('7')}}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{
+                  deleteProduct(item._id)
+                }}>
                   <FontAwesome
                     name="trash"
                     size={20}
@@ -64,7 +99,7 @@ const ProductCard = ({navigation, item}) => {
                 </TouchableOpacity>
               </View>
               <Text style={{width: wp('60')}}>
-                {description.substring(0, 100)}...
+                {item.description}...
               </Text>
               <Text style={[TextStyles.foodPrice]}>Rs.{item.price}</Text>
             </View>
