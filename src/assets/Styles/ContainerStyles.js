@@ -11,6 +11,17 @@ const ContainerStyles = StyleSheet.create({
     justifyContent:"center",
     alignItems:"center"
   },
+  CameraIconView: {
+    height: hp('6'),
+    width: wp('12'),
+    backgroundColor: AppColors.charcol,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: hp('3'),
+    marginLeft: wp('58'),
+    marginTop: hp('-6'),
+  },
+
   flexCenter:{
     flex:1,
     justifyContent:"center",
