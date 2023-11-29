@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -26,13 +26,29 @@ import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageStyles from '../../assets/Styles/ImageStyles';
 import CategoryModal from '../../components/CategoryModal';
+import AppContext from '../../Context/AppContext';
+import axios from 'axios';
+const RestaurantDetail = ({navigation,route}) => {
+  const {userName,userEmail,userPassword}= route.params;
+  console.log("kdjfkldjfljdlkfjdj",userName,userEmail,userPassword);
+  const {baseUrl} = useContext(AppContext);
 
-const RestaurantDetail = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('');
+  const [restaurantName,setRestaurantName]= useState('');
+  const [restaurantAddress,setRestaurantAddress]= useState('');
+  const [restaurantCnic,setRestaurantCnic]= useState('');
+  const [restaurantPhoneNumber,setRestaurantPhoneNumber]= useState('');
+  const [restaurantImage,setRestaurantImage]=useState('');
 
+  const [restaurantNameError,setRestaurantNameError]= useState('')
+  const [restaurantAddressError,setRestaurantAddressError]= useState('')
+  const [restaurantCnicError,setRestaurantCnicError]= useState('')
+  const [restaurantPhoneNumberError,setRestaurantPhoneNumberError]= useState('')
+  const [categoryInputError,setCategoryInputError] = useState('');
+  const [restaurantImageDataError,setRestaurantImageDataError]=useState('');
   const openModal = () => {
     setModalVisible(true);
   };
@@ -55,27 +71,119 @@ const RestaurantDetail = ({navigation}) => {
       }
     });
   };
+const addRestaurant=()=>{
+  
+}
+  const handelSubmit = () => {
+    if (!restaurantName) {
+      setRestaurantNameError('Please enter product name.');
+    }
 
+    if (!restaurantAddress) {
+      setRestaurantAddressError('Please enter your product description.');
+    }
+    if (!restaurantCnic) {
+      setRestaurantCnicError('Please enter your product price.');
+    } 
+    if (!restaurantPhoneNumber) {
+      setRestaurantPhoneNumberError('Please enter your product price.');
+    } 
+    if (!imageData) {
+     setRestaurantImageDataError('Please Upload image of your product .');
+   } 
+    if (
+     !imageData ||
+      !restaurantName ||
+      !restaurantAddress||
+      !restaurantCnic||
+      !restaurantPhoneNumber
+    
+    ) {
+      return false;
+    }
+    else{
+      const formData = new FormData();
+      formData.append('restaurantName', restaurantName);
+      formData.append('restaurantAddress', restaurantAddress);
+      formData.append('restaurantCnic', restaurantCnic);
+      formData.append('restaurantPhoneNumber', restaurantPhoneNumber);
+      formData.append('userName',userName);
+      formData.append('userEmail',userEmail);
+      formData.append('userPassword',userPassword);
+  
+      if (restaurantImage) {
+        formData.append('restaurantImage', {
+          uri: restaurantImage.uri,
+          type: restaurantImage.type,
+          name: restaurantImage.fileName,
+        });
+      }
+      console.log("?????????????????????????????????????????????????????????????");
+      console.log(formData);
+      console.log("?????????????????????????????????????????????????????????????");
+  
+      axios({
+        method: 'post',
+        url: `${baseUrl}/restaurantSignup`,
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then(response => {
+          if (response.data.added) {
+            navigation.navigate('WelcomeScreen')
+          } else {
+            alert('Please try again later.');
+          }
+        })
+        .catch(error => {
+            console.log('Error', error.message);  
+        });
+    }
+
+   
+    }   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
        <View style={[ContainerStyles.centeredContainer,{marginTop:hp('0')}]}> 
-      <TouchableOpacity
-        onPress={() => {
-          openImagePicker();
-        }}>
-        <Neomorph
-          style={[ContainerStyles.imageContainterNeomorph]}>
+       <Neomorph
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            shadowRadius: 3,
+            borderRadius: 100,
+            backgroundColor: AppColors.background2,
+            width: wp('30%'),
+            height: hp('15%'),
+          }}>
           {imageData == '' ? (
-            <Ionicons name="camera-outline" size={34} color={AppColors.Gray} />
+            <TouchableOpacity  onPress={() => {
+              setRestaurantImageDataError('');
+              openImagePicker();
+            }}>
+            <Ionicons name="camera-outline" size={34} color={'grey'} />
+            </TouchableOpacity>
           ) : (
+            <TouchableOpacity  onPress={() => {
+              openImagePicker();
+            }}>
             <Image
               source={{uri: imageData}}
-              style={[ImageStyles.roundImageStyle]}
+              style={{
+                width: wp('30%'),
+                height: hp('15%'),
+                borderRadius: 100,
+                borderWidth: 0.3,
+                borderColor: 'grey',
+              }}
             />
+            </TouchableOpacity>
           )}
+          
         </Neomorph>
-      </TouchableOpacity>
+        {restaurantImageDataError ? (
+              <Text style={[TextStyles.errorText,{marginTop:hp('2')}]}>{restaurantImageDataError}</Text>
+            ) : null}
 
       <Text
         style={[TextStyles.cartTextStyle,{marginLeft:0}]}>
@@ -95,8 +203,16 @@ const RestaurantDetail = ({navigation}) => {
             <TextInput
               placeholder="Enter Your Restaurant Name"
               style={[TextFieldStyles.inputField]}
+              value={restaurantName}
+              onChange={text => {
+                setRestaurantName(text);
+                setRestaurantNameError('');
+              }}
             />
           </View>
+          {restaurantNameError ? (
+              <Text style={[TextStyles.errorText]}>{restaurantNameError}</Text>
+            ) : null}
         </Neomorph>
         <Neomorph
           darkShadowColor={AppColors.primary}
@@ -112,8 +228,16 @@ const RestaurantDetail = ({navigation}) => {
             <TextInput
               placeholder="Restaurant Full Address"
               style={[TextFieldStyles.inputField]}
+              value={restaurantAddress}
+              onChangeText={text => {
+                setRestaurantAddress(text);
+                setRestaurantAddressError('');
+              }}
             />
           </View>
+          {restaurantAddressError ? (
+              <Text style={[TextStyles.errorText]}>{restaurantAddressError}</Text>
+            ) : null}
         </Neomorph>
 
         <Neomorph
@@ -131,8 +255,16 @@ const RestaurantDetail = ({navigation}) => {
             <TextInput
               placeholder="Enter CNIC"
               style={[TextFieldStyles.inputField]}
+              value={restaurantCnic}
+              onChangeText={text => {
+                setRestaurantCnic(text);
+                setRestaurantCnicError('');
+              }}
             />
           </View>
+          {restaurantCnicError ? (
+              <Text style={[TextStyles.errorText]}>{restaurantCnicError}</Text>
+            ) : null}
         </Neomorph>
         <Neomorph
           darkShadowColor={AppColors.primary}
@@ -147,10 +279,18 @@ const RestaurantDetail = ({navigation}) => {
             />
 
             <TextInput
-              placeholder="Enter PhoneNumber"
+              placeholder="Enter CNIC"
               style={[TextFieldStyles.inputField]}
+              value={restaurantCnic}
+              onChangeText={text => {
+                setRestaurantCnic(text);
+                setRestaurantCnicError('');
+              }}
             />
           </View>
+          {restaurantCnicError ? (
+              <Text style={[TextStyles.errorText]}>{restaurantCnicError}</Text>
+            ) : null}
         </Neomorph>
         <TouchableOpacity onPress={openModal}>
           <Neomorph
@@ -172,14 +312,18 @@ const RestaurantDetail = ({navigation}) => {
                 editable={false} // Disable manual input
               />
             </View>
+            {categoryInputError ? (
+              <Text style={[TextStyles.errorText]}>{categoryInputError}</Text>
+            ) : null}
           </Neomorph>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>{
-          navigation.navigate('WelcomeScreen',{
-            selectedCategories:selectedCategories
-          })
-        }}>
+        <TouchableOpacity 
+          onPress={() => {
+            addRestaurant();
+            // console.log('addRestaurant')
+        
+          }}>
           <Neomorph
             darkShadowColor="white"
             lightShadowColor="white"

@@ -2,7 +2,6 @@ import React, {useEffect, useState, useContext} from 'react';
 import {
   Image,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -73,45 +72,16 @@ const Signup = ({navigation}) => {
     ) {
       return false;
     }
+    else{
+      navigation.navigate("RestaurantDetail",{
+        userName,
+         userEmail,
+         userPassword,
+       })
+    }
 
-    const formData = new FormData();
-    formData.append('name', userName);
-    formData.append('email', userEmail);
-    formData.append('password', userPassword);
-
-    axios({
-      method: 'post',
-      url: `${baseUrl}/restaurantSignup`,
-      data: formData,
-      headers: {'Content-Type': 'multipart/form-data'},
-    })
-      .then(function (response) {
-        if (response.data.save == true) {
-          AsyncStorage.setItem('user', JSON.stringify(response.data.newUser));
-          updateCurrentUser({userId:response.data.newUser._id,email:response.data.email,password:response.data.password})
-          navigation.navigate('RestaurantDetail');
-        } else if (response.data.save == false) {
-          // setUserEmailError("A user With the same email already exists.");
-          // alert('A user with this Email Address Already Exists');
-          setUserEmailError('A user with this Email Address Already Exists');
-        } else {
-          alert('Account cannot be created! Please try again later.');
-        }
-      })
-      .catch(function (response) {
-        //handle error
-        console.log(response);
-      });
-    // console.warn("Stop");
-  };
-
-  // useEffect(() => {
-  //   let currentUserStatus = AsyncStorage.getItem('user');
-  //   if (currentUserStatus) {
-  //     navigation.navigate('Signup');
-  //   }
-  // }, []);
-
+    
+  }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
@@ -217,9 +187,8 @@ const Signup = ({navigation}) => {
 
           <TouchableOpacity
             onPress={() => {
-              userRegister();
-              // navigation.navigate('SecurityQuestions')
-              console.log('signup is running');
+
+             userRegister();
             }}>
             <Neomorph
               darkShadowColor="white"
