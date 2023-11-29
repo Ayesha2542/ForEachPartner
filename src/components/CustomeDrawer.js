@@ -97,6 +97,18 @@ const CustomeDrawer = props => {
         </TouchableOpacity>
 
 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('SingleProductDetail');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>Products Detail</Text>
+          </View>
+        </TouchableOpacity>
+
+
         </View>
         </DrawerContentScrollView>
 

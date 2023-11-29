@@ -372,3 +372,4 @@ const AddFoodItems = ({navigation,route}) => {
 };
 
 export default AddFoodItems;
+
