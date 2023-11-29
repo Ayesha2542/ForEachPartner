@@ -16,7 +16,7 @@ const Splash = ({navigation}) => {
   //
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('RestaurantDetail');
+      navigation.navigate('Products');
     }, 2000);
   }, []);
 

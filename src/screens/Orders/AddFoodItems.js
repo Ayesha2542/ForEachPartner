@@ -1,15 +1,12 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext,useEffect} from 'react';
 import {
   Image,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   Modal,
-  Button,
-  StyleSheet,
 } from 'react-native';
 import BackButtonHeader from '../../components/headers/BackButtonHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
@@ -27,39 +24,31 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import LottieView from 'lottie-react-native';
 import AppContext from '../../Context/AppContext';
 import axios from 'axios';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const AddFoodItems = ({navigation}) => {
+const AddFoodItems = ({navigation,route}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageData, setImageData] = useState('');
-  const {baseUrl, updateCurrentUser} = useContext(AppContext);
+  const {baseUrl} = useContext(AppContext);
   const [productTitle, setproductTitle] = useState('');
   const [productDescription, setproductDescription] = useState('');
   const [productPrice, setproductPrice] = useState('');
-  // const {storeSelectedImageUri,selectedImageUri,currentUser}=useContext(AppContext);
-const [productImage,setProductImage]=useState('');
-  const onPressCombined = () => {
-    addProduct();
-    setModalVisible(true);
-  };
-  
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  const [productImage,setProductImage]=useState('');
+  const [updateId, setUpdateId] = useState("");
+  const [productTitleError, setProductTitleError] = useState('');
+   const [productDescriptionError, setProductDescriptionError] = useState('');
+   const [productPriceError, setProductPriceError] = useState('');
+   const [productImageError,setProductImageError] = useState('');
 
-  // Function to close the modal
+    const openModal = () => {
+      setModalVisible(true);
+    };
+
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  const handleCategorySelect = selectedCategoryLabels => {
-    setSelectedCategories(selectedCategoryLabels);
-    setCategoryInput(selectedCategoryLabels.join(', '));
-    closeModal();
-  };
-
+  
   //Functions......
   const openImagePicker = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -71,69 +60,90 @@ const [productImage,setProductImage]=useState('');
     });
   };
 
-  // const openGallery = async () => {
-  //   const options = {
-  //     title: 'Select Image',
-  //     type: 'library',
-  //     options: {
-  //       maxHeight: 200,
-  //       maxWidth: 200,
-  //       selectionLimit: 1,
-  //       mediaType: 'photo',
-  //       includeBase64: false,
-  //     },
-  //   };
+  
+  useEffect(() => {
+    if (route.params) {
+      const { productId, title, description, price, productImage } = route.params;
+      setproductTitle(title);
+      setproductDescription(description);
+      setproductPrice(price);
+      setImageData(productImage);
+      setUpdateId(productId);
+    }
+  }, [route.params]);
 
-  //   const images = await launchImageLibrary(options);
-  //   storeSelectedImageUri(images.assets[0].uri);
-  //   // setCustomerProfileImage(images.assets[0]);
-  //   // console.log(images.assets[0])
-  //   console.log('i am serry');
-  //   return images;
-  // };
+  const addOrUpdateProduct = () => {
+    if (!productTitle) {
+      setProductTitleError('Please enter product name.');
+    }
 
+    if (!productDescription) {
+      setProductDescriptionError('Please enter your product description.');
+    }
+    if (!productPrice) {
+      setProductPriceError('Please enter your product price.');
+    } 
+    if (!imageData) {
+     setProductImageError('Please Upload image of your product .');
+   } 
+    if (
+     !imageData ||
+      !productTitle ||
+      !productDescription ||
+      !productPrice 
+    ) {
+      return false;
+    }
 
-
-
-
-  const addProduct = () => {
     const formData = new FormData();
     formData.append('title', productTitle);
     formData.append('description', productDescription);
     formData.append('price', productPrice);
-    formData.append('productImage',{
-      uri:productImage.uri,
-      type:productImage.type,
-      name:productImage.fileName,
+    formData.append('productId', updateId);
 
-    })
+    if (productImage) {
+      formData.append('productImage', {
+        uri: productImage.uri,
+        type: productImage.type,
+        name: productImage.fileName,
+      });
+    }
+    console.log("?????????????????????????????????????????????????????????????");
+    console.log(formData);
+    console.log("?????????????????????????????????????????????????????????????");
+    const apiUrl = route.params ? `${baseUrl}/updateProduct` : `${baseUrl}/addProduct`;
 
     axios({
       method: 'post',
-      url: `${baseUrl}/addProduct`,
+      url: apiUrl,
       data: formData,
-      headers: {'Content-Type': 'multipart/form-data'},
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
-      .then(function (response) {
-        if (response.data.save == true) {
-          AsyncStorage.setItem(
-            'product',
-            JSON.stringify(response.data.newProduct),
-          );
-          // updateCurrentUser({userId:response.data.newUser._id,email:response.data.email,password:response.data.password})
-          navigation.navigate('Home');
+      .then(response => {
+        if (response.data.added || response.data.update) {
+          openModal();
         } else {
-          alert(' Please try again later.');
+          alert('Please try again later.');
         }
       })
-      .catch(function (response) {
-        //handle error
-        console.log(response);
+      .catch(error => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // other than 2xx. Access error response data here.
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received.
+          // `error.request` is an instance of XMLHttpRequest in the browser
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error.
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
       });
-    
-  };
-
-
+    }    
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
@@ -150,11 +160,15 @@ const [productImage,setProductImage]=useState('');
           }}>
           {imageData == '' ? (
             <TouchableOpacity  onPress={() => {
+              setProductImageError('');
               openImagePicker();
             }}>
             <Ionicons name="camera-outline" size={34} color={'grey'} />
             </TouchableOpacity>
           ) : (
+            <TouchableOpacity  onPress={() => {
+              openImagePicker();
+            }}>
             <Image
               source={{uri: imageData}}
               style={{
@@ -165,32 +179,13 @@ const [productImage,setProductImage]=useState('');
                 borderColor: 'grey',
               }}
             />
+            </TouchableOpacity>
           )}
+          
         </Neomorph>
-
-{/* <TouchableOpacity onPress={openGallery}>
-          <Image
-            source={
-              selectedImageUri === ''
-                ? require('../../assets/Images/burger1.jpg')
-                : {uri: selectedImageUri}
-            }
-            style={{
-              height: hp('17%'),
-              width: wp('35%'),
-              borderRadius: 100,
-              alignSelf: 'center',
-              // marginBottom: 7,
-            }}
-          />
-          <View style={[ContainerStyles.CameraIconView]}>
-            <MaterialIcons name="camera-alt" size={23} color="white" />
-          </View>
-        </TouchableOpacity>
-
- */}
-
-
+        {productImageError ? (
+              <Text style={[TextStyles.errorText,{marginTop:hp('2')}]}>{productImageError}</Text>
+            ) : null}
 
       {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
       <View style={{alignItems: 'center', marginTop: hp('5')}}>
@@ -212,10 +207,15 @@ const [productImage,setProductImage]=useState('');
               value={productTitle}
               onChangeText={text => {
                 setproductTitle(text);
+                setProductTitleError('');
               }}
 
             />
           </View>
+          
+          {productTitleError ? (
+              <Text style={[TextStyles.errorText]}>{productTitleError}</Text>
+            ) : null}
         </Neomorph>
 
         <Neomorph
@@ -236,10 +236,14 @@ const [productImage,setProductImage]=useState('');
               value={productDescription}
               onChangeText={text => {
                 setproductDescription(text);
+                setProductDescriptionError('');
               }}
 
             />
           </View>
+          {productDescriptionError ? (
+              <Text style={[TextStyles.errorText]}>{productDescriptionError}</Text>
+            ) : null}
         </Neomorph>
         <Neomorph
           darkShadowColor={AppColors.primary}
@@ -259,20 +263,41 @@ const [productImage,setProductImage]=useState('');
               value={productPrice}
               onChangeText={text => {
                 setproductPrice(text);
+                setProductPriceError('');
               }}
 
             />
           </View>
+          {productPriceError ? (
+              <Text style={[TextStyles.errorText]}>{productPriceError}</Text>
+            ) : null}
         </Neomorph>
-        <TouchableOpacity onPress={onPressCombined}>
+        {updateId == "" ? (
+        <TouchableOpacity onPress={()=>{
+          addOrUpdateProduct();
+        }}>
             <Neomorph
               darkShadowColor={AppColors.white}
               lightShadowColor={AppColors.white}
               swapShadows // <- change zIndex of each shadow color
               style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
-              <Text style={TextStyles.whiteCenteredLable}>Add Producttt</Text>
+              <Text style={TextStyles.whiteCenteredLable}>Add Product</Text>
             </Neomorph>
           </TouchableOpacity>
+        ):(
+          <TouchableOpacity onPress={()=>{
+            addOrUpdateProduct();
+          }}>
+              <Neomorph
+                darkShadowColor={AppColors.white}
+                lightShadowColor={AppColors.white}
+                swapShadows // <- change zIndex of each shadow color
+                style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
+                <Text style={TextStyles.whiteCenteredLable}>Update Product</Text>
+              </Neomorph>
+            </TouchableOpacity> 
+        )
+}
           <Modal
         animationType="slide"
         transparent={true}
@@ -312,9 +337,16 @@ const [productImage,setProductImage]=useState('');
           style={{ width:wp('80'), height:hp('25')}}
           speed={1}
         />
+        {updateId == "" ? (
         <Text style={[TextStyles.leftSmallText]}>
           Product is Successfully Added
         </Text>
+        ):(
+<Text style={[TextStyles.leftSmallText]}>
+          Product is Successfully Updated
+        </Text>
+        )
+}
         <TouchableOpacity onPress={() => {
           navigation.navigate('Products');
         }}>
