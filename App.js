@@ -37,6 +37,7 @@ import TermsOfUse from './src/screens/Settings/TermsOfUse';
 import NewOrder from './src/screens/Orders/NewOrder';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
 import PastOrder from './src/screens/Orders/PastOrder';
+import SingleProductDetail from './src/screens/Food/SingleProductDetail.js';
 
 
 
@@ -91,6 +92,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="NewOrder" component={NewOrder} />
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
       <Stack.Screen name="PastOrder" component={PastOrder} />
+      <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
+
     </Stack.Navigator>
   );
 };

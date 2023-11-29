@@ -30,7 +30,6 @@ import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const AddFoodItems = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageData, setImageData] = useState('');
@@ -39,12 +38,12 @@ const AddFoodItems = ({navigation}) => {
   const [productDescription, setproductDescription] = useState('');
   const [productPrice, setproductPrice] = useState('');
   // const {storeSelectedImageUri,selectedImageUri,currentUser}=useContext(AppContext);
-const [productImage,setProductImage]=useState('');
+  const [productImage, setProductImage] = useState('');
   const onPressCombined = () => {
     addProduct();
     setModalVisible(true);
   };
-  
+
   const openModal = () => {
     setModalVisible(true);
   };
@@ -66,34 +65,10 @@ const [productImage,setProductImage]=useState('');
       if (!response.didCancel && !response.error) {
         console.log('Selected image URI:', response.assets[0].uri);
         setImageData(response.assets[0].uri);
-        setProductImage(response.assets[0])
+        setProductImage(response.assets[0]);
       }
     });
   };
-
-  // const openGallery = async () => {
-  //   const options = {
-  //     title: 'Select Image',
-  //     type: 'library',
-  //     options: {
-  //       maxHeight: 200,
-  //       maxWidth: 200,
-  //       selectionLimit: 1,
-  //       mediaType: 'photo',
-  //       includeBase64: false,
-  //     },
-  //   };
-
-  //   const images = await launchImageLibrary(options);
-  //   storeSelectedImageUri(images.assets[0].uri);
-  //   // setCustomerProfileImage(images.assets[0]);
-  //   // console.log(images.assets[0])
-  //   console.log('i am serry');
-  //   return images;
-  // };
-
-
-
 
 
   const addProduct = () => {
@@ -101,15 +76,14 @@ const [productImage,setProductImage]=useState('');
     formData.append('title', productTitle);
     formData.append('description', productDescription);
     formData.append('price', productPrice);
-    formData.append('productImage',{
-      uri:productImage.uri,
-      type:productImage.type,
-      name:productImage.fileName,
-
-    })
+    formData.append('productImage', {
+      uri: productImage.uri,
+      type: productImage.type,
+      name: productImage.fileName,
+    });
 
     axios({
-      method: 'post',
+      method: 'post',   
       url: `${baseUrl}/addProduct`,
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'},
@@ -130,14 +104,12 @@ const [productImage,setProductImage]=useState('');
         //handle error
         console.log(response);
       });
-    
   };
-
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
-      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}>
+      <View style={[ContainerStyles.centeredContainer, {marginTop: hp('3')}]}>
         <Neomorph
           style={{
             justifyContent: 'center',
@@ -149,10 +121,11 @@ const [productImage,setProductImage]=useState('');
             height: hp('15%'),
           }}>
           {imageData == '' ? (
-            <TouchableOpacity  onPress={() => {
-              openImagePicker();
-            }}>
-            <Ionicons name="camera-outline" size={34} color={'grey'} />
+            <TouchableOpacity
+              onPress={() => {
+                openImagePicker();
+              }}>
+              <Ionicons name="camera-outline" size={34} color={'grey'} />
             </TouchableOpacity>
           ) : (
             <Image
@@ -168,172 +141,147 @@ const [productImage,setProductImage]=useState('');
           )}
         </Neomorph>
 
-{/* <TouchableOpacity onPress={openGallery}>
-          <Image
-            source={
-              selectedImageUri === ''
-                ? require('../../assets/Images/burger1.jpg')
-                : {uri: selectedImageUri}
-            }
-            style={{
-              height: hp('17%'),
-              width: wp('35%'),
-              borderRadius: 100,
-              alignSelf: 'center',
-              // marginBottom: 7,
-            }}
-          />
-          <View style={[ContainerStyles.CameraIconView]}>
-            <MaterialIcons name="camera-alt" size={23} color="white" />
-          </View>
-        </TouchableOpacity>
+        {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
+        <View style={{alignItems: 'center', marginTop: hp('5')}}>
+          <Neomorph
+            darkShadowColor={AppColors.primary}
+            lightShadowColor={AppColors.background}
+            swapShadows // <- change zIndex of each shadow color
+            style={[
+              ContainerStyles.inputFieldNeomorphContainer,
+              {width: wp('70%')},
+            ]}>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                placeholder="Product Title"
+                style={[
+                  TextFieldStyles.inputField,
+                  {paddingHorizontal: wp('5%'), width: wp('70%')},
+                ]}
+                value={productTitle}
+                onChangeText={text => {
+                  setproductTitle(text);
+                }}
+              />
+            </View>
+          </Neomorph>
 
- */}
-
-
-
-      {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
-      <View style={{alignItems: 'center', marginTop: hp('5')}}>
-        <Neomorph
-          darkShadowColor={AppColors.primary}
-          lightShadowColor={AppColors.background}
-          swapShadows // <- change zIndex of each shadow color
-          style={[
-            ContainerStyles.inputFieldNeomorphContainer,
-            {width: wp('70%')},
-          ]}>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              placeholder="Product Title"
-              style={[
-                TextFieldStyles.inputField,
-                {paddingHorizontal: wp('5%'), width: wp('70%')},
-              ]}
-              value={productTitle}
-              onChangeText={text => {
-                setproductTitle(text);
-              }}
-
-            />
-          </View>
-        </Neomorph>
-
-        <Neomorph
-          darkShadowColor={AppColors.primary}
-          lightShadowColor={AppColors.background}
-          swapShadows // <- change zIndex of each shadow color
-          style={[
-            ContainerStyles.inputFieldNeomorphContainer,
-            {width: wp('70%')},
-          ]}>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              placeholder="Product Description"
-              style={[
-                TextFieldStyles.inputField,
-                {paddingHorizontal: wp('5%'), width: wp('70%')},
-              ]}
-              value={productDescription}
-              onChangeText={text => {
-                setproductDescription(text);
-              }}
-
-            />
-          </View>
-        </Neomorph>
-        <Neomorph
-          darkShadowColor={AppColors.primary}
-          lightShadowColor={AppColors.background}
-          swapShadows // <- change zIndex of each shadow color
-          style={[
-            ContainerStyles.inputFieldNeomorphContainer,
-            {width: wp('70%')},
-          ]}>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              placeholder="Product Price"
-              style={[
-                TextFieldStyles.inputField,
-                {paddingHorizontal: wp('5%'), width: wp('70%')},
-              ]}
-              value={productPrice}
-              onChangeText={text => {
-                setproductPrice(text);
-              }}
-
-            />
-          </View>
-        </Neomorph>
-        <TouchableOpacity onPress={onPressCombined}>
+          <Neomorph
+            darkShadowColor={AppColors.primary}
+            lightShadowColor={AppColors.background}
+            swapShadows // <- change zIndex of each shadow color
+            style={[
+              ContainerStyles.inputFieldNeomorphContainer,
+              {width: wp('70%')},
+            ]}>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                placeholder="Product Description"
+                style={[
+                  TextFieldStyles.inputField,
+                  {paddingHorizontal: wp('5%'), width: wp('70%')},
+                ]}
+                value={productDescription}
+                onChangeText={text => {
+                  setproductDescription(text);
+                }}
+              />
+            </View>
+          </Neomorph>
+          <Neomorph
+            darkShadowColor={AppColors.primary}
+            lightShadowColor={AppColors.background}
+            swapShadows // <- change zIndex of each shadow color
+            style={[
+              ContainerStyles.inputFieldNeomorphContainer,
+              {width: wp('70%')},
+            ]}>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                placeholder="Product Price"
+                style={[
+                  TextFieldStyles.inputField,
+                  {paddingHorizontal: wp('5%'), width: wp('70%')},
+                ]}
+                value={productPrice}
+                onChangeText={text => {
+                  setproductPrice(text);
+                }}
+              />
+            </View>
+          </Neomorph>
+          <TouchableOpacity onPress={onPressCombined}>
             <Neomorph
               darkShadowColor={AppColors.white}
               lightShadowColor={AppColors.white}
               swapShadows // <- change zIndex of each shadow color
-              style={[ContainerStyles.touchableOpacityNeomorphContainer,{width:wp('70%')}]}>
+              style={[
+                ContainerStyles.touchableOpacityNeomorphContainer,
+                {width: wp('70%')},
+              ]}>
               <Text style={TextStyles.whiteCenteredLable}>Add Producttt</Text>
             </Neomorph>
           </TouchableOpacity>
           <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={closeModal}>
-          <View
-      style={[
-        ContainerStyles.flexCenter,
-        { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-      ]}
-    >
-      <View
-        style={[
-          TextStyles.modalContent,
-          { justifyContent: 'center', alignItems: 'center' },
-        ]}
-      >
-        <Neomorph
-          darkShadowColor={AppColors.primary}
-          lightShadowColor={AppColors.darkgray}
-          swapShadows // <- change zIndex of each shadow color
-          style={ContainerStyles.smallCloseButtonNeomorph}
-        >
-          <TouchableOpacity onPress={closeModal}>
-            <AntDesign
-              name="close"
-              size={wp('4%')}
-              style={{ color: AppColors.primary }}
-            />
-          </TouchableOpacity>
-        </Neomorph>
+            animationType="slide"
+            transparent={true}
+            visible={isModalVisible}
+            onRequestClose={closeModal}>
+            <View
+              style={[
+                ContainerStyles.flexCenter,
+                {backgroundColor: 'rgba(0, 0, 0, 0.5)'},
+              ]}>
+              <View
+                style={[
+                  TextStyles.modalContent,
+                  {justifyContent: 'center', alignItems: 'center'},
+                ]}>
+                <Neomorph
+                  darkShadowColor={AppColors.primary}
+                  lightShadowColor={AppColors.darkgray}
+                  swapShadows // <- change zIndex of each shadow color
+                  style={ContainerStyles.smallCloseButtonNeomorph}>
+                  <TouchableOpacity onPress={closeModal}>
+                    <AntDesign
+                      name="close"
+                      size={wp('4%')}
+                      style={{color: AppColors.primary}}
+                    />
+                  </TouchableOpacity>
+                </Neomorph>
 
-        <LottieView
-          source={require('../../assets/animations/Done.json')}
-          autoPlay
-          loop
-          style={{ width:wp('80'), height:hp('25')}}
-          speed={1}
-        />
-        <Text style={[TextStyles.leftSmallText]}>
-          Product is Successfully Added
-        </Text>
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('Products');
-        }}>
-          <Neomorph
-            darkShadowColor={AppColors.white}
-            lightShadowColor={AppColors.white}
-            swapShadows // <- change zIndex of each shadow color
-            style={[ContainerStyles.smallConfirmButtonNeomorph, { marginLeft: 0 }]}>
-            <Text
-              style={[TextStyles.smallButtonText]}>
-              View Product
-            </Text>
-          </Neomorph>
-        </TouchableOpacity>
-      </View>
-    </View>
-
-      </Modal>
-      </View>
+                <LottieView
+                  source={require('../../assets/animations/Done.json')}
+                  autoPlay
+                  loop
+                  style={{width: wp('80'), height: hp('25')}}
+                  speed={1}
+                />
+                <Text style={[TextStyles.leftSmallText]}>
+                  Product is Successfully Added
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('Products');
+                  }}>
+                  <Neomorph
+                    darkShadowColor={AppColors.white}
+                    lightShadowColor={AppColors.white}
+                    swapShadows // <- change zIndex of each shadow color
+                    style={[
+                      ContainerStyles.smallConfirmButtonNeomorph,
+                      {marginLeft: 0},
+                    ]}>
+                    <Text style={[TextStyles.smallButtonText]}>
+                      View Product
+                    </Text>
+                  </Neomorph>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </View>
     </SafeAreaView>
   );
