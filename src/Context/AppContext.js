@@ -13,8 +13,9 @@ export const AppProvider =({children})=>{
     const [donatedData, setDonatedData] = useState([]);
     const [isAddedIntoDonatedData, setIsAddedIntoDonatedData] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
- //const [apiKey] = useState('AIzaSyCnBTlNS8np9Emo20ZyJCP8cL2jnpDUOsQ')
+
     const[baseUrl]=useState("http://192.168.0.107:8888");
+
 
 
 const [currentUser,setCurrentUser] =useState({});
