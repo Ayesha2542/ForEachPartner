@@ -27,12 +27,11 @@ import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import AppContext from '../../Context/AppContext';
 
 const Signup = ({navigation}) => {
-  const {baseUrl,updateCurrentUser}=useContext(AppContext)
+  const {baseUrl,storeUpdatedCurrentUser}=useContext(AppContext)
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
-
   const [userNameError, setUserNameError] = useState('');
   const [userEmailError, setUserEmailError] = useState('');
   const [userPasswordError, setUserPasswordError] = useState('');
@@ -47,6 +46,7 @@ const Signup = ({navigation}) => {
   const isPasswordValid = userPassword => {
     return userPassword.length >= 8; // Minimum password length of 8 characters
   };
+  
   const userRegister =  () => {
     if (!userName) {
       setUserNameError('Please enter your name.');
@@ -72,21 +72,45 @@ const Signup = ({navigation}) => {
     ) {
       return false;
     }
-    else{
-      navigation.navigate("RestaurantDetail",{
-        userName,
-         userEmail,
-         userPassword,
-       })
-    }
 
-    
-  }
+    const formData = new FormData();
+    formData.append('userName', userName);
+    formData.append('userEmail', userEmail);
+    formData.append('userPassword', userPassword);
+    console.log("09999999999999999999999999999");
+   console.log(formData);
+    axios({
+      method: 'post',
+      url: `${baseUrl}/restaurantSignup`,
+      data: formData,
+      headers: {'Content-Type': 'multipart/form-data'},
+    })
+      .then(function (response) {
+        if (response.data.save == true) {
+          storeUpdatedCurrentUser({
+                userId:response.data.newUser._id,
+                userEmail: response.data.newUser.userEmail,
+                userPassword: response.data.newUser.userPassword,
+                userName: response.data.newUser.userName, 
+  });
+               
+          navigation.navigate('RestaurantDetail');
+        } else if (response.data.save == false) {
+          setUserEmailError('A user with this Email Address Already Exists');
+        } else {
+          alert('Account cannot be created! Please try again later.');
+        }
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+    // console.warn("Stop");
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <BackButtonHeader navigation={navigation} />
-   
-        <Text style={[TextStyles.leftHeading]}>Sign Up</Text>
+
+        <Text style={[TextStyles.leftHeading,{marginTop:hp('15')}]}>Sign Up</Text>
         {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
         <View style={{alignItems: 'center'}}>
           <Neomorph
@@ -187,8 +211,9 @@ const Signup = ({navigation}) => {
 
           <TouchableOpacity
             onPress={() => {
-
-             userRegister();
+              userRegister();
+              // navigation.navigate('AfterSignup')
+              console.log('signup is running');
             }}>
             <Neomorph
               darkShadowColor="white"

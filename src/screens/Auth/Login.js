@@ -26,22 +26,53 @@ import Feather from 'react-native-vector-icons/Feather';
 import AppContext from '../../Context/AppContext';
 
 const Login = ({navigation}) => {
-  const {baseUrl,updateCurrentUser}=useContext(AppContext)
+  const {baseUrl,storeUpdatedCurrentUser,currentUser}=useContext(AppContext)
   // states
-  const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [userEmailError, setUserEmailError] = useState('');
+  const [userPasswordError, setUserPasswordError] = useState('');
 
-  // functions
+
+  const isEmailValid = userEmail => {
+    const emailPattern = /\S+@\S+\.\S+/;
+    return emailPattern.test(userEmail);
+  };
+
+  const isPasswordValid = userPassword => {
+    return userPassword.length >= 8; // Minimum password length of 8 characters
+  };
+
+
   const userLogin = () => {
+  
+    if (!userEmail) {
+      setUserEmailError('Please enter your email address.');
+    } else if (!isEmailValid(userEmail)) {
+      setUserEmailError('Please enter a valid email address.');
+    }
+    if (!userPassword) {
+      setUserPasswordError('Please enter your password.');
+    } else if (!isPasswordValid(userPassword)) {
+      setUserPasswordError('Password must be at least 8 characters long.');
+    }
+
+    if (
+      !userEmail ||
+      !userPassword ||
+      !isEmailValid(userEmail) ||
+      !isPasswordValid(userPassword)
+    ) {
+      return false;
+    }
     const formData = new FormData();
-    formData.append('email', userEmail);
-    formData.append('password', userPassword);
+    formData.append('userEmail', userEmail);
+    formData.append('userPassword', userPassword);
 
     axios({
       method: 'post',
-      url: `${baseUrl}/Login`,
+      url: `${baseUrl}/restaurantLogin`,
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'},
     })
@@ -51,7 +82,20 @@ const Login = ({navigation}) => {
             'provider',
             JSON.stringify(response.data.loggedInUser),
           );
-          navigation.navigate('RestaurantDetail');
+          storeUpdatedCurrentUser({
+            userId:response.data.loggedInUser._id,
+            userName:response.data.loggedInUser.userName,
+            userEmail:response.data.loggedInUser.userEmail,
+            userPassword:response.data.loggedInUser.userPassword,
+            restaurantImage:response.data.loggedInUser.restaurantImage,
+            restaurantName:response.data.loggedInUser.restaurantName,
+            restaurantAddress:response.data.loggedInUser.restaurantAddress,
+            restaurantCnic:response.data.loggedInUser.restaurantCnic,
+            restaurantPhoneNumber:response.data.loggedInUser.restaurantPhoneNumber,
+            restaurantCategories:response.data.loggedInUser.restaurantCategories,
+           
+          })
+          navigation.navigate('Home');
         } else {
           alert('No User found with this email and password');
         }
@@ -69,16 +113,10 @@ const Login = ({navigation}) => {
     }
   };
 
-  // useEffect(() => {
-  //   let currentUserStatus = AsyncStorage.getItem('user');
-  //   if (currentUserStatus) {
-  //     navigation.navigate('Login');
-  //   }
-  // }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
-      <BackButtonHeader navigation={navigation} />
-      <Text style={TextStyles.leftHeading}>Log In</Text>
+
+      <Text style={[TextStyles.leftHeading,{marginTop:hp('16')}]}>Log In</Text>
       {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
       <View style={{alignItems: 'center'}}>
         <Neomorph
@@ -99,9 +137,13 @@ const Login = ({navigation}) => {
               autoCapitalize="none"
               onChangeText={text => {
                 setUserEmail(text);
+                setUserEmailError('');
               }}
             />
           </View>
+          {userEmailError ? (
+              <Text style={[TextStyles.errorText]}>{userEmailError}</Text>
+            ) : null}
         </Neomorph>
 
         <Neomorph
@@ -123,6 +165,7 @@ const Login = ({navigation}) => {
               secureTextEntry={passwordVisible}
               onChangeText={text => {
                 setUserPassword(text);
+                setUserPasswordError('')
               }}
             />
              <TouchableOpacity
@@ -137,6 +180,9 @@ const Login = ({navigation}) => {
                 />
               </TouchableOpacity>
           </View>
+          {userPasswordError ? (
+              <Text style={[TextStyles.errorText]}>{userPasswordError}</Text>
+            ) : null}
         </Neomorph>
 
         <TouchableOpacity
@@ -150,8 +196,6 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           onPress={() => {
             userLogin();
-            console.log('user logged in');
-            // navigation.navigate('Login');
           }}>
           <Neomorph
             darkShadowColor={AppColors.primary}
