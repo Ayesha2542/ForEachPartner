@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -19,12 +19,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import IconStyles from '../../assets/Styles/IconStyles';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
+import AppContext from '../../Context/AppContext';
 
 const Profile = ({ navigation }) => {
+  const {currentUser} = useContext(AppContext);
   const [userName, setUserName] = useState('Toqeer Fatima');
   const [userEmail, setUserEmail] = useState('toqeerfatima@gmail.com');
   const [userMobileNumber, setMobileNumber] = useState('+923026665276');
-
+console.log(currentUser)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.white }}>
       <CartHeader navigation={navigation} item="Profile" />
@@ -51,7 +53,7 @@ const Profile = ({ navigation }) => {
               </View>
             </View>
             <Text style={[TextFieldStyles.profileInputFieldText]}>
-              {userName}
+              {currentUser.userName}
             </Text>
           </Neomorph>
         </TouchableOpacity>
@@ -78,7 +80,7 @@ const Profile = ({ navigation }) => {
               </View>
               </View>
             <Text style={[TextFieldStyles.profileInputFieldText]}>
-              {userEmail}
+              {currentUser.userEmail}
             </Text>
           </Neomorph>
         </TouchableOpacity>
@@ -104,7 +106,7 @@ const Profile = ({ navigation }) => {
             
             </View>
             <Text style={[TextFieldStyles.profileInputFieldText]}>
-              {userMobileNumber}
+              {currentUser.restaurantPhoneNumber}
             </Text>
           </Neomorph>
         </TouchableOpacity>

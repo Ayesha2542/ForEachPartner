@@ -9,7 +9,7 @@ import AppColors from '../assets/colors/AppColors';
 import axios from 'axios'; // Import axios for making HTTP requests
 import AppContext from '../Context/AppContext';
 
-const CategoryModal = ({ selectedCategories, onCategorySelect }) => {
+const CategoryModal = ({ restaurantCategories, onCategorySelect }) => {
   const {baseUrl} = useContext(AppContext);
   const [categories, setAllCategories] = useState([]);
 
@@ -20,7 +20,7 @@ const CategoryModal = ({ selectedCategories, onCategorySelect }) => {
         const fetchedCategories = response.data.map(category => ({
           id: category._id, // Assuming the category object has an '_id' property
           label: category.title,
-          checked: selectedCategories.includes(category.title),
+          checked: restaurantCategories.includes(category.title),
         }));
         setAllCategories(fetchedCategories);
       } catch (error) {
@@ -30,7 +30,7 @@ const CategoryModal = ({ selectedCategories, onCategorySelect }) => {
 
     // Call the function when the component mounts
     fetchCategories();
-  }, [selectedCategories]); // Include selectedCategories in the dependency array to update when it changes
+  }, [restaurantCategories]); // Include restaurantCategories in the dependency array to update when it changes
 
   const handleCategoryToggle = (categoryId, label) => {
     const updatedCategories = categories.map(category => {

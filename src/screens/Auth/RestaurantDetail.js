@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Modal,
+  Modal, 
+  Platform 
 } from 'react-native';
 import BackButtonHeader from '../../components/headers/BackButtonHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
@@ -24,17 +25,19 @@ import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import TextStyles from '../../assets/Styles/TextStyles';
 import TextFieldStyles from '../../assets/Styles/TextFieldStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
-import ImageStyles from '../../assets/Styles/ImageStyles';
+//import ImageStyles from '../../assets/Styles/ImageStyles';
 import CategoryModal from '../../components/CategoryModal';
 import AppContext from '../../Context/AppContext';
 import axios from 'axios';
-const RestaurantDetail = ({navigation,route}) => {
-  const {userName,userEmail,userPassword}= route.params;
-  console.log("kdjfkldjfljdlkfjdj",userName,userEmail,userPassword);
-  const {baseUrl} = useContext(AppContext);
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+
+const RestaurantDetail = ({navigation}) => {
+
+  const {baseUrl,currentUser,storeUpdatedCurrentUser} = useContext(AppContext);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [restaurantCategories, setrestaurantCategories] = useState();
   const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('');
   const [restaurantName,setRestaurantName]= useState('');
@@ -42,7 +45,6 @@ const RestaurantDetail = ({navigation,route}) => {
   const [restaurantCnic,setRestaurantCnic]= useState('');
   const [restaurantPhoneNumber,setRestaurantPhoneNumber]= useState('');
   const [restaurantImage,setRestaurantImage]=useState('');
-
   const [restaurantNameError,setRestaurantNameError]= useState('')
   const [restaurantAddressError,setRestaurantAddressError]= useState('')
   const [restaurantCnicError,setRestaurantCnicError]= useState('')
@@ -58,7 +60,7 @@ const RestaurantDetail = ({navigation,route}) => {
   };
 
   const handleCategorySelect = selectedCategoryLabels => {
-    setSelectedCategories(selectedCategoryLabels);
+    setrestaurantCategories(selectedCategoryLabels);
     setCategoryInput(selectedCategoryLabels.join(', '));
     closeModal();
   };
@@ -68,49 +70,71 @@ const RestaurantDetail = ({navigation,route}) => {
       if (!response.didCancel && !response.error) {
         console.log('Selected image URI:', response.assets[0].uri);
         setImageData(response.assets[0].uri);
+        setRestaurantImage(response.assets[0])
       }
     });
   };
-const addRestaurant=()=>{
-  
-}
-  const handelSubmit = () => {
-    if (!restaurantName) {
-      setRestaurantNameError('Please enter product name.');
-    }
 
+  const isValidPhoneNumber = restaurantPhoneNumber => {
+    const regex = /^(\+92|0)(3[0-9]{9})$/;
+    return regex.test(restaurantPhoneNumber); 
+  };
+  const isValidCNIC = cnic => {
+    // CNIC format: 12345-6789012-3
+    const regex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
+    return regex.test(cnic);
+  };
+  const formatCNIC = input => {
+    const cleanedInput = input.replace(/[-\s]/g, '');
+    const formattedInput = cleanedInput
+      .replace(/^(\d{5})(\d{7})(\d{1})$/, '$1-$2-$3')
+      .slice(0, 15);
+  
+    return formattedInput;
+  };
+  
+  const addRestaurant = () => {
+    if (!imageData) {
+      setRestaurantImageDataError('Restaurant Image is required');
+    } 
+    if (!restaurantName) {
+      setRestaurantNameError('Restaurant name is required');
+    }
     if (!restaurantAddress) {
-      setRestaurantAddressError('Please enter your product description.');
+      setRestaurantAddressError('Restaurant Address is required');
     }
     if (!restaurantCnic) {
-      setRestaurantCnicError('Please enter your product price.');
-    } 
+      setRestaurantCnicError('Owner CNIC is required');
+    }
     if (!restaurantPhoneNumber) {
-      setRestaurantPhoneNumberError('Please enter your product price.');
-    } 
-    if (!imageData) {
-     setRestaurantImageDataError('Please Upload image of your product .');
-   } 
+      setRestaurantPhoneNumberError('Restaurant phone number is required');
+    } else if (!isValidPhoneNumber(restaurantPhoneNumber)) {
+      setRestaurantPhoneNumberError('Invalid Phone Number');
+    }
+
+   if(!categoryInput){
+    setCategoryInputError('Choose one or more category is required')
+   }
+   
     if (
-     !imageData ||
-      !restaurantName ||
+      !imageData||
+      !restaurantName||
       !restaurantAddress||
       !restaurantCnic||
-      !restaurantPhoneNumber
-    
+      !categoryInput||
+      !restaurantCnic||
+      !isValidPhoneNumber(restaurantPhoneNumber)
     ) {
       return false;
     }
-    else{
+
       const formData = new FormData();
       formData.append('restaurantName', restaurantName);
       formData.append('restaurantAddress', restaurantAddress);
       formData.append('restaurantCnic', restaurantCnic);
       formData.append('restaurantPhoneNumber', restaurantPhoneNumber);
-      formData.append('userName',userName);
-      formData.append('userEmail',userEmail);
-      formData.append('userPassword',userPassword);
-  
+      formData.append('restaurantCategories',JSON.stringify(restaurantCategories));
+      formData.append('_id',currentUser.userId);
       if (restaurantImage) {
         formData.append('restaurantImage', {
           uri: restaurantImage.uri,
@@ -118,33 +142,53 @@ const addRestaurant=()=>{
           name: restaurantImage.fileName,
         });
       }
+    
       console.log("?????????????????????????????????????????????????????????????");
       console.log(formData);
       console.log("?????????????????????????????????????????????????????????????");
   
       axios({
         method: 'post',
-        url: `${baseUrl}/restaurantSignup`,
+        url: `${baseUrl}/restaurantDetail`,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' },
       })
         .then(response => {
-          if (response.data.added) {
+          if (response.data.registeredUser) {
+            storeUpdatedCurrentUser({
+              userId:response.data.registeredUser._id,
+              userName:response.data.registeredUser.userName,
+              userEmail:response.data.registeredUser.userEmail,
+              userPassword:response.data.registeredUser.userPassword,
+              restaurantImage:response.data.registeredUser.restaurantImage,
+              restaurantName:response.data.registeredUser.restaurantName,
+              restaurantAddress:response.data.registeredUser.restaurantAddress,
+              restaurantCnic:response.data.registeredUser.restaurantCnic,
+              restaurantPhoneNumber:response.data.registeredUser.restaurantPhoneNumber,
+              restaurantCategories:response.data.registeredUser.restaurantCategories,
+            })
             navigation.navigate('WelcomeScreen')
           } else {
             alert('Please try again later.');
           }
         })
         .catch(error => {
-            console.log('Error', error.message);  
+          console.error('Error:', error);
+          alert(`An error occurred: ${error.message}`);
         });
-    }
+      }
 
    
-    }   
+    
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+        <KeyboardAwareScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        extraScrollHeight={Platform.select({ ios: 80, android: 40 })}
+        enableOnAndroid
+      >
       <BackButtonHeader navigation={navigation} />
+     
        <View style={[ContainerStyles.centeredContainer,{marginTop:hp('0')}]}> 
        <Neomorph
           style={{
@@ -186,25 +230,26 @@ const addRestaurant=()=>{
             ) : null}
 
       <Text
-        style={[TextStyles.cartTextStyle,{marginLeft:0}]}>
+        style={[TextStyles.cartTextStyle,{marginLeft:0,marginTop:hp('1')}]}>
         Restaurant Details
-      </Text>     
+      </Text>
+      
         <Neomorph
           darkShadowColor={AppColors.primary}
           lightShadowColor={AppColors.background}
           swapShadows // <- change zIndex of each shadow color
           style={ContainerStyles.inputFieldNeomorphContainer}>
           <View style={{flexDirection: 'row'}}>
-            <MaterialIcons
+          <MaterialIcons
               name="food-bank"
               size={wp('6%')}
               style={IconStyles.signupIcons}
             />
             <TextInput
-              placeholder="Enter Your Restaurant Name"
+              placeholder="Restaurant Name"
               style={[TextFieldStyles.inputField]}
               value={restaurantName}
-              onChange={text => {
+              onChangeText={text => {
                 setRestaurantName(text);
                 setRestaurantNameError('');
               }}
@@ -220,14 +265,38 @@ const addRestaurant=()=>{
           swapShadows // <- change zIndex of each shadow color
           style={ContainerStyles.inputFieldNeomorphContainer}>
           <View style={{flexDirection: 'row'}}>
+           
+            
+          <Neomorph
+          darkShadowColor={AppColors.primary}
+          lightShadowColor={AppColors.darkgray}
+          swapShadows // <- change zIndex of each shadow color
+          style={{
+          marginLeft:wp('0'),marginTop:hp('0'),
+          shadowRadius: 0.3,
+          backgroundColor: AppColors.white,
+          borderRadius: wp('1%'),
+          height: hp('7'),
+          width: wp('10%'),
+          shadowOpacity: 0.3,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <TouchableOpacity onPress={()=>{
+              navigation.navigate('AddAddress')
+            }}>
             <Octicons
               name="location"
               size={wp('5%')}
-              style={IconStyles.signupIcons}
+              style={[IconStyles.signupIcons,{margin:0}]}
             />
+            </TouchableOpacity>
+            </Neomorph>
+           
             <TextInput
               placeholder="Restaurant Full Address"
-              style={[TextFieldStyles.inputField]}
+              style={[TextFieldStyles.inputField,{marginLeft:wp('3.5')}]}
               value={restaurantAddress}
               onChangeText={text => {
                 setRestaurantAddress(text);
@@ -255,11 +324,12 @@ const addRestaurant=()=>{
             <TextInput
               placeholder="Enter CNIC"
               style={[TextFieldStyles.inputField]}
-              value={restaurantCnic}
+              value={formatCNIC(restaurantCnic)}
               onChangeText={text => {
                 setRestaurantCnic(text);
                 setRestaurantCnicError('');
               }}
+              keyboardType="numeric"
             />
           </View>
           {restaurantCnicError ? (
@@ -272,24 +342,24 @@ const addRestaurant=()=>{
           swapShadows // <- change zIndex of each shadow color
           style={ContainerStyles.inputFieldNeomorphContainer}>
           <View style={{flexDirection: 'row'}}>
-            <AntDesign
-              name="idcard"
+            <FontAwesome
+              name="phone"
               size={wp('6%')}
               style={IconStyles.signupIcons}
             />
 
             <TextInput
-              placeholder="Enter CNIC"
+              placeholder="Enter Phone Number"
               style={[TextFieldStyles.inputField]}
-              value={restaurantCnic}
+              value={restaurantPhoneNumber}
               onChangeText={text => {
-                setRestaurantCnic(text);
-                setRestaurantCnicError('');
+                setRestaurantPhoneNumber(text);
+                setRestaurantPhoneNumberError('');
               }}
             />
           </View>
-          {restaurantCnicError ? (
-              <Text style={[TextStyles.errorText]}>{restaurantCnicError}</Text>
+          {restaurantPhoneNumberError ? (
+              <Text style={[TextStyles.errorText]}>{restaurantPhoneNumberError}</Text>
             ) : null}
         </Neomorph>
         <TouchableOpacity onPress={openModal}>
@@ -308,7 +378,10 @@ const addRestaurant=()=>{
                 placeholder="Choose Categories"
                 style={[TextFieldStyles.inputField, {color: 'black'}]}
                 value={categoryInput}
-                onChangeText={text => setCategoryInput(text)}
+                onChangeText={text => {
+                  setCategoryInput(text)
+                  setCategoryInputError('');
+                }}
                 editable={false} // Disable manual input
               />
             </View>
@@ -321,7 +394,6 @@ const addRestaurant=()=>{
         <TouchableOpacity 
           onPress={() => {
             addRestaurant();
-            // console.log('addRestaurant')
         
           }}>
           <Neomorph
@@ -341,11 +413,12 @@ const addRestaurant=()=>{
         visible={isModalVisible}
         onRequestClose={closeModal}>
         <CategoryModal
-          selectedCategories={selectedCategories}
+          restaurantCategories={restaurantCategories}
           onCategorySelect={handleCategorySelect}
         />
       </Modal>
       </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

@@ -24,9 +24,7 @@ const WelcomeScreen = ({navigation}) => {
   
   useEffect(() => {
     if (shouldNavigate) {
-      navigation.navigate('Home', {
-        selectedCategories: selectedCategories,
-      });
+      navigation.navigate('Home');
     }
   }, [shouldNavigate, navigation]);
 
