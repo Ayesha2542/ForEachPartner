@@ -22,24 +22,29 @@ import TextStyles from '../../assets/Styles/TextStyles';
 import AppContext from '../../Context/AppContext';
 import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
-const Products = ({navigation}) => {
+import LottieView from 'lottie-react-native';
+
+const Products = ({navigation,item}) => {
   const {storeSelectedSubCategoryFeature, baseUrl} = useContext(AppContext);
   const [allProducts, setAllProducts] = useState([]);
+  const [hasProducts, setHasProducts] = useState(true);
 
 
       const viewAllProducts = async () => {
         try {
           const response = await axios.post(`${baseUrl}/viewAllProducts`);
           setAllProducts(response.data);
+          setHasProducts(response.data.length > 0);
         } catch (error) {
           console.error('Error fetching categories:', error);
         }
       };
-      useFocusEffect(React.useCallback(
-        ()=>{
-        viewAllProducts();
-    },[]
-  ))
+      useFocusEffect(
+        React.useCallback(() => {
+          viewAllProducts();
+        }, [])
+      );
+      
 
   const deleteProduct = async (delId) => {
     try {
@@ -55,16 +60,31 @@ const Products = ({navigation}) => {
       console.log(error);
     }
   };
-  
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <ProfileHeader navigation={navigation} item="Products" />
-
+      {hasProducts ? (
       <FlatList
         data={allProducts}
         renderItem={({item}) => {
           return (
             <View style={[ContainerStyles.flexCenter]}>
+              <TouchableOpacity onPress={() => {
+            navigation.navigate('SingleProductDetail',{
+              productImage: baseUrl + item.productImage,
+              imageTitle: item.title,
+              imagePrice: item.price,
+              description: item.description,
+    
+            });
+          }}
+>
               <Neomorph
                 darkShadowColor={AppColors.primary}
                 lightShadowColor={AppColors.darkgray}
@@ -130,7 +150,7 @@ const Products = ({navigation}) => {
                         </TouchableOpacity>
                       </View>
                       <Text style={{width: wp('60')}}>
-                        {item.description}...
+                      {truncateText(item.description, 20)}
                       </Text>
                       <Text style={[TextStyles.foodPrice]}>
                         Rs.{item.price}
@@ -139,10 +159,23 @@ const Products = ({navigation}) => {
                   </View>
                 </View>
               </Neomorph>
+              </TouchableOpacity>
             </View>
           );
         }}
       />
+      ) : (
+        <View style={[ContainerStyles.flexCenter, {padding: 20}]}>
+          <LottieView
+            source={require('../../assets/animations/productEmpty.json')}
+            autoPlay
+            loop
+            style={{width: 200, height: 200}}
+          />
+          <Text>No products available</Text>
+        </View>
+      )}
+  
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => {
@@ -159,6 +192,7 @@ const Products = ({navigation}) => {
             <Text style={TextStyles.whiteCenteredLable}>Add Product</Text>
           </Neomorph>
         </TouchableOpacity>
+        
       </View>
     </SafeAreaView>
   );

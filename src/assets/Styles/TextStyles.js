@@ -79,8 +79,9 @@ const TextStyles = StyleSheet.create({
   leftText: {
     color: AppColors.black,
     fontFamily: 'Poppins-SemiBold',
-    marginTop: hp('2%'),
+    marginTop: hp('4%'),
     marginLeft: wp('4%'),
+    fontSize:hp('2.8')
   },
   leftMediumText: {
     color: AppColors.black,
@@ -89,6 +90,16 @@ const TextStyles = StyleSheet.create({
     marginTop: hp('1%'),
     marginLeft: wp('4%'),
   },
+  
+  leftMediumText2: {
+    color: AppColors.black,
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: hp('3%'),
+    marginTop: hp('1%'),
+    marginLeft: wp('4%'),
+  },
+
+
   leftSmallText: {
     color: AppColors.black,
     fontFamily: 'Poppins-Regular',
@@ -103,7 +114,8 @@ const TextStyles = StyleSheet.create({
   simpleText: {
     color: AppColors.black,
     fontFamily: 'Poppins-SemiBold',
-    fontSize: hp('1.9'),
+    fontSize: hp('2.5'),
+    marginLeft:hp('3')
   },
 
   fetchTextStyle: {
@@ -173,7 +185,13 @@ const TextStyles = StyleSheet.create({
   },
   dealText: {
     fontFamily: 'Poppins-Regular',
-    marginLeft: wp('4%'),
+    justifyContent:"space-between",
+    alignItems:"center",
+    textAlign:"right",
+    textAlign:"left",
+    marginLeft:wp('6'),
+    marginRight:wp('3'),
+    marginTop:hp('1.5')
   },
   dealPriceText: {
     color: AppColors.black,
@@ -242,6 +260,14 @@ foodPrice:{
   fontFamily: 'Poppins-Bold',
   marginLeft: wp('45')
 },
+
+foodPrices:{
+  fontSize: hp('2.8'),
+  fontFamily: 'Poppins-Bold',
+  marginLeft: wp('4'),
+  marginTop:hp('4')
+},
+
   label2: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: wp('3%'),
