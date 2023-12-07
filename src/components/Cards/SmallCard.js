@@ -12,8 +12,8 @@ import axios from 'axios';
 import AppContext from '../../Context/AppContext';
 
 const SmallCard = ({navigation, item}) => {
-  const[allCategories,setAllCategories]=useState([])
   const {baseUrl} = useContext(AppContext)
+  const[allCategories,setAllCategories]=useState([])
 
   const categoryImages = allCategories.reduce((acc, category) => {
     acc[category.title] = category.categoryImage;
@@ -21,21 +21,21 @@ const SmallCard = ({navigation, item}) => {
   }, {});
 
     useEffect(() => {
-    // Function to fetch categories from the backend
-    const fetchCategories = async () => {
+    const viewAllCategories = async () => {
       try {
         const response = await axios.post(`${baseUrl}/viewAllCategories`);
+
         setAllCategories(response.data);
+        
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
-    fetchCategories();
+    viewAllCategories();
   }, []);
   
 
   const categoryImage = categoryImages[item];
-
   return (
     <View style={{marginLeft: wp('11'), marginTop: hp('3.9')}}>
       <TouchableOpacity onPress={() => navigation.navigate('Products')}>
