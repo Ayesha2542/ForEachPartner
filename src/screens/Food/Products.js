@@ -22,16 +22,21 @@ import TextStyles from '../../assets/Styles/TextStyles';
 import AppContext from '../../Context/AppContext';
 import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
+
 const Products = ({navigation, route}) => {
   const {baseUrl, categoryName, currentUser} = useContext(AppContext);
+import LottieView from 'lottie-react-native';
+
+const Products = ({navigation,item}) => {
+  const {storeSelectedSubCategoryFeature, baseUrl} = useContext(AppContext);
   const [allProducts, setAllProducts] = useState([]);
+  const [hasProducts, setHasProducts] = useState(true);
 
   const viewAllProducts = async () => {
     try {
       const response = await axios.post(
         `${baseUrl}/viewAllProducts/${currentUser.userId}/${categoryName.categoryName}`,
       );
-
       setAllProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -43,6 +48,22 @@ const Products = ({navigation, route}) => {
       viewAllProducts();
     }, [currentUser.userId, categoryName.categoryName]),
   );
+      const viewAllProducts = async () => {
+        try {
+          const response = await axios.post(`${baseUrl}/viewAllProducts`);
+          setAllProducts(response.data);
+          setHasProducts(response.data.length > 0);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+      useFocusEffect(
+        React.useCallback(() => {
+          viewAllProducts();
+        }, [])
+      );
+      
+
 
   const deleteProduct = async delId => {
     try {
@@ -93,6 +114,59 @@ const Products = ({navigation, route}) => {
                       }}>
                       <View key={item.id}>
                         <View
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
+      <ProfileHeader navigation={navigation} item="Products" />
+      {hasProducts ? (
+      <FlatList
+        data={allProducts}
+        renderItem={({item}) => {
+          return (
+            <View style={[ContainerStyles.flexCenter]}>
+              <TouchableOpacity onPress={() => {
+            navigation.navigate('SingleProductDetail',{
+              productImage: baseUrl + item.productImage,
+              imageTitle: item.title,
+              imagePrice: item.price,
+              description: item.description,
+    
+            });
+          }}
+>
+              <Neomorph
+                darkShadowColor={AppColors.primary}
+                lightShadowColor={AppColors.darkgray}
+                swapShadows // <- change zIndex of each shadow color
+                style={[
+                  ContainerStyles.productCardNeomorph,
+                  {overflow: 'hidden'},
+                ]}>
+                <View style={{flexDirection: 'row', width: wp('65')}}>
+                  <Image
+                    source={{uri: baseUrl + item.productImage}}
+                    style={[ImageStyles.orderImage]}
+                    onError={error =>
+                      console.error('Image loading error:', error)
+                    }
+                  />
+                  <View
+                    style={{
+                      marginTop: hp('4'),
+                      marginLeft: wp('2.5'),
+                    }}>
+                    <View key={item.id}>
+                      <View
+                        style={{
+                          justifyContent: 'space-between',
+                          flexDirection: 'row',
+                        }}>
+                        <Text
                           style={{
                             justifyContent: 'space-between',
                             flexDirection: 'row',
@@ -149,6 +223,32 @@ const Products = ({navigation, route}) => {
           }}
         />
       )}
+                      <Text style={{width: wp('60')}}>
+                      {truncateText(item.description, 20)}
+                      </Text>
+                      <Text style={[TextStyles.foodPrice]}>
+                        Rs.{item.price}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </Neomorph>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      />
+      ) : (
+        <View style={[ContainerStyles.flexCenter, {padding: 20}]}>
+          <LottieView
+            source={require('../../assets/animations/productEmpty.json')}
+            autoPlay
+            loop
+            style={{width: 200, height: 200}}
+          />
+          <Text>No products available</Text>
+        </View>
+      )}
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => {
@@ -165,6 +265,7 @@ const Products = ({navigation, route}) => {
             <Text style={TextStyles.whiteCenteredLable}>Add Product</Text>
           </Neomorph>
         </TouchableOpacity>
+        
       </View>
     </SafeAreaView>
   );

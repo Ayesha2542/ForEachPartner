@@ -15,11 +15,9 @@ export const AppProvider =({children})=>{
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [categoryName, setCategoryName] = useState('');
     const[baseUrl]=useState("http://192.168.0.114:8888");
+   const [currentUser,setCurrentUser] =useState({});
 
-
-
-const [currentUser,setCurrentUser] =useState({});
-
+  
     const storeSelectedFoodFeature= (val)=>{
         setSelectedFoodFeature(val);  
     }
@@ -60,10 +58,10 @@ const [currentUser,setCurrentUser] =useState({});
             setCategoryName(newCategoryName);
           };
     return <AppContext.Provider value={{
-      baseUrl,
-      categoryName,
-      currentUser,
-      selectedFoodFeature,
+        baseUrl,
+        categoryName,
+        currentUser,
+        selectedFoodFeature,
         selectedCategories,
         selectedSubCategoryFeature,
         selectedRestaurants,
