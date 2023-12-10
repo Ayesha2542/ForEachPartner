@@ -37,7 +37,7 @@ const RestaurantDetail = ({navigation}) => {
 
   const {baseUrl,currentUser,storeUpdatedCurrentUser} = useContext(AppContext);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [restaurantCategories, setrestaurantCategories] = useState();
+  const [restaurantCategories, setRestaurantCategories] = useState([]);
   const [categoryInput, setCategoryInput] = useState('');
   const [imageData, setImageData] = useState('');
   const [restaurantName,setRestaurantName]= useState('');
@@ -60,7 +60,7 @@ const RestaurantDetail = ({navigation}) => {
   };
 
   const handleCategorySelect = selectedCategoryLabels => {
-    setrestaurantCategories(selectedCategoryLabels);
+    setRestaurantCategories(selectedCategoryLabels);
     setCategoryInput(selectedCategoryLabels.join(', '));
     closeModal();
   };

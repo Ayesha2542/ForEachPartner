@@ -22,6 +22,9 @@ import TextStyles from '../../assets/Styles/TextStyles';
 import AppContext from '../../Context/AppContext';
 import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
+
+const Products = ({navigation, route}) => {
+  const {baseUrl, categoryName, currentUser} = useContext(AppContext);
 import LottieView from 'lottie-react-native';
 
 const Products = ({navigation,item}) => {
@@ -29,7 +32,22 @@ const Products = ({navigation,item}) => {
   const [allProducts, setAllProducts] = useState([]);
   const [hasProducts, setHasProducts] = useState(true);
 
+  const viewAllProducts = async () => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/viewAllProducts/${currentUser.userId}/${categoryName.categoryName}`,
+      );
+      setAllProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      viewAllProducts();
+    }, [currentUser.userId, categoryName.categoryName]),
+  );
       const viewAllProducts = async () => {
         try {
           const response = await axios.post(`${baseUrl}/viewAllProducts`);
@@ -46,11 +64,12 @@ const Products = ({navigation,item}) => {
       );
       
 
-  const deleteProduct = async (delId) => {
+
+  const deleteProduct = async delId => {
     try {
       const response = await axios.delete(`${baseUrl}/deleteProduct/${delId}`);
       console.log('Delete Product Response:', response.data);
-  
+
       if (response.data.success) {
         viewAllProducts();
       } else {
@@ -60,6 +79,41 @@ const Products = ({navigation,item}) => {
       console.log(error);
     }
   };
+
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
+      <ProfileHeader navigation={navigation} item="Products" />
+      {allProducts.length === 0 ? (
+        <Text>No products available for the selected category</Text>
+      ) : (
+        <FlatList
+          data={allProducts}
+          renderItem={({item}) => {
+            return (
+              <View style={[ContainerStyles.flexCenter]}>
+                <Neomorph
+                  darkShadowColor={AppColors.primary}
+                  lightShadowColor={AppColors.darkgray}
+                  swapShadows // <- change zIndex of each shadow color
+                  style={[
+                    ContainerStyles.productCardNeomorph,
+                    {overflow: 'hidden'},
+                  ]}>
+                  <View style={{flexDirection: 'row', width: wp('65')}}>
+                    <Image
+                      source={{uri: baseUrl + item.productImage}}
+                      style={[ImageStyles.orderImage]}
+                      onError={error =>
+                        console.error('Image loading error:', error)
+                      }
+                    />
+                    <View
+                      style={{
+                        marginTop: hp('4'),
+                        marginLeft: wp('2.5'),
+                      }}>
+                      <View key={item.id}>
+                        <View
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -114,41 +168,61 @@ const Products = ({navigation,item}) => {
                         }}>
                         <Text
                           style={{
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: hp(2),
-                            color: AppColors.black,
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
                           }}>
-                          {item.title}
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-SemiBold',
+                              fontSize: hp(2),
+                              color: AppColors.black,
+                            }}>
+                            {item.productName}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.navigate('AddFoodItems', {
+                                productId: item._id,
+                                productName: item.productName,
+                                productDescription: item.productDescription,
+                                productPrice: item.productPrice,
+                                productImage: baseUrl + item.productImage,
+                              });
+                            }}>
+                            <FontAwesome
+                              name="edit"
+                              size={20}
+                              color={AppColors.primary}
+                              style={{marginLeft: wp('7')}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              deleteProduct(item._id);
+                            }}>
+                            <FontAwesome
+                              name="trash"
+                              size={20}
+                              color={AppColors.primary}
+                              style={{marginRight: wp('1')}}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        <Text style={{width: wp('60')}}>
+                          {item.productDescription}...
                         </Text>
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.navigate('AddFoodItems', {
-                              productId: item._id,
-                              title: item.title,
-                              description: item.description,
-                              price: item.price,
-                              productImage: baseUrl + item.productImage,
-                            });
-                          }}>
-                          <FontAwesome
-                            name="edit"
-                            size={20}
-                            color={AppColors.primary}
-                            style={{marginLeft: wp('7')}}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            deleteProduct(item._id);
-                          }}>
-                          <FontAwesome
-                            name="trash"
-                            size={20}
-                            color={AppColors.primary}
-                            style={{marginRight: wp('1')}}
-                          />
-                        </TouchableOpacity>
+                        <Text style={[TextStyles.foodPrice]}>
+                          Rs.{item.productPrice}
+                        </Text>
                       </View>
+                    </View>
+                  </View>
+                </Neomorph>
+              </View>
+            );
+          }}
+        />
+      )}
                       <Text style={{width: wp('60')}}>
                       {truncateText(item.description, 20)}
                       </Text>
@@ -175,7 +249,6 @@ const Products = ({navigation,item}) => {
           <Text>No products available</Text>
         </View>
       )}
-  
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => {
