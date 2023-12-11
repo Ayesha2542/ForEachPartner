@@ -1,4 +1,4 @@
-import React, {useEffect, useState,useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 
 import {
   Image,
@@ -26,14 +26,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import AppContext from '../../Context/AppContext';
 
 const Login = ({navigation}) => {
-  const {baseUrl,storeUpdatedCurrentUser,currentUser}=useContext(AppContext)
+  const {baseUrl, storeUpdatedCurrentUser, currentUser} =
+    useContext(AppContext);
   // states
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [userEmailError, setUserEmailError] = useState('');
   const [userPasswordError, setUserPasswordError] = useState('');
-
 
   const isEmailValid = userEmail => {
     const emailPattern = /\S+@\S+\.\S+/;
@@ -44,9 +44,7 @@ const Login = ({navigation}) => {
     return userPassword.length >= 8; // Minimum password length of 8 characters
   };
 
-
   const userLogin = () => {
-  
     if (!userEmail) {
       setUserEmailError('Please enter your email address.');
     } else if (!isEmailValid(userEmail)) {
@@ -78,23 +76,44 @@ const Login = ({navigation}) => {
     })
       .then(function (response) {
         if (response.data.match == true) {
+          const loggedInUser = response.data.loggedInUser;
+          if (loggedInUser.status === 1) {
+            AsyncStorage.setItem('user', JSON.stringify(loggedInUser));
+            navigation.navigate('Home');
+          } else {
+            alert('User is deactivated. Please contact support.');
+          }
           AsyncStorage.setItem(
-            'provider',
-            JSON.stringify(response.data.loggedInUser),
+            'user',
+            JSON.stringify({
+              userId: response.data.loggedInUser._id,
+              userName: response.data.loggedInUser.userName,
+              userEmail: response.data.loggedInUser.userEmail,
+              userPassword: response.data.loggedInUser.userPassword,
+              restaurantImage: response.data.loggedInUser.restaurantImage,
+              restaurantName: response.data.loggedInUser.restaurantName,
+              restaurantAddress: response.data.loggedInUser.restaurantAddress,
+              restaurantCnic: response.data.loggedInUser.restaurantCnic,
+              restaurantPhoneNumber:
+                response.data.loggedInUser.restaurantPhoneNumber,
+              restaurantCategories:
+                response.data.loggedInUser.restaurantCategories,
+            }),
           );
           storeUpdatedCurrentUser({
-            userId:response.data.loggedInUser._id,
-            userName:response.data.loggedInUser.userName,
-            userEmail:response.data.loggedInUser.userEmail,
-            userPassword:response.data.loggedInUser.userPassword,
-            restaurantImage:response.data.loggedInUser.restaurantImage,
-            restaurantName:response.data.loggedInUser.restaurantName,
-            restaurantAddress:response.data.loggedInUser.restaurantAddress,
-            restaurantCnic:response.data.loggedInUser.restaurantCnic,
-            restaurantPhoneNumber:response.data.loggedInUser.restaurantPhoneNumber,
-            restaurantCategories:response.data.loggedInUser.restaurantCategories,
-           
-          })
+            userId: response.data.loggedInUser._id,
+            userName: response.data.loggedInUser.userName,
+            userEmail: response.data.loggedInUser.userEmail,
+            userPassword: response.data.loggedInUser.userPassword,
+            restaurantImage: response.data.loggedInUser.restaurantImage,
+            restaurantName: response.data.loggedInUser.restaurantName,
+            restaurantAddress: response.data.loggedInUser.restaurantAddress,
+            restaurantCnic: response.data.loggedInUser.restaurantCnic,
+            restaurantPhoneNumber:
+              response.data.loggedInUser.restaurantPhoneNumber,
+            restaurantCategories:
+              response.data.loggedInUser.restaurantCategories,
+          });
           navigation.navigate('Home');
         } else {
           alert('No User found with this email and password');
@@ -115,8 +134,9 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
-
-      <Text style={[TextStyles.leftHeading,{marginTop:hp('16')}]}>Log In</Text>
+      <Text style={[TextStyles.leftHeading, {marginTop: hp('16')}]}>
+        Log In
+      </Text>
       {/* ye view mai ne neomorhp ko center krny k liye diya hai */}
       <View style={{alignItems: 'center'}}>
         <Neomorph
@@ -142,8 +162,8 @@ const Login = ({navigation}) => {
             />
           </View>
           {userEmailError ? (
-              <Text style={[TextStyles.errorText]}>{userEmailError}</Text>
-            ) : null}
+            <Text style={[TextStyles.errorText]}>{userEmailError}</Text>
+          ) : null}
         </Neomorph>
 
         <Neomorph
@@ -165,33 +185,32 @@ const Login = ({navigation}) => {
               secureTextEntry={passwordVisible}
               onChangeText={text => {
                 setUserPassword(text);
-                setUserPasswordError('')
+                setUserPasswordError('');
               }}
             />
-             <TouchableOpacity
-                onPress={() => setPasswordVisible(!passwordVisible)}>
-                <Feather
-                  name={passwordVisible ? 'eye' : 'eye-off'}
-                  size={wp('5%')}
-                  style={[
-                    IconStyles.signupIcons,
-                    {color: 'grey', opacity: 0.7},
-                  ]}
-                />
-              </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPasswordVisible(!passwordVisible)}>
+              <Feather
+                name={passwordVisible ? 'eye' : 'eye-off'}
+                size={wp('5%')}
+                style={[IconStyles.signupIcons, {color: 'grey', opacity: 0.7}]}
+              />
+            </TouchableOpacity>
           </View>
           {userPasswordError ? (
-              <Text style={[TextStyles.errorText]}>{userPasswordError}</Text>
-            ) : null}
+            <Text style={[TextStyles.errorText]}>{userPasswordError}</Text>
+          ) : null}
         </Neomorph>
 
         <TouchableOpacity
           style={{marginLeft: wp('42%')}}
           onPress={() => {
             // resetPassword();
-            navigation.navigate('ForgetPassword')
+            navigation.navigate('ForgetPassword');
           }}>
-          <Text style={{fontFamily: 'Poppins-SemiBold'}}>Forgot Password ?</Text>
+          <Text style={{fontFamily: 'Poppins-SemiBold'}}>
+            Forgot Password ?
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {

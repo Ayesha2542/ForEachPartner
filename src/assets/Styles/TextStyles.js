@@ -258,7 +258,7 @@ padding:10,
 foodPrice:{
   fontSize: 16,
   fontFamily: 'Poppins-Bold',
-  marginLeft: wp('45')
+  marginLeft: wp('43.5')
 },
 
 foodPrices:{

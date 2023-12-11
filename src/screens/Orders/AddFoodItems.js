@@ -27,15 +27,18 @@ import axios from 'axios';
 
 
 const AddFoodItems = ({navigation,route}) => {
+  const {baseUrl,currentUser,categoryName} = useContext(AppContext);
+
+  console.log("++++++++++++++++",categoryName)
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageData, setImageData] = useState('');
-  const {baseUrl} = useContext(AppContext);
-  const [productTitle, setproductTitle] = useState('');
+  const [productName, setproductName] = useState('');
   const [productDescription, setproductDescription] = useState('');
   const [productPrice, setproductPrice] = useState('');
   const [productImage,setProductImage]=useState('');
   const [updateId, setUpdateId] = useState("");
-  const [productTitleError, setProductTitleError] = useState('');
+  const [productNameError, setproductNameError] = useState('');
    const [productDescriptionError, setProductDescriptionError] = useState('');
    const [productPriceError, setProductPriceError] = useState('');
    const [productImageError,setProductImageError] = useState('');
@@ -48,8 +51,6 @@ const AddFoodItems = ({navigation,route}) => {
     setModalVisible(false);
   };
 
-  
-  //Functions......
   const openImagePicker = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (!response.didCancel && !response.error) {
@@ -63,18 +64,19 @@ const AddFoodItems = ({navigation,route}) => {
   
   useEffect(() => {
     if (route.params) {
-      const { productId, title, description, price, productImage } = route.params;
-      setproductTitle(title);
-      setproductDescription(description);
-      setproductPrice(price);
+      const { productId, productName, productDescription, productPrice, productImage } = route.params;
+      setproductName(productName);
+      setproductDescription(productDescription);
+      setproductPrice(productPrice);
       setImageData(productImage);
-      setUpdateId(productId);
+      setUpdateId(productId);  // Make sure this is not set when adding a new product
     }
   }, [route.params]);
+  
 
   const addOrUpdateProduct = () => {
-    if (!productTitle) {
-      setProductTitleError('Please enter product name.');
+    if (!productName) {
+      setproductNameError('Please enter product name.');
     }
 
     if (!productDescription) {
@@ -88,7 +90,7 @@ const AddFoodItems = ({navigation,route}) => {
    } 
     if (
      !imageData ||
-      !productTitle ||
+      !productName ||
       !productDescription ||
       !productPrice 
     ) {
@@ -96,11 +98,12 @@ const AddFoodItems = ({navigation,route}) => {
     }
 
     const formData = new FormData();
-    formData.append('title', productTitle);
-    formData.append('description', productDescription);
-    formData.append('price', productPrice);
+    formData.append('productName', productName);
+    formData.append('productDescription', productDescription);
+    formData.append('productPrice', productPrice);
     formData.append('productId', updateId);
-
+    formData.append('restaurant_id',currentUser.userId)
+    formData.append('categoryName', categoryName.categoryName);
     if (productImage) {
       formData.append('productImage', {
         uri: productImage.uri,
@@ -147,7 +150,7 @@ const AddFoodItems = ({navigation,route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
-      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}>
+      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('7')}]}>
         <Neomorph
           style={{
             justifyContent: 'center',
@@ -204,17 +207,17 @@ const AddFoodItems = ({navigation,route}) => {
                 TextFieldStyles.inputField,
                 {paddingHorizontal: wp('5%'), width: wp('70%')},
               ]}
-              value={productTitle}
+              value={productName}
               onChangeText={text => {
-                setproductTitle(text);
-                setProductTitleError('');
+                setproductName(text);
+                setproductNameError('');
               }}
 
             />
           </View>
           
-          {productTitleError ? (
-              <Text style={[TextStyles.errorText]}>{productTitleError}</Text>
+          {productNameError ? (
+              <Text style={[TextStyles.errorText]}>{productNameError}</Text>
             ) : null}
         </Neomorph>
 

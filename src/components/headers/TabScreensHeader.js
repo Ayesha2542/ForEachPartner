@@ -11,16 +11,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextStyles from '../../assets/Styles/TextStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import IconStyles from '../../assets/Styles/IconStyles';
+import { Item } from 'react-native-paper/lib/typescript/src/components/Drawer/Drawer';
 
-const TabScreensHeader = ({navigation, title}) => {
+const TabScreensHeader = ({navigation,item}) => {
   return (
     <View
       style={{
         backgroundColor: AppColors.white,
-        height: hp('8%'),
-        width: wp('100%'),
-        justifyContent: 'center',
-        marginTop: hp('3'),
+        height: hp('8'), 
+        width: wp('100'), 
+        flexDirection: "row", 
+        borderBottomWidth: wp('0.4'),
+        borderColor: AppColors.background2,
+        marginTop:hp('3.5')
       }}>
       {/* <View style={{marginTop:hp('4')}}> */}
       <StatusBar
@@ -37,12 +40,12 @@ const TabScreensHeader = ({navigation, title}) => {
           size={wp('6%')}
           style={{
             color: AppColors.primary,
-            marginTop: hp('1%'),
-            marginLeft: wp('6%'),
+            marginTop: hp('2.4'),
+            marginLeft: wp('7'),
           }}
         />
       </TouchableOpacity>
-      <Text style={[TextStyles.backButtonTitle]}>{title}</Text>
+      <Text style={[TextStyles.profileTextStyle]}>{item}</Text>
     </View>
   );
 };
