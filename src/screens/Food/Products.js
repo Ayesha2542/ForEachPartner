@@ -22,30 +22,33 @@ import TextStyles from '../../assets/Styles/TextStyles';
 import AppContext from '../../Context/AppContext';
 import {useFocusEffect} from '@react-navigation/native';
 import axios from 'axios';
-const Products = ({navigation}) => {
-  const {storeSelectedSubCategoryFeature, baseUrl} = useContext(AppContext);
+const Products = ({navigation, route}) => {
+  const {baseUrl, categoryName, currentUser} = useContext(AppContext);
   const [allProducts, setAllProducts] = useState([]);
 
+  const viewAllProducts = async () => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/viewAllProducts/${currentUser.userId}/${categoryName.categoryName}`,
+      );
 
-      const viewAllProducts = async () => {
-        try {
-          const response = await axios.post(`${baseUrl}/viewAllProducts`);
-          setAllProducts(response.data);
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      };
-      useFocusEffect(React.useCallback(
-        ()=>{
-        viewAllProducts();
-    },[]
-  ))
+      setAllProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
-  const deleteProduct = async (delId) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      viewAllProducts();
+    }, [currentUser.userId, categoryName.categoryName]),
+  );
+
+  const deleteProduct = async delId => {
     try {
       const response = await axios.delete(`${baseUrl}/deleteProduct/${delId}`);
       console.log('Delete Product Response:', response.data);
-  
+
       if (response.data.success) {
         viewAllProducts();
       } else {
@@ -55,94 +58,97 @@ const Products = ({navigation}) => {
       console.log(error);
     }
   };
-  
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <ProfileHeader navigation={navigation} item="Products" />
-
-      <FlatList
-        data={allProducts}
-        renderItem={({item}) => {
-          return (
-            <View style={[ContainerStyles.flexCenter]}>
-              <Neomorph
-                darkShadowColor={AppColors.primary}
-                lightShadowColor={AppColors.darkgray}
-                swapShadows // <- change zIndex of each shadow color
-                style={[
-                  ContainerStyles.productCardNeomorph,
-                  {overflow: 'hidden'},
-                ]}>
-                <View style={{flexDirection: 'row', width: wp('65')}}>
-                  <Image
-                    source={{uri: baseUrl + item.productImage}}
-                    style={[ImageStyles.orderImage]}
-                    onError={error =>
-                      console.error('Image loading error:', error)
-                    }
-                  />
-                  <View
-                    style={{
-                      marginTop: hp('4'),
-                      marginLeft: wp('2.5'),
-                    }}>
-                    <View key={item.id}>
-                      <View
-                        style={{
-                          justifyContent: 'space-between',
-                          flexDirection: 'row',
-                        }}>
-                        <Text
+      {allProducts.length === 0 ? (
+        <Text>No products available for the selected category</Text>
+      ) : (
+        <FlatList
+          data={allProducts}
+          renderItem={({item}) => {
+            return (
+              <View style={[ContainerStyles.flexCenter]}>
+                <Neomorph
+                  darkShadowColor={AppColors.primary}
+                  lightShadowColor={AppColors.darkgray}
+                  swapShadows // <- change zIndex of each shadow color
+                  style={[
+                    ContainerStyles.productCardNeomorph,
+                    {overflow: 'hidden'},
+                  ]}>
+                  <View style={{flexDirection: 'row', width: wp('65')}}>
+                    <Image
+                      source={{uri: baseUrl + item.productImage}}
+                      style={[ImageStyles.orderImage]}
+                      onError={error =>
+                        console.error('Image loading error:', error)
+                      }
+                    />
+                    <View
+                      style={{
+                        marginTop: hp('4'),
+                        marginLeft: wp('2.5'),
+                      }}>
+                      <View key={item.id}>
+                        <View
                           style={{
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: hp(2),
-                            color: AppColors.black,
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
                           }}>
-                          {item.title}
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-SemiBold',
+                              fontSize: hp(2),
+                              color: AppColors.black,
+                            }}>
+                            {item.productName}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.navigate('AddFoodItems', {
+                                productId: item._id,
+                                productName: item.productName,
+                                productDescription: item.productDescription,
+                                productPrice: item.productPrice,
+                                productImage: baseUrl + item.productImage,
+                              });
+                            }}>
+                            <FontAwesome
+                              name="edit"
+                              size={20}
+                              color={AppColors.primary}
+                              style={{marginLeft: wp('7')}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              deleteProduct(item._id);
+                            }}>
+                            <FontAwesome
+                              name="trash"
+                              size={20}
+                              color={AppColors.primary}
+                              style={{marginRight: wp('1')}}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                        <Text style={{width: wp('60')}}>
+                          {item.productDescription}...
                         </Text>
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.navigate('AddFoodItems', {
-                              productId: item._id,
-                              title: item.title,
-                              description: item.description,
-                              price: item.price,
-                              productImage: baseUrl + item.productImage,
-                            });
-                          }}>
-                          <FontAwesome
-                            name="edit"
-                            size={20}
-                            color={AppColors.primary}
-                            style={{marginLeft: wp('7')}}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            deleteProduct(item._id);
-                          }}>
-                          <FontAwesome
-                            name="trash"
-                            size={20}
-                            color={AppColors.primary}
-                            style={{marginRight: wp('1')}}
-                          />
-                        </TouchableOpacity>
+                        <Text style={[TextStyles.foodPrice]}>
+                          Rs.{item.productPrice}
+                        </Text>
                       </View>
-                      <Text style={{width: wp('60')}}>
-                        {item.description}...
-                      </Text>
-                      <Text style={[TextStyles.foodPrice]}>
-                        Rs.{item.price}
-                      </Text>
                     </View>
                   </View>
-                </View>
-              </Neomorph>
-            </View>
-          );
-        }}
-      />
+                </Neomorph>
+              </View>
+            );
+          }}
+        />
+      )}
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => {
