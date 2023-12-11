@@ -12,7 +12,7 @@ import axios from 'axios';
 import AppContext from '../../Context/AppContext';
 
 const SmallCard = ({navigation, item}) => {
-  const {baseUrl} = useContext(AppContext)
+  const {baseUrl,storeUpdateCategoryName} = useContext(AppContext)
   const[allCategories,setAllCategories]=useState([])
 
   const categoryImages = allCategories.reduce((acc, category) => {
@@ -37,8 +37,12 @@ const SmallCard = ({navigation, item}) => {
 
   const categoryImage = categoryImages[item];
   return (
-    <View style={{marginLeft: wp('11'), marginTop: hp('3.9')}}>
-      <TouchableOpacity onPress={() => navigation.navigate('Products')}>
+    <View style={{marginLeft: wp('11'), marginTop: hp('2')}}>
+      <TouchableOpacity onPress={() =>{
+       storeUpdateCategoryName({
+        categoryName:item, 
+      })
+       navigation.navigate('Products')}}>
         <Neomorph
           darkShadowColor={AppColors.primary}
           lightShadowColor={AppColors.background}

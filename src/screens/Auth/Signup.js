@@ -87,6 +87,13 @@ const Signup = ({navigation}) => {
     })
       .then(function (response) {
         if (response.data.save == true) {
+          AsyncStorage.setItem('user', JSON.stringify({
+            userId:response.data.newUser._id,
+            userEmail: response.data.newUser.userEmail,
+            userPassword: response.data.newUser.userPassword,
+            userName: response.data.newUser.userName
+          }));
+
           storeUpdatedCurrentUser({
                 userId:response.data.newUser._id,
                 userEmail: response.data.newUser.userEmail,
