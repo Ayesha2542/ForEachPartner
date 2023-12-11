@@ -17,7 +17,7 @@ export const AppProvider =({children})=>{
     const[baseUrl]=useState("http://192.168.0.112:8888");
     const [currentUser,setCurrentUser] =useState({});
 
-  
+
     const storeSelectedFoodFeature= (val)=>{
         setSelectedFoodFeature(val);  
     }
