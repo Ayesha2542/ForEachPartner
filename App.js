@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -38,7 +38,8 @@ import NewOrder from './src/screens/Orders/NewOrder';
 import OngoingOrder from './src/screens/Orders/OngoingOrder';
 import PastOrder from './src/screens/Orders/PastOrder';
 import SingleProductDetail from './src/screens/Food/SingleProductDetail.js';
-
+import messaging from "@react-native-firebase/messaging";
+import { Alert } from 'react-native';
 
 
 const Stack = createNativeStackNavigator();
@@ -107,6 +108,23 @@ const AuthStackNavigator = () => {
 };
 
 const App = () => {
+   
+  const getToken = async()=>{
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+ const token = await messaging().getToken();
+ console.log({token})
+  }
+  useEffect(() => {
+    getToken();
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
   return (
     <AppProvider>
     <NavigationContainer> 
