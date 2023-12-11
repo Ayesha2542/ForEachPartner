@@ -51,8 +51,6 @@ const AddFoodItems = ({navigation,route}) => {
     setModalVisible(false);
   };
 
-  
-  //Functions......
   const openImagePicker = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (!response.didCancel && !response.error) {
@@ -152,7 +150,7 @@ const AddFoodItems = ({navigation,route}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <BackButtonHeader navigation={navigation} />
-      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('3')}]}>
+      <View style={[ContainerStyles.centeredContainer,{marginTop:hp('7')}]}>
         <Neomorph
           style={{
             justifyContent: 'center',

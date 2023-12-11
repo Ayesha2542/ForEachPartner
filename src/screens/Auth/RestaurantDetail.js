@@ -31,6 +31,8 @@ import AppContext from '../../Context/AppContext';
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const RestaurantDetail = ({navigation}) => {
@@ -143,9 +145,7 @@ const RestaurantDetail = ({navigation}) => {
         });
       }
     
-      console.log("?????????????????????????????????????????????????????????????");
-      console.log(formData);
-      console.log("?????????????????????????????????????????????????????????????");
+
   
       axios({
         method: 'post',
@@ -155,6 +155,18 @@ const RestaurantDetail = ({navigation}) => {
       })
         .then(response => {
           if (response.data.registeredUser) {
+            AsyncStorage.setItem('user', JSON.stringify({
+              userId:response.data.registeredUser._id,
+              userName:response.data.registeredUser.userName,
+              userEmail:response.data.registeredUser.userEmail,
+              userPassword:response.data.registeredUser.userPassword,
+              restaurantImage:response.data.registeredUser.restaurantImage,
+              restaurantName:response.data.registeredUser.restaurantName,
+              restaurantAddress:response.data.registeredUser.restaurantAddress,
+              restaurantCnic:response.data.registeredUser.restaurantCnic,
+              restaurantPhoneNumber:response.data.registeredUser.restaurantPhoneNumber,
+              restaurantCategories:response.data.registeredUser.restaurantCategories,
+            }));
             storeUpdatedCurrentUser({
               userId:response.data.registeredUser._id,
               userName:response.data.registeredUser.userName,
@@ -182,11 +194,7 @@ const RestaurantDetail = ({navigation}) => {
     
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-        <KeyboardAwareScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        extraScrollHeight={Platform.select({ ios: 80, android: 40 })}
-        enableOnAndroid
-      >
+      <ScrollView>
       <BackButtonHeader navigation={navigation} />
      
        <View style={[ContainerStyles.centeredContainer,{marginTop:hp('0')}]}> 
@@ -418,7 +426,7 @@ const RestaurantDetail = ({navigation}) => {
         />
       </Modal>
       </View>
-      </KeyboardAwareScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

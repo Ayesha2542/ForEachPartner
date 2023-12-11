@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {ImageBackground,Text,View,Image,TouchableOpacity} from 'react-native';
 import AppColors from '../assets/colors/AppColors';
 import {useNavigation} from '@react-navigation/native';
@@ -8,19 +8,52 @@ import ContainerStyles from '../assets/Styles/ContainerStyles';
 import TextStyles from '../assets/Styles/TextStyles';
 import ImageStyles from '../assets/Styles/ImageStyles';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
+import AppContext from '../Context/AppContext';
 
 const CustomeDrawer = props => {
-  
+  const {currentUser,baseUrl,storeUpdatedCurrentUser} = useContext(AppContext)
   const navigation = useNavigation();
+  useEffect(() => {
+    // Check for existing user data
+    
+    storeUpdatedCurrentUser({
+      userId:currentUser._id,
+      userName:currentUser.userName,
+      userEmail:currentUser.userEmail,
+      userPassword:currentUser.userPassword,
+      restaurantImage:currentUser.restaurantImage,
+      restaurantName:currentUser.restaurantName,
+      restaurantAddress:currentUser.restaurantAddress,
+      restaurantCnic:currentUser.restaurantCnic,
+      restaurantPhoneNumber:currentUser.restaurantPhoneNumber,
+      restaurantCategories:currentUser.restaurantCategories,
+     
+    })
+    
+   
+  }, []);
 
+  const handleLogout = async () => {
+    try {
+      // Clear user data from AsyncStorage
+      await AsyncStorage.removeItem('user');
+  
+      // Navigate to the login screen
+      navigation.navigate('Login');
+      closeModal();
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+  
   return (
     <View style={{flex: 1}}>
       <ImageBackground
         source={require('../assets/Images/image36.jpg')}
         style={{alignItems: 'center', height: hp('30')}}>
         <Image
-          source={require('../assets/Images/image13.png')}
-          style={[ImageStyles.logoImageStyle]}
+          source={{uri: baseUrl+currentUser.restaurantImage}}
+          style={[ImageStyles.logoImageStyle,{marginTop:hp('10')}]}
         />
         <Text style={[TextStyles.whiteCenteredLable]}>Mr. Ahmad</Text>
       </ImageBackground>
