@@ -52,7 +52,7 @@ const CustomeDrawer = props => {
         source={require('../assets/Images/image36.jpg')}
         style={{alignItems: 'center', height: hp('30')}}>
         <Image
-          source={{uri: baseUrl+currentUser.restaurantImage}}
+          source={{uri: baseUrl+ currentUser.restaurantImage}}
           style={[ImageStyles.logoImageStyle,{marginTop:hp('10')}]}
         />
         <Text style={[TextStyles.whiteCenteredLable]}>Mr. Ahmad</Text>
