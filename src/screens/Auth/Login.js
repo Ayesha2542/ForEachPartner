@@ -114,7 +114,7 @@ const Login = ({navigation}) => {
             restaurantCategories:
               response.data.loggedInUser.restaurantCategories,
           });
-          navigation.navigate('Home');
+          // navigation.navigate('Home');
         } else {
           alert('No User found with this email and password');
         }
