@@ -14,6 +14,7 @@ import {
 import TextStyles from '../../assets/Styles/TextStyles';
 import ProductsBackButton from '../../components/headers/ProductsBackButton';
 import {Image} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const SingleProductDetail = ({navigation, route, item}) => {
@@ -56,7 +57,7 @@ const {productImage, productName, productPrice, productDescription} = route.para
           }}>
           Description:
         </Text>
-      
+      <ScrollView>
         <Text
           style={{
             fontFamily: 'Poppins-Regular',
@@ -67,7 +68,7 @@ const {productImage, productName, productPrice, productDescription} = route.para
           }}>
           {productDescription}
         </Text>
-      
+        </ScrollView>
         <Text style={[TextStyles.foodPrices]}>Rs.{productPrice}</Text>
       </View>
       <Image

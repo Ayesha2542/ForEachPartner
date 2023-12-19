@@ -3,11 +3,8 @@ import { View, TouchableOpacity, Text,StatusBar } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppColors from '../../assets/colors/AppColors';
 import TextStyles from '../../assets/Styles/TextStyles';
-import Profile from '../../screens/Profile/Profile';
-import IconStyles from '../../assets/Styles/IconStyles';
 
 const ProfileHeader = ({ item, navigation }) => {
   return (
@@ -18,7 +15,8 @@ const ProfileHeader = ({ item, navigation }) => {
       flexDirection: "row", 
       borderBottomWidth: wp('0.4'),
       borderColor: AppColors.background2,
-      marginTop:hp('3.5')
+      marginTop:hp('3.5'),
+      justifyContent:"space-between",
     }}>
       <StatusBar
       barStyle="dark-content"
@@ -26,16 +24,13 @@ const ProfileHeader = ({ item, navigation }) => {
     />
       <TouchableOpacity
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.goBack();
             }}>
-            <Ionicons
-              name="menu-outline"
-              size={wp('9')}
-              style={[IconStyles.drawerManuIcon2,{color:AppColors.black}]}
-            />
+           <AntDesign name="arrowleft" size={wp('6%')} style={{color:AppColors.primary,marginTop:hp('2.8'),marginLeft:wp('3')}} />
+
           </TouchableOpacity>
 
-      <Text style={[TextStyles.profileTextStyle]}>{item}</Text>
+      <Text style={[TextStyles.profileTextStyle,{marginRight:wp('43'),marginTop:hp('2.4')}]}>{item}</Text>
     </View>
  
   );

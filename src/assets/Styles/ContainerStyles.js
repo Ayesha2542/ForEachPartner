@@ -37,31 +37,23 @@ const ContainerStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     marginTop: hp('1.4%'),
    } ,
-
-   EditNameNeomorphContainer:{
-      width: wp('87%'),
-      height: hp('7%'),
-      borderRadius: wp('3%'),
-      shadowRadius: 3,
-      backgroundColor: AppColors.white,
-      // alignSelf:"center",
-      // alignItems: 'center',
-      // justifyContent: 'center',
-      marginVertical: hp('2%'),
-      shadowOpacity: 0.2,
-      marginLeft:wp('6'),
-      marginTop: hp('1.1%'),
-
-     } ,
+   profileInputFieldNeomorphContainer: {
+    shadowRadius: 4,
+    shadowOpacity: 0.3,
+    borderRadius: wp('3'),
+    backgroundColor: AppColors.white,
+    width: hp('40'),
+    height: hp('10')
+   } ,
   
    profileInputFieldContainer:{
       
-      shadowRadius: 2,
-      shadowOpacity: 0.15,
-      borderRadius: 10,
-      backgroundColor: AppColors.white,
-      width: hp('43'),
-      height: hp('12'),
+    shadowRadius: 4,
+    shadowOpacity: 0.3,
+    borderRadius: wp('3'),
+    backgroundColor: AppColors.white,
+    width: hp('40'),
+    height: hp('10')
    },
     NeomorphContainer:{
       shadowRadius: 2,
@@ -76,25 +68,22 @@ const ContainerStyles = StyleSheet.create({
   EditNameNeomorphContainer: {
     width: wp('87%'),
     height: hp('7%'),
-    borderRadius: wp('3%'),
-    shadowRadius: 3,
+    shadowRadius: 4,
+    shadowOpacity: 0.3,
+    borderRadius: wp('3'),
     backgroundColor: AppColors.white,
-    // alignSelf:"center",
-    // alignItems: 'center',
-    // justifyContent: 'center',
     marginVertical: hp('2%'),
-    shadowOpacity: 0.2,
     marginLeft: wp('6'),
     marginTop: hp('1.1%'),
   },
 
   profileInputFieldContainer: {
-    shadowRadius: 2,
-    shadowOpacity: 0.15,
-    borderRadius: 10,
+    shadowRadius: 4,
+    shadowOpacity: 0.3,
+    borderRadius: wp('3'),
     backgroundColor: AppColors.white,
-    width: hp('43'),
-    height: hp('12'),
+    width: hp('40'),
+    height: hp('10')
   },
   NeomorphContainer: {
     shadowRadius: 2,
@@ -105,20 +94,7 @@ const ContainerStyles = StyleSheet.create({
     height: hp('10'),
   },
 
-  EditNameNeomorphContainer: {
-    width: wp('87%'),
-    height: hp('7%'),
-    borderRadius: wp('3%'),
-    shadowRadius: 3,
-    backgroundColor: AppColors.white,
-    // alignSelf:"center",
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    marginVertical: hp('2%'),
-    shadowOpacity: 0.2,
-    marginLeft: wp('6'),
-    marginTop: hp('1.1%'),
-  },
+
 
   profileInputFieldContainer: {
     shadowRadius: 4,

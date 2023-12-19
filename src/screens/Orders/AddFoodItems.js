@@ -28,7 +28,7 @@ import axios from 'axios';
 
 const AddFoodItems = ({navigation,route}) => {
   const {baseUrl,currentUser,categoryName} = useContext(AppContext);
-
+console.log('CJDLFAJLFDJ',currentUser.userId)
   console.log("++++++++++++++++",categoryName)
 
   const [isModalVisible, setModalVisible] = useState(false);

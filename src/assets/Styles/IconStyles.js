@@ -33,46 +33,43 @@ const IconStyles = StyleSheet.create({
     marginLeft: wp('28'),
   },
   editIcon: {
-    marginLeft: wp('60'),
+    marginRight: wp(2),
     marginTop: hp('1'),
     color: AppColors.primary,
   },
 
-    signupIcons: {
-        color: AppColors.primary,
-        margin: 15,
-    },
-    drawerManuIcon: {
-        color: AppColors.white,
-        marginTop: hp('5'),
-        marginLeft:wp('4')
-    },
+  signupIcons: {
+    color: AppColors.primary,
+    margin: 15,
+  },
+  drawerManuIcon: {
+    color: AppColors.white,
+    marginTop: hp('5'),
+    marginLeft: wp('4'),
+  },
 
-    drawerManuIcon2: {
-        color: AppColors.white,
-        marginTop: hp('1.5'),
-        marginLeft:wp('4')
-    },
+  drawerManuIcon2: {
+    color: AppColors.white,
+    marginTop: hp('1.5'),
+    marginLeft: wp('4'),
+  },
 
-    arrowLeftIcon: {
-        color: AppColors.primary,
-        marginTop: hp('5'),
-        marginLeft: wp('5')
-    },
-    heartIcon: {
-        color: AppColors.primary,
-        marginTop: hp('4%'),
-        marginLeft: wp('37')
-    },
-    shoppingCartIcon: {
-        color: AppColors.primary,
-        marginTop: hp('1%'),
-        marginLeft: wp('28'),
-    },
-    editIcon:{
-        marginLeft:wp('65'),marginTop:hp('1'),color:AppColors.primary
-    },
-
+  arrowLeftIcon: {
+    color: AppColors.primary,
+    marginTop: hp('5'),
+    marginLeft: wp('5'),
+  },
+  heartIcon: {
+    color: AppColors.primary,
+    marginTop: hp('4%'),
+    marginLeft: wp('37'),
+  },
+  shoppingCartIcon: {
+    color: AppColors.primary,
+    marginTop: hp('1%'),
+    marginLeft: wp('28'),
+  },
+ 
   bellIcon: {
     color: AppColors.primary,
     marginTop: hp('1.5'),
