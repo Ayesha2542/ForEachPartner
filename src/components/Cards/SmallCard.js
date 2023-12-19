@@ -12,7 +12,7 @@ import axios from 'axios';
 import AppContext from '../../Context/AppContext';
 
 const SmallCard = ({navigation, item}) => {
-  const {baseUrl} = useContext(AppContext)
+  const {baseUrl,storeUpdateCategoryName} = useContext(AppContext)
   const[allCategories,setAllCategories]=useState([])
 
   const categoryImages = allCategories.reduce((acc, category) => {

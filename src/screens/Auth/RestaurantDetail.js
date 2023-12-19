@@ -33,8 +33,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+// import RestaurantCertificate from '../../components/RestaurantCertificate';
+import DocumentPicker from 'react-native-document-picker';
 const RestaurantDetail = ({navigation}) => {
 
   const {baseUrl,currentUser,storeUpdatedCurrentUser} = useContext(AppContext);
@@ -44,15 +44,19 @@ const RestaurantDetail = ({navigation}) => {
   const [imageData, setImageData] = useState('');
   const [restaurantName,setRestaurantName]= useState('');
   const [restaurantAddress,setRestaurantAddress]= useState('');
-  const [restaurantCnic,setRestaurantCnic]= useState('');
+  // const [restaurantCnic,setRestaurantCnic]= useState('');
   const [restaurantPhoneNumber,setRestaurantPhoneNumber]= useState('');
   const [restaurantImage,setRestaurantImage]=useState('');
   const [restaurantNameError,setRestaurantNameError]= useState('')
   const [restaurantAddressError,setRestaurantAddressError]= useState('')
-  const [restaurantCnicError,setRestaurantCnicError]= useState('')
+  // const [restaurantCnicError,setRestaurantCnicError]= useState('')
   const [restaurantPhoneNumberError,setRestaurantPhoneNumberError]= useState('')
   const [categoryInputError,setCategoryInputError] = useState('');
   const [restaurantImageDataError,setRestaurantImageDataError]=useState('');
+  // const [selectedCertificate, setSelectedCertificate] = useState(null);
+  const [certificateDocument, setCertificateDocument] = useState('');
+  const [certificateDocumentError, setCertificateDocumentError] = useState('');
+  
   const openModal = () => {
     setModalVisible(true);
   };
@@ -68,34 +72,38 @@ const RestaurantDetail = ({navigation}) => {
   };
   
   const openImagePicker = () => {
-    launchImageLibrary({mediaType: 'photo'}, response => {
+    launchImageLibrary({ mediaType: 'photo' }, response => {
       if (!response.didCancel && !response.error) {
         console.log('Selected image URI:', response.assets[0].uri);
         setImageData(response.assets[0].uri);
-        setRestaurantImage(response.assets[0])
+        setRestaurantImage(response.assets[0]);
+      } else {
+        console.log('Image picker error:', response.error);
       }
     });
   };
-
+  
   const isValidPhoneNumber = restaurantPhoneNumber => {
     const regex = /^(\+92|0)(3[0-9]{9})$/;
     return regex.test(restaurantPhoneNumber); 
   };
-  const isValidCNIC = cnic => {
-    // CNIC format: 12345-6789012-3
-    const regex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
-    return regex.test(cnic);
-  };
-  const formatCNIC = input => {
-    const cleanedInput = input.replace(/[-\s]/g, '');
-    const formattedInput = cleanedInput
-      .replace(/^(\d{5})(\d{7})(\d{1})$/, '$1-$2-$3')
-      .slice(0, 15);
+  // const isValidCNIC = cnic => {
+  //   // CNIC format: 12345-6789012-3
+  //   const regex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
+  //   return regex.test(cnic);
+  // };
+  // const formatCNIC = input => {
+  //   const cleanedInput = input.replace(/[-\s]/g, '');
+  //   const formattedInput = cleanedInput
+  //     .replace(/^(\d{5})(\d{7})(\d{1})$/, '$1-$2-$3')
+  //     .slice(0, 15);
   
-    return formattedInput;
-  };
+  //   return formattedInput;
+  // };
   
   const addRestaurant = () => {
+    console.log('Inside addRestaurant function');
+    
     if (!imageData) {
       setRestaurantImageDataError('Restaurant Image is required');
     } 
@@ -105,93 +113,128 @@ const RestaurantDetail = ({navigation}) => {
     if (!restaurantAddress) {
       setRestaurantAddressError('Restaurant Address is required');
     }
-    if (!restaurantCnic) {
-      setRestaurantCnicError('Owner CNIC is required');
-    }
+    // if (!restaurantCnic) {
+    //   setRestaurantCnicError('Owner CNIC is required');
+    // }
+  
     if (!restaurantPhoneNumber) {
       setRestaurantPhoneNumberError('Restaurant phone number is required');
     } else if (!isValidPhoneNumber(restaurantPhoneNumber)) {
       setRestaurantPhoneNumberError('Invalid Phone Number');
     }
-
-   if(!categoryInput){
-    setCategoryInputError('Choose one or more category is required')
-   }
-   
+    if (!certificateDocument) {
+      setCertificateDocumentError('Certificate is required');
+    }
+  
+    if (!categoryInput) {
+      setCategoryInputError('Choose one or more categories is required');
+    }
+  
     if (
-      !imageData||
-      !restaurantName||
-      !restaurantAddress||
-      !restaurantCnic||
-      !categoryInput||
-      !restaurantCnic||
-      !isValidPhoneNumber(restaurantPhoneNumber)
+      !imageData ||
+      !restaurantName ||
+      !restaurantAddress ||
+      !isValidPhoneNumber(restaurantPhoneNumber) ||
+      !categoryInput ||
+      !certificateDocument
     ) {
+      console.log('Validation failed');
       return false;
     }
-
-      const formData = new FormData();
-      formData.append('restaurantName', restaurantName);
-      formData.append('restaurantAddress', restaurantAddress);
-      formData.append('restaurantCnic', restaurantCnic);
-      formData.append('restaurantPhoneNumber', restaurantPhoneNumber);
-      formData.append('restaurantCategories',JSON.stringify(restaurantCategories));
-      formData.append('_id',currentUser.userId);
-      if (restaurantImage) {
-        formData.append('restaurantImage', {
-          uri: restaurantImage.uri,
-          type: restaurantImage.type,
-          name: restaurantImage.fileName,
-        });
-      }
-    
-
   
-      axios({
-        method: 'post',
-        url: `${baseUrl}/restaurantDetail`,
-        data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' },
+    console.log('Validation successful');
+  
+    const formData = new FormData();
+    formData.append('restaurantName', restaurantName);
+    formData.append('restaurantAddress', restaurantAddress);
+    formData.append('restaurantPhoneNumber', restaurantPhoneNumber);
+    formData.append('restaurantCategories', JSON.stringify(restaurantCategories));
+    formData.append('_id', currentUser.userId);
+  
+    if (restaurantImage && restaurantImage.uri && restaurantImage.type) {
+      formData.append('restaurantImage', {
+        uri: restaurantImage.uri,
+        type: restaurantImage.type,
+        name: 'restaurantImage.jpg', // Adjust the filename as needed
+      });
+    }
+  
+    if (certificateDocument && certificateDocument.uri && certificateDocument.type) {
+      formData.append('certificateDocument', {
+        uri: certificateDocument.uri,
+        type: 'application/pdf', // Set the correct MIME type for PDF
+        name: 'certificateDocument.pdf', // Adjust the filename as needed
+      });
+    }
+  
+    console.log('About to make the axios request');
+  
+    axios({
+      method: 'post',
+      url: `${baseUrl}/restaurantDetail`,
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(response => {
+        console.log('Axios success response:', response.data);
+        if (response.data.registeredUser) {
+          AsyncStorage.setItem('user', JSON.stringify({
+            userId: response.data.registeredUser._id,
+            userName: response.data.registeredUser.userName,
+            userEmail: response.data.registeredUser.userEmail,
+            userPassword: response.data.registeredUser.userPassword,
+            restaurantImage: response.data.registeredUser.restaurantImage,
+            restaurantName: response.data.registeredUser.restaurantName,
+            restaurantAddress: response.data.registeredUser.restaurantAddress,
+            // restaurantCnic: response.data.registeredUser.restaurantCnic,
+            certificateDocument: response.data.registeredUser.certificateDocument,
+            restaurantPhoneNumber: response.data.registeredUser.restaurantPhoneNumber,
+            restaurantCategories: response.data.registeredUser.restaurantCategories,
+          }));
+          storeUpdatedCurrentUser({
+            userId: response.data.registeredUser._id,
+            userName: response.data.registeredUser.userName,
+            userEmail: response.data.registeredUser.userEmail,
+            userPassword: response.data.registeredUser.userPassword,
+            restaurantImage: response.data.registeredUser.restaurantImage,
+            restaurantName: response.data.registeredUser.restaurantName,
+            restaurantAddress: response.data.registeredUser.restaurantAddress,
+            // restaurantCnic: response.data.registeredUser.restaurantCnic,
+            certificateDocument: response.data.registeredUser.certificateDocument,
+            restaurantPhoneNumber: response.data.registeredUser.restaurantPhoneNumber,
+            restaurantCategories: response.data.registeredUser.restaurantCategories,
+          });
+          navigation.navigate('WelcomeScreen');
+        } else {
+          console.log('Axios success but no registeredUser in response data');
+          alert('Please try again later.');
+        }
       })
-        .then(response => {
-          if (response.data.registeredUser) {
-            AsyncStorage.setItem('user', JSON.stringify({
-              userId:response.data.registeredUser._id,
-              userName:response.data.registeredUser.userName,
-              userEmail:response.data.registeredUser.userEmail,
-              userPassword:response.data.registeredUser.userPassword,
-              restaurantImage:response.data.registeredUser.restaurantImage,
-              restaurantName:response.data.registeredUser.restaurantName,
-              restaurantAddress:response.data.registeredUser.restaurantAddress,
-              restaurantCnic:response.data.registeredUser.restaurantCnic,
-              restaurantPhoneNumber:response.data.registeredUser.restaurantPhoneNumber,
-              restaurantCategories:response.data.registeredUser.restaurantCategories,
-            }));
-            storeUpdatedCurrentUser({
-              userId:response.data.registeredUser._id,
-              userName:response.data.registeredUser.userName,
-              userEmail:response.data.registeredUser.userEmail,
-              userPassword:response.data.registeredUser.userPassword,
-              restaurantImage:response.data.registeredUser.restaurantImage,
-              restaurantName:response.data.registeredUser.restaurantName,
-              restaurantAddress:response.data.registeredUser.restaurantAddress,
-              restaurantCnic:response.data.registeredUser.restaurantCnic,
-              restaurantPhoneNumber:response.data.registeredUser.restaurantPhoneNumber,
-              restaurantCategories:response.data.registeredUser.restaurantCategories,
-            })
-            navigation.navigate('WelcomeScreen')
-          } else {
-            alert('Please try again later.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert(`An error occurred: ${error.message}`);
-        });
-      }
+      .catch(error => {
+        console.error('Axios error:', error);
+        alert(`An error occurred: ${error.message}`);
+      });
+  };
+  
+  
+  const openCertificatePicker = async () => {
+    try {
+      const document = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf],
+      });
+  
+      setCertificateDocument(document);
+      setCertificateDocumentError('');
+      console.log('Selected certificate document:', document);
+    } catch (err) {
+      console.log(err);
+      setCertificateDocumentError('Error selecting document');
+    }
+  };
+  
+     
 
-   
-    
+            
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView>
@@ -317,7 +360,7 @@ const RestaurantDetail = ({navigation}) => {
             ) : null}
         </Neomorph>
 
-        <Neomorph
+        {/* <Neomorph
           darkShadowColor={AppColors.primary}
           lightShadowColor={AppColors.background}
           swapShadows // <- change zIndex of each shadow color
@@ -343,7 +386,7 @@ const RestaurantDetail = ({navigation}) => {
           {restaurantCnicError ? (
               <Text style={[TextStyles.errorText]}>{restaurantCnicError}</Text>
             ) : null}
-        </Neomorph>
+        </Neomorph> */}
         <Neomorph
           darkShadowColor={AppColors.primary}
           lightShadowColor={AppColors.background}
@@ -370,6 +413,34 @@ const RestaurantDetail = ({navigation}) => {
               <Text style={[TextStyles.errorText]}>{restaurantPhoneNumberError}</Text>
             ) : null}
         </Neomorph>
+
+
+        <TouchableOpacity onPress={openCertificatePicker}>
+   <Neomorph
+       darkShadowColor={AppColors.primary}
+       lightShadowColor={AppColors.background}
+       swapShadows // <- change zIndex of each shadow color
+       style={ContainerStyles.inputFieldNeomorphContainer}>
+   
+      <View style={{ flexDirection: 'row' }}>
+         <FontAwesome
+            name="certificate"
+            size={wp('6%')}
+            style={IconStyles.signupIcons}
+         />
+         <TextInput
+            placeholder="Choose Certificate"
+            style={[TextFieldStyles.inputField, { color: 'black' }]}
+            value={certificateDocument ? 'Certificate Selected' : ''}
+            editable={false} // Disable manual input
+         />
+      </View>
+   </Neomorph>
+</TouchableOpacity>
+
+
+
+
         <TouchableOpacity onPress={openModal}>
           <Neomorph
             darkShadowColor={AppColors.primary}
