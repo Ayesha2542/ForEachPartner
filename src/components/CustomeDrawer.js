@@ -140,6 +140,7 @@ const closeModal = () => {
             </View>
           </TouchableOpacity>
 
+
           <TouchableOpacity
             style={{paddingVertical: 15}}
             onPress={() => {
@@ -150,6 +151,27 @@ const closeModal = () => {
               <Text style={[TextStyles.drawerTextStyle]}>Food Deal</Text>
             </View>
           </TouchableOpacity>
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('SingleProductDetail');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>Products Detail</Text>
+          </View>
+        </TouchableOpacity>
+ 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('Checkout');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>Checkout</Text>
+          </View>
+        </TouchableOpacity> 
 
           {/* <TouchableOpacity
             style={{paddingVertical: 15}}

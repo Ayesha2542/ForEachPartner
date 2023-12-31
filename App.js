@@ -42,6 +42,7 @@ import { Alert } from 'react-native';
 import FoodDeals from './src/screens/Food/FoodDeals';
 import AddFoodDeals from './src/screens/Food/AddFoodDeals';
 import SingleFoodDealDetail from './src/screens/Food/SingleFoodDealDetail';
+import Checkout from './src/screens/Orders/Checkout';
 
 
 const Stack = createNativeStackNavigator();
@@ -98,7 +99,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="PastOrder" component={PastOrder} />
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
       <Stack.Screen name="SingleFoodDealDetail" component={SingleFoodDealDetail} />
-
+      <Stack.Screen name="Checkout" component={Checkout} />
     </Stack.Navigator>
   );
 };
