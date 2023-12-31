@@ -17,8 +17,8 @@ import {Image} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-const SingleProductDetail = ({navigation, route, item}) => {
-const {productImage, productName, productPrice, productDescription} = route.params;
+const SingleFoodDealDetail = ({navigation, route, item}) => {
+const {foodDealImage, foodDealTitle, foodDealPrice, foodDealDescription} = route.params;
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <StatusBar
@@ -28,7 +28,7 @@ const {productImage, productName, productPrice, productDescription} = route.para
       />
 
       <ImageBackground
-        source={{uri: productImage}}
+        source={{uri: foodDealImage}}
         style={{height: hp('40%'), width: wp('100%')}}>
         <ProductsBackButton navigation={navigation} />
         <View
@@ -46,7 +46,7 @@ const {productImage, productName, productPrice, productDescription} = route.para
       </ImageBackground>
 
       <Text style={[TextStyles.leftText, {marginTop: hp('0'),marginRight:wp('4')}]}>
-        {productName}
+        {foodDealTitle}
       </Text>
       <View style={{height: hp('30'),marginTop:hp('3')}}>
         <Text
@@ -66,10 +66,10 @@ const {productImage, productName, productPrice, productDescription} = route.para
             paddingRight: 16, // Adjust the padding as per your design
             paddingLeft: 16,
           }}>
-          {productDescription}
+          {foodDealDescription}
         </Text>
         </ScrollView>
-        <Text style={[TextStyles.foodPrices]}>Rs.{productPrice}</Text>
+        <Text style={[TextStyles.foodPrices]}>Rs.{foodDealPrice}</Text>
       </View>
       <Image
         source={require('../../assets/Images/image10.png')}
@@ -79,4 +79,4 @@ const {productImage, productName, productPrice, productDescription} = route.para
   );
 };
 
-export default SingleProductDetail;
+export default SingleFoodDealDetail;
