@@ -499,7 +499,7 @@ const ContainerStyles = StyleSheet.create({
       marginTop: hp('1.4%'),
       paddingBottom: hp('3'),
     },
-   
+
  Unknown:{
    width: wp('72%'),
     height: hp('7%'),

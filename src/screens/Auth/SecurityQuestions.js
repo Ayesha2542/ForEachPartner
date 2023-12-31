@@ -65,6 +65,7 @@ const SecurityQuestions = ({navigation}) => {
 
       const data = await response.json();
       if (data.message === 'Data saved successfully') {
+        console.log("security question done");
         navigation.navigate('RestaurantDetail');
       } else {
         console.log('Error in response: ', data);

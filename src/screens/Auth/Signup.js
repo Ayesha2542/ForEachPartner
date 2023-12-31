@@ -101,7 +101,7 @@ const Signup = ({navigation}) => {
                 userName: response.data.newUser.userName, 
   });
                
-          navigation.navigate('SecurityQuestions');
+          navigation.navigate('RestaurantDetail');
         } else if (response.data.save == false) {
           setUserEmailError('A user with this Email Address Already Exists');
         } else {

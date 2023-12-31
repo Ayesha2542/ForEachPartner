@@ -55,6 +55,7 @@ const SmallCard = ({navigation, item}) => {
         </Neomorph>
         <Text style={[TextStyles.smallText, {marginTop: 7}]}>{item}</Text>
       </TouchableOpacity>
+     
     </View>
   );
 };

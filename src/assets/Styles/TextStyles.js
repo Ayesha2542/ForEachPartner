@@ -305,6 +305,12 @@ foodPrices:{
     fontFamily: 'Poppins-Regular',
     fontSize: wp('3%'),
   },
+  DealDescription:{
+    fontFamily: 'Poppins-Bold',
+    fontSize: wp('3.4'),
+    // marginTop:hp('2'),
+    marginLeft:wp('3')
+  },
   lightText: {
     fontFamily: 'Poppins-Regular',
     flex: 1,
