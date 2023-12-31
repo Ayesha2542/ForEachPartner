@@ -40,7 +40,7 @@ import PastOrder from './src/screens/Orders/PastOrder';
 import SingleProductDetail from './src/screens/Food/SingleProductDetail.js';
 import messaging from "@react-native-firebase/messaging";
 import { Alert } from 'react-native';
-
+import Checkout from './src/screens/Orders/Checkout';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +94,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
       <Stack.Screen name="PastOrder" component={PastOrder} />
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
+      <Stack.Screen name="Checkout" component={Checkout} />
 
     </Stack.Navigator>
   );

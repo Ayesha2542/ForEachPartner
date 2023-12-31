@@ -140,7 +140,17 @@ const CustomeDrawer = props => {
             <Text style={[TextStyles.drawerTextStyle]}>Products Detail</Text>
           </View>
         </TouchableOpacity>
-
+ 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('Checkout');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>Checkout</Text>
+          </View>
+        </TouchableOpacity> 
 
         </View>
         </DrawerContentScrollView>
