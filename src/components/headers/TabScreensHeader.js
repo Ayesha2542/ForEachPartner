@@ -11,9 +11,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextStyles from '../../assets/Styles/TextStyles';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
 import IconStyles from '../../assets/Styles/IconStyles';
-import { Item } from 'react-native-paper/lib/typescript/src/components/Drawer/Drawer';
 
-const TabScreensHeader = ({navigation,item}) => {
+const TabScreensHeader = ({ navigation, item }) => {
   return (
     <View
       style={{
