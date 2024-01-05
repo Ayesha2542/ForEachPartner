@@ -20,7 +20,7 @@ const TabScreensHeader = ({ navigation, item }) => {
         height: hp('8'), 
         width: wp('100'), 
         flexDirection: "row", 
-        borderBottomWidth: wp('0.4'),
+        borderBottomWidth: wp('0.5'),
         borderColor: AppColors.background2,
         marginTop:hp('3.5')
       }}>

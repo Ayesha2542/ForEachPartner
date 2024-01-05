@@ -173,6 +173,38 @@ const closeModal = () => {
           </View>
         </TouchableOpacity> 
 
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('MyOrders');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}> My Orders</Text>
+          </View>
+        </TouchableOpacity> 
+
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('YourOrder');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}> Your Orders</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{paddingVertical: 15}}
+          onPress={() => {
+            navigation.navigate('PastOrder');
+          }}>
+          <View style={[ContainerStyles.TwoitemsCenter]}>
+            <Ionicons name="settings-outline" size={22} />
+            <Text style={[TextStyles.drawerTextStyle]}>PastOrder</Text>
+          </View>
+        </TouchableOpacity>
+
           {/* <TouchableOpacity
             style={{paddingVertical: 15}}
             onPress={() => {
@@ -183,6 +215,7 @@ const closeModal = () => {
               <Text style={[TextStyles.drawerTextStyle]}>Products Detail</Text>
             </View>
           </TouchableOpacity> */}
+
         </View>
       </DrawerContentScrollView>
 

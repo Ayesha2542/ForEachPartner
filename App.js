@@ -43,6 +43,9 @@ import FoodDeals from './src/screens/Food/FoodDeals';
 import AddFoodDeals from './src/screens/Food/AddFoodDeals';
 import SingleFoodDealDetail from './src/screens/Food/SingleFoodDealDetail';
 import Checkout from './src/screens/Orders/Checkout';
+import MyOrders from './src/screens/Orders/MyOrders';
+import YourOrder from "./src/screens/Orders/YourOrder";
+import OrderDetail from "./src/screens/Orders/OrderDetail"
 
 
 const Stack = createNativeStackNavigator();
@@ -100,6 +103,10 @@ const MainStackNavigator = () => {
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
       <Stack.Screen name="SingleFoodDealDetail" component={SingleFoodDealDetail} />
       <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen name="MyOrders" component={MyOrders} />
+      <Stack.Screen name="YourOrder" component={YourOrder} />
+      <Stack.Screen name="OrderDetail" component={OrderDetail} />
+
     </Stack.Navigator>
   );
 };
