@@ -27,7 +27,6 @@ import Notification from './src/screens/Notification/Notification';
 import Orders from './src/screens/Orders/Orders';
 import AddFoodItems from './src/screens/Orders/AddFoodItems';
 import WelcomeScreen from './src/screens/Auth/WelcomeScreen';
-import Deals from './src/screens/Food/Deals';
 import RestaurantDetail from './src/screens/Auth/RestaurantDetail';
 import SecurityQuestions from './src/screens/Auth/SecurityQuestions';
 import Setting from './src/screens/Setting';
@@ -40,10 +39,14 @@ import PastOrder from './src/screens/Orders/PastOrder';
 import SingleProductDetail from './src/screens/Food/SingleProductDetail.js';
 import messaging from "@react-native-firebase/messaging";
 import { Alert } from 'react-native';
+import FoodDeals from './src/screens/Food/FoodDeals';
+import AddFoodDeals from './src/screens/Food/AddFoodDeals';
+import SingleFoodDealDetail from './src/screens/Food/SingleFoodDealDetail';
 import Checkout from './src/screens/Orders/Checkout';
 import MyOrders from './src/screens/Orders/MyOrders';
 import YourOrder from "./src/screens/Orders/YourOrder";
 import OrderDetail from "./src/screens/Orders/OrderDetail"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -89,7 +92,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="AddFoodItems" component={AddFoodItems} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-      <Stack.Screen name="Deals" component={Deals} />
+      <Stack.Screen name="FoodDeals" component={FoodDeals} />
+      <Stack.Screen name="AddFoodDeals" component={AddFoodDeals} />
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
@@ -97,6 +101,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="OngoingOrder" component={OngoingOrder} />
       <Stack.Screen name="PastOrder" component={PastOrder} />
       <Stack.Screen name="SingleProductDetail" component={SingleProductDetail} />
+      <Stack.Screen name="SingleFoodDealDetail" component={SingleFoodDealDetail} />
       <Stack.Screen name="Checkout" component={Checkout} />
       <Stack.Screen name="MyOrders" component={MyOrders} />
       <Stack.Screen name="YourOrder" component={YourOrder} />

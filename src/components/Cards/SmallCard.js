@@ -48,7 +48,6 @@ const SmallCard = ({navigation, item}) => {
           lightShadowColor={AppColors.background}
           swapShadows // <- change zIndex of each shadow color
           style={ContainerStyles.smallCategoriesNeomorphStyle}>
-          {/* Display the category image */}
           <Image
             source={{uri: baseUrl+categoryImage}}
             style={{width: wp(25), height: hp(9.5),marginTop:hp('2')}}
@@ -56,6 +55,7 @@ const SmallCard = ({navigation, item}) => {
         </Neomorph>
         <Text style={[TextStyles.smallText, {marginTop: 7}]}>{item}</Text>
       </TouchableOpacity>
+     
     </View>
   );
 };

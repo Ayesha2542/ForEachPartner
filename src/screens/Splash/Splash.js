@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -11,13 +11,41 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import AppContext from '../../Context/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = ({navigation}) => {
-  //
+const{storeUpdatedCurrentUser,currentUser}= useContext(AppContext)
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Login');
-    }, 2000);
+    const checkForUser = async ()=>{
+      try{
+        const userData = await AsyncStorage.getItem('user');
+        console.log('User Stored in AsyncStorage',userData)
+        if(userData){
+          const parseData =JSON.parse(userData);
+          storeUpdatedCurrentUser({
+            userId:parseData.userId,
+            userName:parseData.userName,
+            userEmail:parseData.userEmail,
+            userPassword:parseData.userPassword,
+            restaurantImage:parseData.restaurantImage,
+            restaurantName:parseData.restaurantName,
+            restaurantAddress:parseData.restaurantAddress,
+            restaurantCnic:parseData.restaurantCnic,
+            restaurantPhoneNumber:parseData.restaurantPhoneNumber,
+            restaurantCategories:parseData.restaurantCategories,
+          });
+          navigation.navigate('Home');
+          console.log('parsed Data',parseData)
+        }
+        else{
+          navigation.navigate('Login');
+        }
+      }catch(error){
+        console.log('Error Checking for User Data',error);
+      }
+    };
+    checkForUser();
   }, []);
 
   return (

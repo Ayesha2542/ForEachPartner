@@ -222,7 +222,6 @@ const RestaurantDetail = ({navigation}) => {
       const document = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
       });
-  
       setCertificateDocument(document);
       setCertificateDocumentError('');
       console.log('Selected certificate document:', document);
@@ -231,6 +230,7 @@ const RestaurantDetail = ({navigation}) => {
       setCertificateDocumentError('Error selecting document');
     }
   };
+  
   
      
 

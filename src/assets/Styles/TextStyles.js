@@ -140,7 +140,7 @@ const TextStyles = StyleSheet.create({
   cartTextStyle: {
     color: 'black',
     fontSize: hp('3%'),
-    marginLeft: wp('8%'),
+    marginRight: wp('40'),
     fontFamily: 'Poppins-SemiBold',
     marginTop: hp('2.4%'),
   },
@@ -304,6 +304,12 @@ foodPrices:{
   orderDescription: {
     fontFamily: 'Poppins-Regular',
     fontSize: wp('3%'),
+  },
+  DealDescription:{
+    fontFamily: 'Poppins-Bold',
+    fontSize: wp('3.4'),
+    // marginTop:hp('2'),
+    marginLeft:wp('3')
   },
   lightText: {
     fontFamily: 'Poppins-Regular',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import DrawerHeader from '../components/headers/DrawerHeader';
 import {Neomorph} from 'react-native-neomorph-shadows';
 import {
@@ -24,9 +24,12 @@ import ProfileHeader from '../components/headers/ProfileHeader';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconStyles from '../assets/Styles/IconStyles';
 import TextStyles from '../assets/Styles/TextStyles';
+import AppContext from '../Context/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Setting = ({navigation}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const {baseUrl,currentUser,storeUpdatedCurrentUser}=useContext(AppContext)
 
   const OpenModal = () => {
     setIsModalVisible(true);
@@ -34,7 +37,35 @@ const Setting = ({navigation}) => {
   const closeModal = () => {
     setIsModalVisible(false);
   };
-
+  // {console.log('current user hai k nai',currentUser)}
+  
+  useEffect(() => {
+    storeUpdatedCurrentUser({
+      userId: currentUser._id,
+      userName: currentUser.userName,
+      userEmail: currentUser.userEmail,
+      userPassword: currentUser.userPassword,
+      restaurantImage: currentUser.restaurantImage,
+      restaurantName: currentUser.restaurantName,
+      restaurantAddress: currentUser.restaurantAddress,
+      restaurantCnic: currentUser.restaurantCnic,
+      restaurantPhoneNumber: currentUser.restaurantPhoneNumber,
+      restaurantCategories: currentUser.restaurantCategories,
+    });
+  }, []);
+  
+  const handleLogout = async () => {
+    try {
+      // Clear user data from AsyncStorage
+      await AsyncStorage.removeItem('user');
+  
+      // Navigate to the login screen
+      navigation.navigate('Login');
+      closeModal();
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <ProfileHeader navigation={navigation} item="Setting" />
@@ -237,7 +268,9 @@ const Setting = ({navigation}) => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                       }}>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{
+                        closeModal();
+                      }}>
                         <View
                           style={{
                             borderWidth: 1.5,
@@ -253,7 +286,9 @@ const Setting = ({navigation}) => {
                           <Text style={{color:AppColors.primary,fontFamily:"Poppins-SemiBold"}}>Cancel</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{
+                        handleLogout();
+                      }}>
                         <View
                           style={{
                             borderWidth: 1.5,
