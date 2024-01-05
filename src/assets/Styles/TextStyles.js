@@ -139,10 +139,10 @@ const TextStyles = StyleSheet.create({
   },
   cartTextStyle: {
     color: 'black',
-    fontSize: hp('3%'),
+    fontSize: hp('2.6%'),
     marginLeft: wp('8%'),
     fontFamily: 'Poppins-SemiBold',
-    marginTop: hp('2.4%'),
+    marginTop: hp('2.5%'),
   },
   text3: {
     fontFamily: 'Poppins-SemiBold',

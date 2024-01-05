@@ -10,7 +10,7 @@ import TextStyles from '../../assets/Styles/TextStyles';
 const CartHeader = ({ item, navigation }) => {
   return (
     <View style={{
-            height: hp('9'),
+            height: hp('8'),
             borderBottomWidth: wp('0.4'),
             borderColor: AppColors.background2,
             flexDirection:"row",
