@@ -63,7 +63,7 @@ const PastOrder = ({navigation}) => {
                   height: hp('20'),
                   width: wp('94'),
                   borderRadius: wp('1.3%'),
-                  shadowRadius: 2,
+                  shadowRadius: 2.2,
                   backgroundColor: AppColors.white,
                   marginVertical: hp('1%'),
                   shadowOpacity: 0.3,

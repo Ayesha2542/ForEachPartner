@@ -43,6 +43,8 @@ const Deals = ({navigation}) => {
       uri: require('../../assets/Images/image39.jpg'),
     },
    
+  
+    
   ]);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
