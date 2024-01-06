@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "748183169944",
-    "project_id": "foodforeach",
-    "storage_bucket": "foodforeach.appspot.com"
+    "project_number": "681616632168",
+    "project_id": "foreachpartner-5fb94",
+    "storage_bucket": "foreachpartner-5fb94.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:748183169944:android:244a2300152ebf2ae319ed",
+        "mobilesdk_app_id": "1:681616632168:android:98670ed17ed9fc1f3d4edd",
         "android_client_info": {
           "package_name": "com.ForEachPartner"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBm2z0KsnlN-r5PCkO_4nfnfGEBB9dAwSQ"
+          "current_key": "AIzaSyCJXjmuoV5iB00oyFIg5C0KhxpxfSHVw9A"
         }
       ],
       "services": {

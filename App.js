@@ -113,21 +113,17 @@ const AuthStackNavigator = () => {
 };
 
 const App = () => {
-   
-  const getToken = async()=>{
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
- const token = await messaging().getToken();
- console.log({token})
+  useEffect(()=>{
+    getDeviceToken();
+  },[]);
+  const getDeviceToken= async ()=>{
+  let token = await messaging().getToken();
+  console.log("This is FCM Token:",token);
   }
   useEffect(() => {
-    getToken();
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
-
     return unsubscribe;
   }, []);
   return (
