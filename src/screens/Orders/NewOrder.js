@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -12,9 +12,12 @@ import TextStyles from '../../assets/Styles/TextStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AddressHeader from '../../components/headers/AddressHeader';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import AppContext from '../../Context/AppContext';
 
 const NewOrder = ({navigation, item}) => {
   
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: AppColors.white}}>
       <AddressHeader navigation={navigation} item="New Order" />

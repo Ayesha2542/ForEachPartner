@@ -5,7 +5,6 @@ import { List } from 'react-native-paper';
 import ProfileHeader from '../../components/headers/ProfileHeader';
 import AppColors from '../../assets/colors/AppColors';
 import ContainerStyles from '../../assets/Styles/ContainerStyles';
-import { widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import IconStyles from '../../assets/Styles/IconStyles';
 
@@ -45,7 +44,6 @@ const Notification = ({navigation}) => {
   return (
 <SafeAreaView style={{flex:1,backgroundColor:AppColors.white}}>
     <ProfileHeader navigation={navigation} item="Notification" /> 
-
       <FlatList
         data={notificationsData}
         renderItem={renderNotification}

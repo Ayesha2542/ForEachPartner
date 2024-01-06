@@ -14,7 +14,7 @@ export const AppProvider =({children})=>{
     const [isAddedIntoDonatedData, setIsAddedIntoDonatedData] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [categoryName, setCategoryName] = useState('');
-    const[baseUrl]=useState("http://192.168.0.106:8888");
+    const[baseUrl]=useState("http://192.168.0.108:8888");
     const [currentUser,setCurrentUser] =useState({});
 
 

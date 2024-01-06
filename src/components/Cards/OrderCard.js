@@ -64,45 +64,23 @@ const OrderCard = ({navigation, item, currentOrderRoute}) => {
                     marginLeft: wp('17'),
                   },
                 ]}>
-                {item.dateTime}
+                {item.orderDateTime}
               </Text>
               <Text style={[TextStyles.lightText]}>
-                Total: {item.totalPrice}
+                Total: {item.totalAmount}
               </Text>
             </View>
           </View>
           <ScrollView>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginLeft: wp('15'),
-                marginTop: hp('1'),
-              }}>
-              <Text style={[TextStyles.label2]}>Burger</Text>
-              <Text style={[TextStyles.label2]}>Qty:1</Text>
-              <Text style={[TextStyles.label2]}>Rs. 150</Text>
+          {item.products && item.products.map((product, index) => (
+            <View key={index} style={{flexDirection: 'row', marginLeft: wp('15')}}>
+              <Text style={[TextStyles.label2]}>{product.productName}</Text>
+              <Text style={[TextStyles.label2]}>Qty: {product.qty}</Text>
+              <Text style={[TextStyles.label2]}>Rs. {product.productPrice}</Text>
             </View>
-            <View style={{flexDirection: 'row', marginLeft: wp('15')}}>
-              <Text style={[TextStyles.label2]}>Shawarma</Text>
-              <Text style={[TextStyles.label2]}>Qty:1</Text>
-              <Text style={[TextStyles.label2]}>Rs. 150</Text>
-            </View>
-            <View style={{flexDirection: 'row', marginLeft: wp('15')}}>
-              <Text style={[TextStyles.label2]}>Pizza</Text>
-              <Text style={[TextStyles.label2]}>Qty:1</Text>
-              <Text style={[TextStyles.label2]}>Rs. 550</Text>
-            </View>
-            <View style={{flexDirection: 'row', marginLeft: wp('15')}}>
-              <Text style={[TextStyles.label2]}>Pizza</Text>
-              <Text style={[TextStyles.label2]}>Qty:1</Text>
-              <Text style={[TextStyles.label2]}>Rs. 550</Text>
-            </View>
-            <View style={{flexDirection: 'row', marginLeft: wp('15')}}>
-              <Text style={[TextStyles.label2]}>Pizza</Text>
-              <Text style={[TextStyles.label2]}>Qty:1</Text>
-              <Text style={[TextStyles.label2]}>Rs. 550</Text>
-            </View>
-          </ScrollView>
+          ))}
+        </ScrollView>
+          
           {currentOrderRoute === 'NewOrders' ? (
             <>
               <View
